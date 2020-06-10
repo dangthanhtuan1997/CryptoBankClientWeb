@@ -1,0 +1,31 @@
+.nk-calendar{
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    min-height: calc(100vh - #{$header-height});
+    max-height: calc(100vh - #{$header-height});
+    background: $white;
+    &-aside{
+        background: $lighter;
+        width: 100%;
+        overflow: hidden;
+        max-height: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+    }
+    &-body{
+        flex-grow: 1;
+        padding: 1.5rem;
+    }
+}
+
+@include media-breakpoint-up(lg){
+    .nk-calendar{
+        &-aside{
+            width: 320px;
+            border-right: 1px solid $border-light;
+        }
+    }
+}
