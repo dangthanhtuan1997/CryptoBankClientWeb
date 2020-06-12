@@ -7,16 +7,22 @@ import { onLogin } from '../actions';
 class LoginPage extends React.Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    loading: false
   }
 
   onChangeText = (key, val) => {
     this.setState({ [key]: val })
   }
 
-  render() {
+  handleLogin = (event) => {
     const { onLogin } = this.props;
+    event.preventDefault();
+    this.setState({ loading: true });
+    onLogin(this.state.username, this.state.password);
+  }
 
+  render() {
     return (
       <div className="nk-app-root">
         <div className="nk-split nk-split-page nk-split-md">
@@ -26,31 +32,28 @@ class LoginPage extends React.Component {
             </div>
             <div className="nk-block nk-block-middle nk-auth-body">
               <div className="brand-logo pb-5">
-                <a href="html/general/index.html" className="logo-link">
+                {/* <a href="html/general/index.html" className="logo-link">
                   <img className="logo-light logo-img logo-img-lg" src="./images/logo.png" srcSet="./images/logo2x.png 2x" alt="logo" />
                   <img className="logo-dark logo-img logo-img-lg" src="./images/logo-dark.png" srcSet="./images/logo-dark2x.png 2x" alt="logo-dark" />
-                </a>
+                </a> */}
               </div>
               <div className="nk-block-head">
                 <div className="nk-block-head-content">
-                  <h5 className="nk-block-title">Sign-In</h5>
-                  <div className="nk-block-des">
-                    <p>Access the DashLite panel using your email and passcode.</p>
-                  </div>
+                  <h5 className="nk-block-title">Đăng nhập</h5>
                 </div>
               </div>{/* .nk-block-head */}
               <form>
                 <div className="form-group">
                   <div className="form-label-group">
-                    <label className="form-label" htmlFor="default-01">Email or Username</label>
-                    <a className="link link-primary link-sm" tabIndex={-1} href="#">Need Help?</a>
+                    <label className="form-label" htmlFor="default-01">Tài khoản</label>
+                    <a className="link link-primary link-sm" tabIndex={-1} href="#">Trợ giúp?</a>
                   </div>
                   <input value={this.state.username} onChange={e => this.onChangeText('username', e.target.value)} type="text" className="form-control form-control-lg" id="default-01" placeholder="Enter your email address or username" />
                 </div>{/* .foem-group */}
                 <div className="form-group">
                   <div className="form-label-group">
-                    <label className="form-label" htmlFor="password">Passcode</label>
-                    <a className="link link-primary link-sm" tabIndex={-1} href="html/general/pages/auths/auth-reset.html">Forgot Code?</a>
+                    <label className="form-label" htmlFor="password">Mật khẩu</label>
+                    <a className="link link-primary link-sm" tabIndex={-1} href="html/general/pages/auths/auth-reset.html">Quên mật khẩu?</a>
                   </div>
                   <div className="form-control-wrap">
                     <a tabIndex={-1} href="#" className="form-icon form-icon-right passcode-switch" data-target="password">
@@ -61,13 +64,12 @@ class LoginPage extends React.Component {
                   </div>
                 </div>{/* .foem-group */}
                 <div className="form-group">
-                  <button onClick={(event) => {
-                    event.preventDefault();
-                    onLogin(this.state.username, this.state.password);
-                  }} className="btn btn-lg btn-primary btn-block" >Sign in</button>
+                  <button onClick={(event) => this.handleLogin(event)} className="btn btn-lg btn-primary btn-block" disabled={this.state.loading}>
+                    {this.state.loading ? <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> : null}
+                    <span>Sign in</span></button>
                 </div>
               </form>{/* form */}
-              <div className="form-note-s2 pt-4"> New on our platform? <a href="html/general/pages/auths/auth-register.html">Create an account</a>
+              <div className="form-note-s2 pt-4"> Chưa có tài khoản? <a href="html/general/pages/auths/auth-register.html">Đăng ký</a>
               </div>
               <div className="text-center pt-4 pb-3">
                 <h6 className="overline-title overline-title-sap"><span>OR</span></h6>
@@ -76,9 +78,6 @@ class LoginPage extends React.Component {
                 <li className="nav-item"><a className="nav-link" href="#">Facebook</a></li>
                 <li className="nav-item"><a className="nav-link" href="#">Google</a></li>
               </ul>
-              <div className="text-center mt-5">
-                <span className="fw-500">I don't have an account? <a href="#">Try 15 days free</a></span>
-              </div>
             </div>{/* .nk-block */}
             <div className="nk-block nk-auth-footer">
               <div className="nk-block-between">
@@ -178,11 +177,11 @@ class LoginPage extends React.Component {
 }
 
 export default connect(state => {
-    return {
-      user: state.userReducer
-    }
-  }, dispatch => {
-    return {
-      onLogin: (username, password) => dispatch(onLogin(username, password)),
-    }
-  })(LoginPage);
+  return {
+    user: state.userReducer
+  }
+}, dispatch => {
+  return {
+    onLogin: (username, password) => dispatch(onLogin(username, password)),
+  }
+})(LoginPage);

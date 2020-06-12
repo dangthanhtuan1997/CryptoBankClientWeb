@@ -25,7 +25,7 @@ class Header extends React.Component {
                                         <em className="icon ni ni-card-view" />
                                     </div>
                                     <div className="nk-news-text">
-                                        <p>Do you know the latest update of 2019? <span> A overview of our is now available on YouTube</span></p>
+                                        <p>Tính năng mới <span> Gửi lời nhắc chuyển tiền cho bạn bè</span></p>
                                         <em className="icon ni ni-external" />
                                     </div>
                                 </a>
@@ -40,8 +40,8 @@ class Header extends React.Component {
                                                 <em className="icon ni ni-user-alt" />
                                             </div>
                                             <div className="user-info d-none d-md-block">
-                                                <div className="user-status user-status-unverified">Unverified</div>
-                                                <div className="user-name dropdown-indicator">Abu Bin Ishityak</div>
+                                                <div className="user-status user-status-unverified">User</div>
+                                                <div className="user-name dropdown-indicator">Đặng Thanh Tuấn</div>
                                             </div>
                                         </div>
                                     </a>
@@ -52,27 +52,27 @@ class Header extends React.Component {
                                                     <span>AB</span>
                                                 </div>
                                                 <div className="user-info">
-                                                    <span className="lead-text">Abu Bin Ishtiyak</span>
-                                                    <span className="sub-text">info@softnio.com</span>
+                                                    <span className="lead-text">Đặng Thanh Tuấn</span>
+                                                    <span className="sub-text">dangthanhtuan</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="dropdown-inner user-account-info">
-                                            <h6 className="overline-title-alt">Nio Wallet Account</h6>
-                                            <div className="user-balance">12.395769 <small className="currency currency-btc">BTC</small></div>
-                                            <div className="user-balance-sub">Locked <span>0.344939 <span className="currency currency-btc">BTC</span></span></div>
-                                            <a href="#" className="link"><span>Withdraw Funds</span> <em className="icon ni ni-wallet-out" /></a>
+                                            <h6 className="overline-title-alt">Số dư khả dụng</h6>
+                                            <div className="user-balance">50.225.000 <small className="currency">VND</small></div>
+                                            <div className="user-balance-sub">Tiết kiệm <span>100.000.000 <span className="currency">VND</span></span></div>
+                                            <a href="#" className="link"><span>Chuyển tiền</span> <em className="icon ni ni-wallet-out" /></a>
                                         </div>
                                         <div className="dropdown-inner">
                                             <ul className="link-list">
-                                                <li><a href="html/crypto/profile.html"><em className="icon ni ni-user-alt" /><span>View Profile</span></a></li>
-                                                <li><a href="html/crypto/profile-security.html"><em className="icon ni ni-setting-alt" /><span>Account Setting</span></a></li>
-                                                <li><a href="html/crypto/profile-activity.html"><em className="icon ni ni-activity-alt" /><span>Login Activity</span></a></li>
+                                                <li><a href="html/crypto/profile.html"><em className="icon ni ni-user-alt" /><span>Thông tin cá nhân</span></a></li>
+                                                <li><a href="html/crypto/profile-security.html"><em className="icon ni ni-setting-alt" /><span>Cài đặt</span></a></li>
+                                                <li><a href="html/crypto/profile-activity.html"><em className="icon ni ni-activity-alt" /><span>Lịch sử đăng nhập</span></a></li>
                                             </ul>
                                         </div>
                                         <div className="dropdown-inner">
                                             <ul className="link-list">
-                                                <li><a href="#"><em className="icon ni ni-signout" /><span>Sign out</span></a></li>
+                                                <li><a href="#"><em className="icon ni ni-signout" /><span>Đăng xuất</span></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -83,8 +83,8 @@ class Header extends React.Component {
                                     </a>
                                     <div className="dropdown-menu dropdown-menu-xl dropdown-menu-right dropdown-menu-s1">
                                         <div className="dropdown-head">
-                                            <span className="sub-title nk-dropdown-title">Notifications</span>
-                                            <a href="#">Mark All as Read</a>
+                                            <span className="sub-title nk-dropdown-title">Thông báo</span>
+                                            <a href="#">Đánh dấu tất cả đã đọc</a>
                                         </div>
                                         <div className="dropdown-body">
                                             <div className="nk-notification">
@@ -93,8 +93,8 @@ class Header extends React.Component {
                                                         <em className="icon icon-circle bg-warning-dim ni ni-curve-down-right" />
                                                     </div>
                                                     <div className="nk-notification-content">
-                                                        <div className="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
-                                                        <div className="nk-notification-time">2 hrs ago</div>
+                                                        <div className="nk-notification-text">Chuyển tiền đến Nguyễn Sĩ Văn</div>
+                                                        <div className="nk-notification-time">2 giờ trước</div>
                                                     </div>
                                                 </div>{/* .dropdown-inner */}
                                                 <div className="nk-notification-item dropdown-inner">
@@ -102,50 +102,14 @@ class Header extends React.Component {
                                                         <em className="icon icon-circle bg-success-dim ni ni-curve-down-left" />
                                                     </div>
                                                     <div className="nk-notification-content">
-                                                        <div className="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
-                                                        <div className="nk-notification-time">2 hrs ago</div>
-                                                    </div>
-                                                </div>{/* .dropdown-inner */}
-                                                <div className="nk-notification-item dropdown-inner">
-                                                    <div className="nk-notification-icon">
-                                                        <em className="icon icon-circle bg-warning-dim ni ni-curve-down-right" />
-                                                    </div>
-                                                    <div className="nk-notification-content">
-                                                        <div className="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
-                                                        <div className="nk-notification-time">2 hrs ago</div>
-                                                    </div>
-                                                </div>{/* .dropdown-inner */}
-                                                <div className="nk-notification-item dropdown-inner">
-                                                    <div className="nk-notification-icon">
-                                                        <em className="icon icon-circle bg-success-dim ni ni-curve-down-left" />
-                                                    </div>
-                                                    <div className="nk-notification-content">
-                                                        <div className="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
-                                                        <div className="nk-notification-time">2 hrs ago</div>
-                                                    </div>
-                                                </div>{/* .dropdown-inner */}
-                                                <div className="nk-notification-item dropdown-inner">
-                                                    <div className="nk-notification-icon">
-                                                        <em className="icon icon-circle bg-warning-dim ni ni-curve-down-right" />
-                                                    </div>
-                                                    <div className="nk-notification-content">
-                                                        <div className="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
-                                                        <div className="nk-notification-time">2 hrs ago</div>
-                                                    </div>
-                                                </div>{/* .dropdown-inner */}
-                                                <div className="nk-notification-item dropdown-inner">
-                                                    <div className="nk-notification-icon">
-                                                        <em className="icon icon-circle bg-success-dim ni ni-curve-down-left" />
-                                                    </div>
-                                                    <div className="nk-notification-content">
-                                                        <div className="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
-                                                        <div className="nk-notification-time">2 hrs ago</div>
+                                                        <div className="nk-notification-text">Nhận tiền từ Nguyễn Sĩ văn</div>
+                                                        <div className="nk-notification-time">3 giờ trước</div>
                                                     </div>
                                                 </div>{/* .dropdown-inner */}
                                             </div>
                                         </div>{/* .nk-dropdown-body */}
                                         <div className="dropdown-foot center">
-                                            <a href="#">View All</a>
+                                            <a href="#">Xem tất cả</a>
                                         </div>
                                     </div>
                                 </li>

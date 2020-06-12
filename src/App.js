@@ -1,9 +1,8 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import LoginPage from './components/LoginPage';
-import HomePage from './components/HomePage';
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
 import cookie from 'react-cookies';
-import store from './store';
 import history from './history';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -21,7 +20,7 @@ function App() {
   return (
     <Router history={history}>
       <Switch>
-        <PrivateRoute exact path="/" component={HomePage} />
+        <PrivateRoute exact path="/" component={DashboardPage} />
         <Route path="/login" component={LoginPage} />
       </Switch>
     </Router>
