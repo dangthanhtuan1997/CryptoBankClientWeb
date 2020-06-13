@@ -1,7 +1,6 @@
 import { apiUrl } from '../config';
 import cookie from 'react-cookies';
 import store from '../store';
-import { Redirect } from 'react-router-dom';
 import history from '../history';
 const axios = require('axios');
 
@@ -25,7 +24,8 @@ const onLogin = (username, password) => async dispatch => {
         cookie.save('CryptoBankAccessToken', token, { path: '/', expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000) });
         dispatch(Login(token, null));
 
-        history.push('/');
+        history.replace({ pathname: '/' });
+        //history.go();
     } catch (error) {
         dispatch(Login(null, error.response.data.message));
     }

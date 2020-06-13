@@ -20,8 +20,8 @@ function App() {
   return (
     <Router history={history}>
       <Switch>
-        <PrivateRoute exact path="/" component={DashboardPage} />
         <Route path="/login" component={LoginPage} />
+        <PrivateRoute exact path="/" component={DashboardPage} />
       </Switch>
     </Router>
   );

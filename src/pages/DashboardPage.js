@@ -1,12 +1,12 @@
 import React from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Menu from '../components/Menu';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Dashboard from '../components/Dashboard';
 
-class HomePage extends React.Component {
-
+class DashboardPage extends React.Component {
+    
     render() {
         return (
             <div className="nk-app-root">
@@ -35,4 +35,4 @@ class HomePage extends React.Component {
     }
 }
 
-export default withRouter(HomePage);
+export default withRouter(DashboardPage);

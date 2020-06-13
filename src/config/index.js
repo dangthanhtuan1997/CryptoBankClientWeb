@@ -1,4 +1,3 @@
-//const apiUrl = 'http://vou-api.herokuapp.com/api'
-const apiUrl = 'http://localhost:4000/api'
+const apiUrl = 'http://crypto-bank-1612785.herokuapp.com/api'
 
 module.exports = { apiUrl };

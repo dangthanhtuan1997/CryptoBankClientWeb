@@ -54,6 +54,7 @@ class Menu extends React.Component {
                                     </ul>
                                 </div>
                             </div>{/* .nk-sidebar-widget */}
+
                             <div className="nk-sidebar-menu">
                                 {/* Menu */}
                                 <ul className="nk-menu">
