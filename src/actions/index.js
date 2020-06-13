@@ -6,9 +6,9 @@ const axios = require('axios');
 
 /*==============================================     Login     ==============================================*/
 
-const Login = (userToken, error) => ({
+const Login = (accessToken, error) => ({
     type: 'LOG_IN',
-    userToken: userToken,
+    accessToken: accessToken,
     error: error
 });
 
@@ -42,6 +42,34 @@ const onLogout = () => async dispatch => {
 };
 
 
+/*==============================================     GetUserInfo     ==============================================*/
+
+const SetUserInfo = (userInfo) => ({
+    type: 'SET_USER_INFO',
+    userInfo: userInfo
+});
+
+const onGetUserInfo = () => async dispatch => {
+    const state = store.getState();
+    let accessToken = state.userReducer.accessToken;
+
+    if (!accessToken) {
+        accessToken = cookie.load('CryptoBankAccessToken');
+    }
+
+    try {
+        const userInfo = await axios.get(`${apiUrl}/users/me`, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
+        });
+        
+        dispatch(SetUserInfo(userInfo.data));
+    } catch (error) {
+        console.log(JSON.stringify(error));
+    }
+}
+
 /*==============================================     Register     ==============================================*/
 
 const Register = (error) => ({
@@ -49,23 +77,23 @@ const Register = (error) => ({
     error: error
 });
 
-const onRegister = (username, password, navigation) => async dispatch => {
+const onRegister = (username, password) => async dispatch => {
     try {
         await axios.post(`${apiUrl}/auth/signup`, {
             username: username,
             password: password
         });
-        dispatch(onLogin(username, password, navigation));
+        dispatch(onLogin(username, password));
     } catch (error) {
         console.log(error.response.data);
         dispatch(Register(error.response.data.message));
     }
 }
 
-const RestoreUserToken = (usertoken) => ({
+const RestoreAccessToken = (accessToken) => ({
     type: 'RESTORE_TOKEN',
-    userToken: usertoken
+    accessToken: accessToken
 });
 
 
-export { onLogin, onLogout, onRegister, RestoreUserToken };
+export { onLogin, onLogout, onRegister, RestoreAccessToken, onGetUserInfo };

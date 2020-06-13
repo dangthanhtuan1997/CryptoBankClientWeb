@@ -1,17 +1,17 @@
-const initialState = { userToken: null, userInfo: null, loginError: null, registerError: null };
+const initialState = { accessToken: null, userInfo: null, loginError: null, registerError: null };
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'RESTORE_TOKEN':
             return {
                 ...state,
-                userToken: action.userToken
+                accessToken: action.accessToken
             };
 
         case 'LOG_IN':
             return {
                 ...state,
-                userToken: action.userToken,
+                accessToken: action.accessToken,
                 loginError: action.error
             };
 
@@ -30,7 +30,7 @@ const userReducer = (state = initialState, action) => {
         case 'LOG_OUT':
             return {
                 ...state,
-                userToken: null,
+                accessToken: null,
                 userInfo: null
             };
 

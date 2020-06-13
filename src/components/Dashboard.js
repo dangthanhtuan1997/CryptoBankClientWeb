@@ -3,16 +3,16 @@ import { withRouter, Redirect } from 'react-router-dom';
 import Chart from 'chart.js';
 
 var summaryBalance = {
-    labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+    labels: ["01 Nov", "02 Nov", "03 Nov", "04 Nov", "05 Nov", "06 Nov", "07 Nov", "08 Nov", "09 Nov", "10 Nov", "11 Nov", "12 Nov", "13 Nov", "14 Nov", "15 Nov", "16 Nov", "17 Nov", "18 Nov", "19 Nov", "20 Nov", "21 Nov", "22 Nov", "23 Nov", "24 Nov", "25 Nov", "26 Nov", "27 Nov", "28 Nov", "29 Nov", "30 Nov"],
     dataUnit: 'VND',
     datasets: [{
-        label: "Chuyển tiền",
+        label: "Send",
         color: "#5ce0aa",
-        data: [11000000, 8000000, 12500000, 5500000, 9500000, null, null, null, null, null, null, null]
+        data: [110, 80, 125, 55, 95, 75, 90, 110, 80, 125, 55, 95, 75, 90, 110, 80, 125, 55, 95, 75, 90, 110, 80, 125, 55, 95, 75, 90, 75, 90]
     }, {
-        label: "Nhận tiền",
+        label: "Receive",
         color: "#f6ca3e",
-        data: [9000000, 9800000, 11500000, 7000000, 8700000, null, null, null, null, null, null, null]
+        data: [80, 54, 105, 120, 82, 85, 60, 80, 54, 105, 120, 82, 85, 60, 80, 54, 105, 120, 82, 85, 60, 80, 54, 105, 120, 82, 85, 60, 85, 60]
     }]
 };
 
@@ -25,7 +25,7 @@ function accountSummary() {
         chart_data.push({
             label: summaryBalance.datasets[i].label,
             tension: .4,
-            backgroundColor: 'transparent',
+            backgroundColor: summaryBalance.datasets[i].color,
             borderWidth: 2,
             borderColor: summaryBalance.datasets[i].color,
             pointBorderColor: 'transparent',
@@ -41,7 +41,7 @@ function accountSummary() {
         });
     }
     var chart = new Chart(selectCanvas, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: summaryBalance.labels,
             datasets: chart_data,

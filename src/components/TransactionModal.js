@@ -4,7 +4,7 @@ class TransactionModal extends React.Component {
 
     render() {
         return (
-            <div className="modal fade" tabIndex={-1} id="subscription-change">
+            <div className="modal fade" tabIndex={-1} id="new-transaction">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <a href="#" className="close" data-dismiss="modal" aria-label="Close"><em className="icon ni ni-cross" /></a>
@@ -35,7 +35,7 @@ class TransactionModal extends React.Component {
                                                 <div className="col-md-6">
                                                     <div className="form-group">
                                                         <label className="form-label" htmlFor="display-name">Người nhận</label>
-                                                        <input disabled="true" type="text" className="form-control form-control-lg" id="display-name" defaultValue="Đặng Tiến Đạt" placeholder="Enter display name" />
+                                                        <input disabled={true} type="text" className="form-control form-control-lg" id="display-name" defaultValue="Đặng Tiến Đạt" placeholder="Enter display name" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
@@ -71,9 +71,9 @@ class TransactionModal extends React.Component {
                                                 <div className="form col-md-12">
                                                     <div className="form-group">
                                                         <label className="form-label" htmlFor="birth-day">Ngân hàng</label>
-                                                        <select className="form-select" data-search="off" data-ui="clean">
+                                                        <select defaultValue="teabank" className="form-select" data-search="off" data-ui="clean">
                                                             <option value="nklbank">NKL Bank</option>
-                                                            <option selected="true" value="teabank">TeaBank</option>
+                                                            <option value="teabank">TeaBank</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -86,7 +86,7 @@ class TransactionModal extends React.Component {
                                                 <div className="col-md-6">
                                                     <div className="form-group">
                                                         <label className="form-label" htmlFor="display-name">Người nhận</label>
-                                                        <input disabled="true" type="text" className="form-control form-control-lg" id="display-name" defaultValue="Đặng Tiến Đạt" placeholder="Enter display name" />
+                                                        <input disabled={true} type="text" className="form-control form-control-lg" id="display-name" defaultValue="Đặng Tiến Đạt" placeholder="Enter display name" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
