@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
 
 class TransactionModal extends React.Component {
 
@@ -26,129 +25,100 @@ class TransactionModal extends React.Component {
                                 <div className="tab-content">
                                     <div className="tab-pane active" id="internal">
                                         <ul className="sp-package-list">
-                                            <li className="sp-package-item">
-                                                <input className="sp-package-choose" type="radio" name="subscription-pack-plan" id="pack-plan-entprise" defaultChecked />
-                                                <label className="sp-package-desc" htmlFor="pack-plan-entprise">
-                                                    <span className="sp-package-info">
-                                                        <span className="sp-package-title title">Enterprise Plan <span className="badge badge-primary badge-pill">Current</span></span>
-                                                        <span className="sp-package-detail">Unlimited Access / $599.00 USD / Year</span>
-                                                    </span>
-                                                    <span className="sp-package-price">
-                                                        <span className="sp-package-amount yearly">
-                                                            <span className="amount">$599.00</span>
-                                                            <span className="text-soft">Yearly</span>
-                                                        </span>
-                                                        <span className="sp-package-amount monthly d-none">
-                                                            <span className="amount">$99.00</span>
-                                                            <span className="text-soft">Monthly</span>
-                                                        </span>
-                                                    </span>
-                                                </label>
-                                            </li>
-                                            <li className="sp-package-item">
-                                                <input className="sp-package-choose" type="radio" name="subscription-pack-plan" id="pack-plan-pro" />
-                                                <label className="sp-package-desc" htmlFor="pack-plan-pro">
-                                                    <span className="sp-package-info">
-                                                        <span className="sp-package-title title">NioPro Plan</span>
-                                                        <span className="sp-package-detail">Unlimited Access / $249.00 USD / Year</span>
-                                                    </span>
-                                                    <span className="sp-package-price">
-                                                        <span className="sp-package-amount yearly">
-                                                            <span className="amount">$299.00</span>
-                                                            <span className="text-soft">Yearly</span>
-                                                        </span>
-                                                        <span className="sp-package-amount monthly d-none">
-                                                            <span className="amount">$49.00</span>
-                                                            <span className="text-soft">Monthly</span>
-                                                        </span>
-                                                    </span>
-                                                </label>
-                                            </li>
-                                            <li className="sp-package-item">
-                                                <input className="sp-package-choose" type="radio" name="subscription-pack-plan" id="pack-plan-free" />
-                                                <label className="sp-package-desc" htmlFor="pack-plan-free">
-                                                    <span className="sp-package-info">
-                                                        <span className="sp-package-title title">Free Plan</span>
-                                                        <span className="sp-package-detail">Free Access / $0.00 USD / Year</span>
-                                                    </span>
-                                                    <span className="sp-package-price">
-                                                        <span className="sp-package-amount yearly">
-                                                            <span className="amount">$0.00</span>
-                                                            <span className="text-soft">Yearly</span>
-                                                        </span>
-                                                        <span className="sp-package-amount monthly d-none">
-                                                            <span className="amount">$0.00</span>
-                                                            <span className="text-soft">Monthly</span>
-                                                        </span>
-                                                    </span>
-                                                </label>
-                                            </li>
+                                            <div className="row gy-4">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label className="form-label" htmlFor="full-name">Số tài khoản</label>
+                                                        <input type="text" className="form-control form-control-lg" id="full-name" defaultValue="0000 1111 2222" placeholder="Enter Full name" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label className="form-label" htmlFor="display-name">Người nhận</label>
+                                                        <input disabled="true" type="text" className="form-control form-control-lg" id="display-name" defaultValue="Đặng Tiến Đạt" placeholder="Enter display name" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label className="form-label" htmlFor="phone-no">Số tiền</label>
+                                                        <input type="text" className="form-control form-control-lg" id="phone-no" defaultValue="16.000.000" placeholder="Phone Number" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label className="form-label" htmlFor="birth-day">Nội dung</label>
+                                                        <input type="text" className="form-control form-control-lg" id="birth-day" defaultValue="Thanh toán" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-6">
+                                                    <div className="custom-control custom-switch">
+                                                        <input type="checkbox" defaultChecked="true" className="custom-control-input" id="latest-sale1" />
+                                                        <label className="custom-control-label" htmlFor="latest-sale1">Phí người chuyển chịu </label>
+                                                    </div>
+                                                </div>
+                                                <div className="col-6">
+                                                    <div className="custom-control custom-switch">
+                                                        <input type="checkbox" defaultChecked="true" className="custom-control-input" id="save1" />
+                                                        <label className="custom-control-label" htmlFor="save1">Lưu người nhận </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </ul>
                                     </div>
                                     <div className="tab-pane" id="external">
                                         <ul className="sp-package-list">
-                                            <li className="sp-package-item">
-                                                <input className="sp-package-choose" type="radio" name="subscription-pack-plan" id="pack-plan-entprise" defaultChecked />
-                                                <label className="sp-package-desc" htmlFor="pack-plan-entprise">
-                                                    <span className="sp-package-info">
-                                                        <span className="sp-package-title title">Enterprise Plan <span className="badge badge-primary badge-pill">Current</span></span>
-                                                        <span className="sp-package-detail">Unlimited Access / $599.00 USD / Year</span>
-                                                    </span>
-                                                    <span className="sp-package-price">
-                                                        <span className="sp-package-amount yearly">
-                                                            <span className="amount">$599.00</span>
-                                                            <span className="text-soft">Yearly</span>
-                                                        </span>
-                                                        <span className="sp-package-amount monthly d-none">
-                                                            <span className="amount">$99.00</span>
-                                                            <span className="text-soft">Monthly</span>
-                                                        </span>
-                                                    </span>
-                                                </label>
-                                            </li>
-                                            <li className="sp-package-item">
-                                                <input className="sp-package-choose" type="radio" name="subscription-pack-plan" id="pack-plan-pro" />
-                                                <label className="sp-package-desc" htmlFor="pack-plan-pro">
-                                                    <span className="sp-package-info">
-                                                        <span className="sp-package-title title">NioPro Plan</span>
-                                                        <span className="sp-package-detail">Unlimited Access / $249.00 USD / Year</span>
-                                                    </span>
-                                                    <span className="sp-package-price">
-                                                        <span className="sp-package-amount yearly">
-                                                            <span className="amount">$299.00</span>
-                                                            <span className="text-soft">Yearly</span>
-                                                        </span>
-                                                        <span className="sp-package-amount monthly d-none">
-                                                            <span className="amount">$49.00</span>
-                                                            <span className="text-soft">Monthly</span>
-                                                        </span>
-                                                    </span>
-                                                </label>
-                                            </li>
-                                            <li className="sp-package-item">
-                                                <input className="sp-package-choose" type="radio" name="subscription-pack-plan" id="pack-plan-free" />
-                                                <label className="sp-package-desc" htmlFor="pack-plan-free">
-                                                    <span className="sp-package-info">
-                                                        <span className="sp-package-title title">Free Plan</span>
-                                                        <span className="sp-package-detail">Free Access / $0.00 USD / Year</span>
-                                                    </span>
-                                                    <span className="sp-package-price">
-                                                        <span className="sp-package-amount yearly">
-                                                            <span className="amount">$0.00</span>
-                                                            <span className="text-soft">Yearly</span>
-                                                        </span>
-                                                        <span className="sp-package-amount monthly d-none">
-                                                            <span className="amount">$0.00</span>
-                                                            <span className="text-soft">Monthly</span>
-                                                        </span>
-                                                    </span>
-                                                </label>
-                                            </li>
+                                            <div className="row gy-4">
+                                                <div className="form col-md-12">
+                                                    <div className="form-group">
+                                                        <label className="form-label" htmlFor="birth-day">Ngân hàng</label>
+                                                        <select className="form-select" data-search="off" data-ui="clean">
+                                                            <option value="nklbank">NKL Bank</option>
+                                                            <option selected="true" value="teabank">TeaBank</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label className="form-label" htmlFor="full-name">Số tài khoản</label>
+                                                        <input type="text" className="form-control form-control-lg" id="full-name" defaultValue="0000 1111 2222" placeholder="Enter Full name" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label className="form-label" htmlFor="display-name">Người nhận</label>
+                                                        <input disabled="true" type="text" className="form-control form-control-lg" id="display-name" defaultValue="Đặng Tiến Đạt" placeholder="Enter display name" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label className="form-label" htmlFor="phone-no">Số tiền</label>
+                                                        <input type="text" className="form-control form-control-lg" id="phone-no" defaultValue="16.000.000" placeholder="Phone Number" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label className="form-label" htmlFor="birth-day">Nội dung</label>
+                                                        <input type="text" className="form-control form-control-lg" id="birth-day" defaultValue="Thanh toán" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-6">
+                                                    <div className="custom-control custom-switch">
+                                                        <input type="checkbox" defaultChecked="true" className="custom-control-input" id="latest-sale2" />
+                                                        <label className="custom-control-label" htmlFor="latest-sale2">Phí người chuyển chịu </label>
+                                                    </div>
+                                                </div>
+                                                <div className="col-6">
+                                                    <div className="custom-control custom-switch">
+                                                        <input type="checkbox" defaultChecked="true" className="custom-control-input" id="save2" />
+                                                        <label className="custom-control-label" htmlFor="save2">Lưu người nhận </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </ul>
                                     </div>
                                 </div>
                                 <div className="sp-package-action">
-                                    <a href="#" className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#transaction-confirmed">Chuyển</a>
+                                    <a href="#" className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Chuyển</a>
                                     <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                 </div>
                             </div>
@@ -160,4 +130,4 @@ class TransactionModal extends React.Component {
     }
 }
 
-export default withRouter(TransactionModal);
+export default TransactionModal;

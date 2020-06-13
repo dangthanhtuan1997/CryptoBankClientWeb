@@ -4,6 +4,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Dashboard from '../components/Dashboard';
 import TransactionModal from '../components/TransactionModal';
+import ConfirmTransactionModal from '../components/ConfirmTransactionModal';
+import ConfirmedTransactionModal from '../components/ConfirmedTransactionModal';
 
 class DashboardPage extends React.Component {
     
@@ -18,6 +20,8 @@ class DashboardPage extends React.Component {
                         <Footer />
                     </div>
                     <TransactionModal/>
+                    <ConfirmTransactionModal/>
+                    <ConfirmedTransactionModal/>
                 </div>
             </div>
         );

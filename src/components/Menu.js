@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
+import history from '../history';
 
 class Menu extends React.Component {
 
@@ -62,7 +63,7 @@ class Menu extends React.Component {
                                         <h6 className="overline-title">Menu</h6>
                                     </li>
                                     <li className="nk-menu-item">
-                                        <a href="/" className="nk-menu-link">
+                                        <a href='' onClick={() => history.push('/')} className="nk-menu-link">
                                             <span className="nk-menu-icon"><em className="icon ni ni-dashboard" /></span>
                                             <span className="nk-menu-text">Dashboard</span>
                                         </a>
