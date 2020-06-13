@@ -4,8 +4,8 @@ import { onLogin } from '../actions';
 
 class LoginPage extends React.Component {
   state = {
-    username: '',
-    password: '',
+    username: 'dangthanhtuan',
+    password: '123456',
     loading: false
   }
 
@@ -50,7 +50,7 @@ class LoginPage extends React.Component {
                     <label className="form-label" htmlFor="default-01">Tài khoản</label>
                     <a className="link link-primary link-sm" tabIndex={-1} href="#">Trợ giúp?</a>
                   </div>
-                  <input value={this.state.username} onChange={e => this.onChangeText('username', e.target.value)} type="text" className="form-control form-control-lg" id="default-01" placeholder="Enter your email address or username" />
+                  <input value={this.state.username} onChange={e => this.onChangeText('username', e.target.value)} type="text" className="form-control form-control-lg" id="default-01" placeholder="Nhập tên tài khoản của bạn" />
                 </div>{/* .foem-group */}
                 <div className="form-group">
                   <div className="form-label-group">
@@ -62,7 +62,7 @@ class LoginPage extends React.Component {
                       <em className="passcode-icon icon-show icon ni ni-eye" />
                       <em className="passcode-icon icon-hide icon ni ni-eye-off" />
                     </a>
-                    <input value={this.state.password} onChange={e => this.onChangeText('password', e.target.value)} type="password" className="form-control form-control-lg" id="password" placeholder="Enter your passcode" />
+                    <input value={this.state.password} onChange={e => this.onChangeText('password', e.target.value)} type="password" className="form-control form-control-lg" id="password" placeholder="Nhập mật khẩu của bạn" />
                   </div>
                 </div>{/* .foem-group */}
                 {this.props.user.loginError ? <div className="form-group">
