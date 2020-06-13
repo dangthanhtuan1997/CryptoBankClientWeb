@@ -1,5 +1,6 @@
 import React from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { onLogout } from '../actions';
 
 class Header extends React.Component {
 
@@ -72,7 +73,7 @@ class Header extends React.Component {
                                         </div>
                                         <div className="dropdown-inner">
                                             <ul className="link-list">
-                                                <li><a href="#"><em className="icon ni ni-signout" /><span>Đăng xuất</span></a></li>
+                                                <li><a href='/login' onClick={()=> this.props.onLogout()}><em className="icon ni ni-signout" /><span>Đăng xuất</span></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -122,4 +123,12 @@ class Header extends React.Component {
     }
 }
 
-export default withRouter(Header);
+export default connect(state => {
+    return {
+      user: state.userReducer
+    }
+  }, dispatch => {
+    return {
+        onLogout: () => dispatch(onLogout()),
+    }
+  })(Header);

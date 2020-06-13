@@ -8,11 +8,11 @@ var summaryBalance = {
     datasets: [{
         label: "Chuyển tiền",
         color: "#5ce0aa",
-        data: [110, 80, 125, 55, 95, null, null, null, null, null, null, null]
+        data: [11000000, 8000000, 12500000, 5500000, 9500000, null, null, null, null, null, null, null]
     }, {
         label: "Nhận tiền",
         color: "#f6ca3e",
-        data: [90, 98, 115, 70, 87, null, null, null, null, null, null, null]
+        data: [9000000, 9800000, 11500000, 7000000, 8700000, null, null, null, null, null, null, null]
     }]
 };
 
@@ -118,10 +118,7 @@ class Dashboard extends React.Component {
                             <div className="nk-block-head-sub"><span>Thông tin tài khoản</span></div>
                             <div className="nk-block-between-md g-4">
                                 <div className="nk-block-head-content">
-                                    <h2 className="nk-block-title fw-normal">1234 5678 9999</h2>
-                                    <div className="nk-block-des">
-                                        <p>Tóm tắt chi tiết tài khoản của bạn.</p>
-                                    </div>
+                                    <h2 className="nk-block-title fw-normal">Số tài khoản: 1234 5678 9999</h2>
                                 </div>
                                 <div className="nk-block-head-content">
                                     <ul className="nk-block-tools gx-3">
@@ -159,7 +156,7 @@ class Dashboard extends React.Component {
                                                         <div className="sub-text">
                                                             <div className="dot dot-lg sq" data-bg="#f6ca3e" /><span>Nhận tiền</span>
                                                         </div>
-                                                        <div className="lead-text-lg">76.000.000<span className="currency currency-btc">VND</span></div>
+                                                        <div className="lead-text-lg">76.000.000 <span className="currency currency-btc">VND</span></div>
                                                     </div>
                                                 </div>{/* .nk-wg4-group */}
                                             </div>{/* .nk-wg4-item */}

@@ -49,8 +49,8 @@ class Menu extends React.Component {
                                 </ul>
                                 <div className="user-account-actions">
                                     <ul className="g-3">
-                                        <li><a href="#" className="btn btn-lg btn-primary"><span>Nhắc nợ</span></a></li>
-                                        <li><a href="#" className="btn btn-lg btn-warning"><span>Chuyển tiền</span></a></li>
+                                        <li><a href="#" className="btn btn-lg btn-primary" data-toggle="modal" data-target="#subscription-change"><span>Nhắc nợ</span></a></li>
+                                        <li><a href="#" className="btn btn-lg btn-warning" data-toggle="modal" data-target="#subscription-change"><span>Chuyển tiền</span></a></li>
                                     </ul>
                                 </div>
                             </div>{/* .nk-sidebar-widget */}

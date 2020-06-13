@@ -25,7 +25,6 @@ const onLogin = (username, password) => async dispatch => {
         dispatch(Login(token, null));
 
         history.replace({ pathname: '/' });
-        //history.go();
     } catch (error) {
         dispatch(Login(null, error.response.data.message));
     }
@@ -38,7 +37,7 @@ const Logout = () => ({
 });
 
 const onLogout = () => async dispatch => {
-    //await SecureStore.deleteItemAsync('userToken');
+    cookie.remove('CryptoBankAccessToken');
     dispatch(Logout());
 };
 

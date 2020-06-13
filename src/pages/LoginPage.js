@@ -1,6 +1,4 @@
 import React from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { onLogin } from '../actions';
 
@@ -20,6 +18,10 @@ class LoginPage extends React.Component {
     event.preventDefault();
     this.setState({ loading: true });
     onLogin(this.state.username, this.state.password);
+  }
+
+  componentWillReceiveProps(){
+    this.setState({loading: false});
   }
 
   render() {
@@ -63,13 +65,18 @@ class LoginPage extends React.Component {
                     <input value={this.state.password} onChange={e => this.onChangeText('password', e.target.value)} type="password" className="form-control form-control-lg" id="password" placeholder="Enter your passcode" />
                   </div>
                 </div>{/* .foem-group */}
+                {this.props.user.loginError ? <div className="form-group">
+                  <div className="alert alert-fill alert-danger alert-dismissible alert-icon">
+                    <em className="icon ni ni-cross-circle"></em> <strong>{this.props.user.loginError}</strong>!
+                  </div>
+                </div> : null}
                 <div className="form-group">
                   <button onClick={(event) => this.handleLogin(event)} className="btn btn-lg btn-primary btn-block" disabled={this.state.loading}>
                     {this.state.loading ? <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> : null}
-                    <span>Sign in</span></button>
+                    <span>Đăng nhập</span></button>
                 </div>
               </form>{/* form */}
-              <div className="form-note-s2 pt-4"> Chưa có tài khoản? <a href="html/general/pages/auths/auth-register.html">Đăng ký</a>
+              <div className="form-note-s2 pt-4">Bạn chưa có tài khoản? <a href="html/general/pages/auths/auth-register.html">Đăng ký</a>
               </div>
               <div className="text-center pt-4 pb-3">
                 <h6 className="overline-title overline-title-sap"><span>OR</span></h6>
