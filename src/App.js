@@ -6,6 +6,13 @@ import cookie from 'react-cookies';
 import history from './history';
 import { RestoreAccessToken } from './actions/index';
 import { connect } from 'react-redux';
+import TransactionModal from './components/TransactionModal';
+import ConfirmTransactionModal from './components/ConfirmTransactionModal';
+import ConfirmedTransactionModal from './components/ConfirmedTransactionModal';
+import RemindTransactionModal from './components/RemindTransactionModal';
+import Menu from './components/Menu';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const accessToken = cookie.load('CryptoBankAccessToken');
@@ -32,8 +39,22 @@ function App(props) {
     <Router history={history}>
       <Switch>
         <Route path="/login" component={LoginPage} />
-        <PrivateRoute exact path="/" component={DashboardPage} />
+        <div className="nk-app-root">
+          <div className="nk-main ">
+            <Menu />
+            <div className="nk-wrap ">
+              <Header />
+              <PrivateRoute exact path="/" component={DashboardPage} />
+              <Footer />
+            </div>
+          </div>
+        </div>
       </Switch>
+      
+      <TransactionModal />
+      <ConfirmTransactionModal />
+      <ConfirmedTransactionModal />
+      <RemindTransactionModal />
     </Router>
   );
 }

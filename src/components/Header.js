@@ -70,7 +70,7 @@ function Header(props) {
                                         <h6 className="overline-title-alt">Số dư khả dụng</h6>
                                         <div className="user-balance">{user.userInfo ? user.userInfo.balance : null} <small className="currency">VND</small></div>
                                         <div className="user-balance-sub">Tiết kiệm <span>{caculatorSaving()} <span className="currency">VND</span></span></div>
-                                        <a href="#" className="link"><span>Chuyển tiền</span> <em className="icon ni ni-wallet-out" /></a>
+                                        <a href="#" className="link" data-toggle="modal" data-target="#new-transaction"><span>Chuyển tiền</span> <em className="icon ni ni-wallet-out" /></a>
                                     </div>
                                     <div className="dropdown-inner">
                                         <ul className="link-list">

@@ -1,6 +1,6 @@
-import React from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js';
+import { connect } from 'react-redux';
 
 var summaryBalance = {
     labels: ["01 Nov", "02 Nov", "03 Nov", "04 Nov", "05 Nov", "06 Nov", "07 Nov", "08 Nov", "09 Nov", "10 Nov", "11 Nov", "12 Nov", "13 Nov", "14 Nov", "15 Nov", "16 Nov", "17 Nov", "18 Nov", "19 Nov", "20 Nov", "21 Nov", "22 Nov", "23 Nov", "24 Nov", "25 Nov", "26 Nov", "27 Nov", "28 Nov", "29 Nov", "30 Nov"],
@@ -105,112 +105,121 @@ function accountSummary() {
     });
 }
 
-class Dashboard extends React.Component {
-    componentDidMount() {
+function Dashboard(props) {
+    const { user } = props;
+
+    useEffect(() => {
         accountSummary();
-    }
-    render() {
-        return (
-            <div className="nk-content nk-content-fluid">
-                <div className="container-xl wide-lg">
-                    <div className="nk-content-body">
-                        <div className="nk-block-head">
-                            <div className="nk-block-head-sub"><span>Thông tin tài khoản</span></div>
-                            <div className="nk-block-between-md g-4">
-                                <div className="nk-block-head-content">
-                                    <h2 className="nk-block-title fw-normal">Số tài khoản: 1234 5678 9999</h2>
-                                </div>
-                                <div className="nk-block-head-content">
-                                    <ul className="nk-block-tools gx-3">
-                                        <li className="btn-wrap"><a href="#" className="btn btn-icon btn-xl btn-dim btn-warning btn-outline-light"><em className="icon ni ni-arrow-from-right" /></a><span className="btn-extext">Yêu cầu chuyển tiền</span></li>
-                                        <li className="btn-wrap"><a href="#" className="btn btn-icon btn-xl btn-success"><em className="icon ni ni-wallet-out" /></a><span className="btn-extext">Chuyển tiền</span></li>
-                                    </ul>
-                                </div>
+    }, [])
+
+    return (
+        <div className="nk-content nk-content-fluid">
+            <div className="container-xl wide-lg">
+                <div className="nk-content-body">
+                    <div className="nk-block-head">
+                        <div className="nk-block-head-sub"><span>Thông tin tài khoản</span></div>
+                        <div className="nk-block-between-md g-4">
+                            <div className="nk-block-head-content">
+                                <h2 className="nk-block-title fw-normal">Số tài khoản: {user.userInfo ? user.userInfo.account_number : '0000000000000'}</h2>
                             </div>
-                        </div>{/* .nk-block-head */}
-                        <div className="nk-block">
-                            <div className="card card-bordered">
-                                <div className="card-inner">
-                                    <div className="card-head ui-v2">
-                                        <div className="card-title">
-                                            <h5 className="title">Báo cáo tóm tắt</h5>
-                                        </div>
-                                        <div className="card-tools">
-                                            <ul className="card-tools-nav">
-                                                <li><a href="#">Tháng này</a></li>
-                                                <li className="active"><a href="#">Năm</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>{/* .card-head */}
-                                    <div className="nk-wg4">
-                                        <div className="nk-wg4-group flex-lg-nowrap justify-between g-3">
-                                            <div className="nk-wg4-item">
-                                                <div className="nk-wg4-group g-3">
-                                                    <div className="nk-wg4-sub">
-                                                        <div className="sub-text">
-                                                            <div className="dot dot-lg sq" data-bg="#5ce0aa" /> <span>Chuyển tiền</span>
-                                                        </div>
-                                                        <div className="lead-text-lg">52.000.000 <span className="currency currency-btc">VND</span></div>
+                            <div className="nk-block-head-content">
+                                <ul className="nk-block-tools gx-3">
+                                    <li className="btn-wrap"><a href="#" className="btn btn-icon btn-xl btn-dim btn-warning btn-outline-light" data-toggle="modal" data-target="#remind-in-debt"><em className="icon ni ni-arrow-from-right" /></a><span className="btn-extext">Yêu cầu chuyển tiền</span></li>
+                                    <li className="btn-wrap"><a href="#" className="btn btn-icon btn-xl btn-success" data-toggle="modal" data-target="#new-transaction"><em className="icon ni ni-wallet-out" /></a><span className="btn-extext">Chuyển tiền</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>{/* .nk-block-head */}
+                    <div className="nk-block">
+                        <div className="card card-bordered">
+                            <div className="card-inner">
+                                <div className="card-head ui-v2">
+                                    <div className="card-title">
+                                        <h5 className="title">Báo cáo tóm tắt</h5>
+                                    </div>
+                                    <div className="card-tools">
+                                        <ul className="card-tools-nav">
+                                            <li><a href="#">Tháng này</a></li>
+                                            <li className="active"><a href="#">Năm</a></li>
+                                        </ul>
+                                    </div>
+                                </div>{/* .card-head */}
+                                <div className="nk-wg4">
+                                    <div className="nk-wg4-group flex-lg-nowrap justify-between g-3">
+                                        <div className="nk-wg4-item">
+                                            <div className="nk-wg4-group g-3">
+                                                <div className="nk-wg4-sub">
+                                                    <div className="sub-text">
+                                                        <div className="dot dot-lg sq" data-bg="#5ce0aa" /> <span>Chuyển tiền</span>
                                                     </div>
-                                                    <div className="nk-wg4-sub">
-                                                        <div className="sub-text">
-                                                            <div className="dot dot-lg sq" data-bg="#f6ca3e" /><span>Nhận tiền</span>
-                                                        </div>
-                                                        <div className="lead-text-lg">76.000.000 <span className="currency currency-btc">VND</span></div>
+                                                    <div className="lead-text-lg">52.000.000 <span className="currency currency-btc">VND</span></div>
+                                                </div>
+                                                <div className="nk-wg4-sub">
+                                                    <div className="sub-text">
+                                                        <div className="dot dot-lg sq" data-bg="#f6ca3e" /><span>Nhận tiền</span>
                                                     </div>
-                                                </div>{/* .nk-wg4-group */}
-                                            </div>{/* .nk-wg4-item */}
-                                            <div className="nk-wg4-item text-lg-right">
-                                                <ul className="nk-wg4-switcher">
-                                                    <li>
-                                                        <div className="dropdown">
-                                                            <a className="dropdown-indicator" href="#" data-toggle="dropdown">Tháng 6</a>
-                                                            <div className="dropdown-menu dropdown-menu-right">
-                                                                <ul className="link-list-plain li-col5x text-center">
-                                                                    <li><a href="#">Tháng 1</a></li>
-                                                                    <li><a href="#">Tháng 2</a></li>
-                                                                    <li><a href="#">Tháng 3</a></li>
-                                                                    <li><a href="#">Tháng 4</a></li>
-                                                                    <li><a href="#">Tháng 5</a></li>
-                                                                    <li><a href="#">Tháng 6</a></li>
-                                                                    <li><a href="#">Tháng 7</a></li>
-                                                                    <li><a href="#">Tháng 8</a></li>
-                                                                    <li><a href="#">Tháng 9</a></li>
-                                                                    <li><a href="#">Tháng 10</a></li>
-                                                                    <li><a href="#">Tháng 11</a></li>
-                                                                    <li><a href="#">Tháng 12</a></li>
-                                                                </ul>
-                                                            </div>
+                                                    <div className="lead-text-lg">76.000.000 <span className="currency currency-btc">VND</span></div>
+                                                </div>
+                                            </div>{/* .nk-wg4-group */}
+                                        </div>{/* .nk-wg4-item */}
+                                        <div className="nk-wg4-item text-lg-right">
+                                            <ul className="nk-wg4-switcher">
+                                                <li>
+                                                    <div className="dropdown">
+                                                        <a className="dropdown-indicator" href="#" data-toggle="dropdown">Tháng 6</a>
+                                                        <div className="dropdown-menu dropdown-menu-right">
+                                                            <ul className="link-list-plain li-col5x text-center">
+                                                                <li><a href="#">Tháng 1</a></li>
+                                                                <li><a href="#">Tháng 2</a></li>
+                                                                <li><a href="#">Tháng 3</a></li>
+                                                                <li><a href="#">Tháng 4</a></li>
+                                                                <li><a href="#">Tháng 5</a></li>
+                                                                <li><a href="#">Tháng 6</a></li>
+                                                                <li><a href="#">Tháng 7</a></li>
+                                                                <li><a href="#">Tháng 8</a></li>
+                                                                <li><a href="#">Tháng 9</a></li>
+                                                                <li><a href="#">Tháng 10</a></li>
+                                                                <li><a href="#">Tháng 11</a></li>
+                                                                <li><a href="#">Tháng 12</a></li>
+                                                            </ul>
                                                         </div>
-                                                    </li>
-                                                    <li>
-                                                        <div className="dropdown">
-                                                            <a className="dropdown-indicator" href="#" data-toggle="dropdown">2020</a>
-                                                            <div className="dropdown-menu dropdown-menu-auto">
-                                                                <ul className="link-list-plain sm text-center">
-                                                                    <li><a href="#">2019</a></li>
-                                                                    <li><a href="#">2018</a></li>
-                                                                    <li><a href="#">2017</a></li>
-                                                                </ul>
-                                                            </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="dropdown">
+                                                        <a className="dropdown-indicator" href="#" data-toggle="dropdown">2020</a>
+                                                        <div className="dropdown-menu dropdown-menu-auto">
+                                                            <ul className="link-list-plain sm text-center">
+                                                                <li><a href="#">2019</a></li>
+                                                                <li><a href="#">2018</a></li>
+                                                                <li><a href="#">2017</a></li>
+                                                            </ul>
                                                         </div>
-                                                    </li>
-                                                </ul>{/* .nk-wg4-switcher */}
-                                                <div className="nk-wg4-note">Tổng cộng <span>32</span> giao dịch</div>
-                                            </div>{/* .nk-wg4-item */}
-                                        </div>{/* .nk-wg4-group */}
-                                    </div>{/* .nk-wg4 */}
-                                    <div className="nk-ck2">
-                                        <canvas className="chart-account-summary" id="summaryBalance" />
-                                    </div>{/* .nk-ck2 */}
-                                </div>{/* .card-inner */}
-                            </div>{/* .card */}
-                        </div>{/* .nk-block */}
-                    </div>
+                                                    </div>
+                                                </li>
+                                            </ul>{/* .nk-wg4-switcher */}
+                                            <div className="nk-wg4-note">Tổng cộng <span>32</span> giao dịch</div>
+                                        </div>{/* .nk-wg4-item */}
+                                    </div>{/* .nk-wg4-group */}
+                                </div>{/* .nk-wg4 */}
+                                <div className="nk-ck2">
+                                    <canvas className="chart-account-summary" id="summaryBalance" />
+                                </div>{/* .nk-ck2 */}
+                            </div>{/* .card-inner */}
+                        </div>{/* .card */}
+                    </div>{/* .nk-block */}
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
-export default withRouter(Dashboard);
+export default connect(state => {
+    return {
+        user: state.userReducer
+    }
+}, dispatch => {
+    return {
+
+    }
+})(Dashboard);

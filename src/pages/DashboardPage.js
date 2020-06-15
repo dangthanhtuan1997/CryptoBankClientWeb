@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Menu from '../components/Menu';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+
 import Dashboard from '../components/Dashboard';
 import TransactionModal from '../components/TransactionModal';
 import ConfirmTransactionModal from '../components/ConfirmTransactionModal';
@@ -17,26 +16,13 @@ function DashboardPage(props) {
     }, []);
 
     return (
-        <div className="nk-app-root">
-            <div className="nk-main ">
-                <Menu />
-                <div className="nk-wrap ">
-                    <Header />
-                    <Dashboard />
-                    <Footer />
-                </div>
-                <TransactionModal />
-                <ConfirmTransactionModal />
-                <ConfirmedTransactionModal />
-                <RemindTransactionModal />
-            </div>
-        </div>
+        <Dashboard />
     );
 }
 
 export default connect(state => {
     return {
-        user: state.userReducer
+        
     }
 }, dispatch => {
     return {
