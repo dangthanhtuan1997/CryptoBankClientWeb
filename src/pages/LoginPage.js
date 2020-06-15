@@ -14,8 +14,8 @@ class LoginPage extends React.Component {
   }
 
   handleLogin = (event) => {
-    const { onLogin } = this.props;
     event.preventDefault();
+    const { onLogin } = this.props;
     this.setState({ loading: true });
     onLogin(this.state.username, this.state.password);
   }

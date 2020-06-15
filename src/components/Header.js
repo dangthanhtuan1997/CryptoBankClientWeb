@@ -81,7 +81,9 @@ function Header(props) {
                                     </div>
                                     <div className="dropdown-inner">
                                         <ul className="link-list">
-                                            <li><a href='/login' onClick={() => this.props.onLogout()}><em className="icon ni ni-signout" /><span>Đăng xuất</span></a></li>
+                                            <li><a href="" onClick={() => {
+                                                props.onLogout();
+                                            }}><em className="icon ni ni-signout" /><span>Đăng xuất</span></a></li>
                                         </ul>
                                     </div>
                                 </div>

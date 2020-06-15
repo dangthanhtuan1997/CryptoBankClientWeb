@@ -63,31 +63,46 @@ function Menu(props) {
                                     <h6 className="overline-title">Menu</h6>
                                 </li>
                                 <li className="nk-menu-item">
-                                    <a href='' onClick={() => history.push('/')} className="nk-menu-link">
+                                    <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        history.push('/');
+                                    }} className="nk-menu-link">
                                         <span className="nk-menu-icon"><em className="icon ni ni-dashboard" /></span>
                                         <span className="nk-menu-text">Dashboard</span>
                                     </a>
                                 </li>
                                 <li className="nk-menu-item">
-                                    <a href="html/crypto/accounts.html" className="nk-menu-link">
+                                    <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        history.push('/');
+                                    }} className="nk-menu-link" >
                                         <span className="nk-menu-icon"><em className="icon ni ni-user-c" /></span>
                                         <span className="nk-menu-text">Thông tin tài khoản</span>
                                     </a>
                                 </li>
                                 <li className="nk-menu-item">
-                                    <a href="html/crypto/wallets.html" className="nk-menu-link">
+                                    <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        history.push('/');
+                                    }} className="nk-menu-link">
                                         <span className="nk-menu-icon"><em className="icon ni ni-wallet-alt" /></span>
                                         <span className="nk-menu-text">Danh sách tài khoản</span>
                                     </a>
                                 </li>
                                 <li className="nk-menu-item">
-                                    <a href="html/crypto/order-history.html" className="nk-menu-link">
+                                    <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        history.push('/transactions');
+                                    }} className="nk-menu-link">
                                         <span className="nk-menu-icon"><em className="icon ni ni-repeat" /></span>
                                         <span className="nk-menu-text">Giao dịch</span>
                                     </a>
                                 </li>
                                 <li className="nk-menu-item">
-                                    <a href="html/crypto/kyc-application.html" className="nk-menu-link">
+                                    <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        history.push('/');
+                                    }} className="nk-menu-link">
                                         <span className="nk-menu-icon"><em className="icon ni ni-file-text" /></span>
                                         <span className="nk-menu-text">Yêu cầu trả nợ</span>
                                     </a>
@@ -153,6 +168,6 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        
+
     }
 })(Menu);

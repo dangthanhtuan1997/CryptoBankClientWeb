@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
 import cookie from 'react-cookies';
 import history from './history';
 import { RestoreAccessToken } from './actions/index';
 import { connect } from 'react-redux';
+
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
+import TransactionsPage from './pages/TransactionsPage';
+
 import TransactionModal from './components/TransactionModal';
 import ConfirmTransactionModal from './components/ConfirmTransactionModal';
 import ConfirmedTransactionModal from './components/ConfirmedTransactionModal';
@@ -26,6 +29,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 function App(props) {
+
   useEffect(() => {
     const accessToken = cookie.load('CryptoBankAccessToken');
 
@@ -39,18 +43,21 @@ function App(props) {
     <Router history={history}>
       <Switch>
         <Route path="/login" component={LoginPage} />
-        <div className="nk-app-root">
-          <div className="nk-main ">
-            <Menu />
-            <div className="nk-wrap ">
-              <Header />
-              <PrivateRoute exact path="/" component={DashboardPage} />
-              <Footer />
+        <>
+          <div className="nk-app-root">
+            <div className="nk-main ">
+              <Menu />
+              <div className="nk-wrap ">
+                <Header />
+                <PrivateRoute exact path="/" component={DashboardPage} />
+                <PrivateRoute exact path="/transactions" component={TransactionsPage} />
+                <Footer />
+              </div>
             </div>
           </div>
-        </div>
+        </>
       </Switch>
-      
+
       <TransactionModal />
       <ConfirmTransactionModal />
       <ConfirmedTransactionModal />
