@@ -64,7 +64,7 @@ const onGetUserInfo = () => async dispatch => {
                 "x-access-token": `JWT ${accessToken}`
             }
         });
-        
+
         dispatch(SetUserInfo(userInfo.data));
     } catch (error) {
         console.log(JSON.stringify(error));
@@ -73,21 +73,20 @@ const onGetUserInfo = () => async dispatch => {
 
 /*==============================================     Register     ==============================================*/
 
-const Register = (error) => ({
-    type: 'REGISTER',
-    error: error
-});
+const onGetUserByAccountNumber = async (account_number) => {
+    const state = store.getState();
+    let accessToken = state.userReducer.accessToken;
 
-const onRegister = (username, password) => async dispatch => {
     try {
-        await axios.post(`${apiUrl}/auth/signup`, {
-            username: username,
-            password: password
+        const res = await axios.get(`${apiUrl}/users/${account_number}`, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
         });
-        dispatch(onLogin(username, password));
+
+        return res.data;
     } catch (error) {
-        console.log(error.response.data);
-        dispatch(Register(error.response.data.message));
+        return '';
     }
 }
 
@@ -97,4 +96,10 @@ const RestoreAccessToken = (accessToken) => ({
 });
 
 
-export { onLogin, onLogout, onRegister, RestoreAccessToken, onGetUserInfo };
+export {
+    onLogin,
+    onLogout,
+    onGetUserByAccountNumber,
+    RestoreAccessToken,
+    onGetUserInfo
+};
