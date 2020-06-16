@@ -1,26 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
-import { onGetUserByAccountNumber } from '../actions';
+import { connect } from 'react-redux';
+import { onGetUserByAccountNumber, onSendMoneyToOthers } from '../actions';
 
-function TransactionModal() {
+function TransactionModal(props) {
     const typingTimeoutRef = useRef(null);
-    const [user, setUser] = useState(null);
-    const [accountNumber, setAccountNumber] = useState('');
+
+    const [receiverName, setReceiverName] = useState('');
+    const [receiverAccountNumber, setReceiverAccountNumber] = useState('123456789');
+    const [amount, setAmount] = useState(10000);
+    const [note, setNote] = useState('');
 
     useEffect(() => {
         if (typingTimeoutRef.current) {
             clearTimeout(typingTimeoutRef.current);
         };
 
-        if (user) {
+        if (receiverName !== '') {
             return;
         }
 
         typingTimeoutRef.current = setTimeout(async () => {
-            const user = await onGetUserByAccountNumber(accountNumber);
-            setUser(user);
+            const receiverName = await onGetUserByAccountNumber(receiverAccountNumber);
+            setReceiverName(receiverName);
         }, 1000);
     });
+
+    function onSendMoney() {
+        props.onSendMoneyToOthers({
+            receiver: {
+                full_name: receiverName,
+                account_number: receiverAccountNumber
+            },
+            amount,
+            note
+        });
+    }
 
     return (
         <div className="modal fade" tabIndex={-1} id="new-transaction">
@@ -48,39 +63,43 @@ function TransactionModal() {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" htmlFor="full-name">Số tài khoản</label>
-                                                    <input type="text" className="form-control form-control-lg" id="account_number" value={accountNumber} onChange={(e) => {
-                                                        setAccountNumber(e.target.value);
-                                                        setUser(null);
+                                                    <input type="text" className="form-control form-control-lg" id="account-number" value={receiverAccountNumber} onChange={(e) => {
+                                                        setReceiverAccountNumber(e.target.value);
+                                                        setReceiverName('');
                                                     }} placeholder="Nhập số tài khoản" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" htmlFor="display-name">Người nhận</label>
-                                                    <input disabled={true} type="text" className="form-control form-control-lg" id="display-name" value={user ? user.full_name : ""} defaultValue="Đặng Tiến Đạt" placeholder="Enter display name" />
+                                                    <input disabled={true} type="text" className="form-control form-control-lg" id="receiver-name" value={receiverName} />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" htmlFor="phone-no">Số tiền</label>
-                                                    <input type="text" className="form-control form-control-lg" id="phone-no" defaultValue="16.000.000" placeholder="Phone Number" />
+                                                    <input type="text" className="form-control form-control-lg" id="amount" value={amount} onChange={(e) => {
+                                                        setAmount(e.target.value);
+                                                    }} placeholder="Số tiền" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" htmlFor="birth-day">Nội dung</label>
-                                                    <input type="text" className="form-control form-control-lg" id="birth-day" defaultValue="Thanh toán" />
+                                                    <input type="text" className="form-control form-control-lg" id="note" value={note} onChange={(e) => {
+                                                        setNote(e.target.value);
+                                                    }} />
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" id="latest-sale1" />
+                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" id="fee" />
                                                     <label className="custom-control-label" htmlFor="latest-sale1">Phí người chuyển chịu </label>
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" id="save1" />
+                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" id="save" />
                                                     <label className="custom-control-label" htmlFor="save1">Lưu người nhận </label>
                                                 </div>
                                             </div>
@@ -140,7 +159,7 @@ function TransactionModal() {
                                 </div>
                             </div>
                             <div className="sp-package-action">
-                                <a href="#" className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Chuyển</a>
+                                <a href="#" className="btn btn-primary" onClick={() => onSendMoney()} data-dismiss="modal" >Chuyển</a>
                                 <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                             </div>
                         </div>
@@ -151,4 +170,12 @@ function TransactionModal() {
     );
 }
 
-export default TransactionModal;
+export default connect(state => {
+    return {
+        user: state.userReducer
+    }
+}, dispatch => {
+    return {
+        onSendMoneyToOthers: (receiver) => dispatch(onSendMoneyToOthers(receiver)),
+    }
+})(TransactionModal);

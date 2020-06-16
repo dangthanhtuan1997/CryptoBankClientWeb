@@ -6,7 +6,7 @@ const axios = require('axios');
 
 /*==============================================     Login     ==============================================*/
 
-const Login = (accessToken, error) => ({
+const login = (accessToken, error) => ({
     type: 'LOG_IN',
     accessToken: accessToken,
     error: error
@@ -22,30 +22,30 @@ const onLogin = (username, password) => async dispatch => {
         const { token } = res.data;
 
         cookie.save('CryptoBankAccessToken', token, { path: '/', expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000) });
-        dispatch(Login(token, null));
+        dispatch(login(token, null));
 
         history.replace({ pathname: '/' });
     } catch (error) {
-        dispatch(Login(null, error.response.data.message));
+        dispatch(login(null, error.response.data.message));
     }
 };
 
 /*==============================================     Logout     ==============================================*/
 
-const Logout = () => ({
+const logout = () => ({
     type: 'LOG_OUT'
 });
 
 const onLogout = () => async dispatch => {
     cookie.remove('CryptoBankAccessToken');
-    dispatch(Logout());
+    dispatch(logout());
     history.replace({ pathname: '/login' });
 };
 
 
 /*==============================================     GetUserInfo     ==============================================*/
 
-const SetUserInfo = (userInfo) => ({
+const setUserInfo = (userInfo) => ({
     type: 'SET_USER_INFO',
     userInfo: userInfo
 });
@@ -65,13 +65,13 @@ const onGetUserInfo = () => async dispatch => {
             }
         });
 
-        dispatch(SetUserInfo(userInfo.data));
+        dispatch(setUserInfo(userInfo.data));
     } catch (error) {
         console.log(JSON.stringify(error));
     }
 }
 
-/*==============================================     Register     ==============================================*/
+/*==============================================     GetUserByAccountNumber     ==============================================*/
 
 const onGetUserByAccountNumber = async (account_number) => {
     const state = store.getState();
@@ -84,9 +84,37 @@ const onGetUserByAccountNumber = async (account_number) => {
             }
         });
 
-        return res.data;
+        return res.data.full_name;
     } catch (error) {
         return '';
+    }
+}
+
+/*==============================================     SendMoneyToOthers     ==============================================*/
+
+const newTransaction = () => ({
+    type: 'NEW_TRANSACTION',
+});
+
+const completedTransaction = () => ({
+    type: 'COMPLETED_TRANSACTION'
+});
+
+const onSendMoneyToOthers = (receiver) => async dispatch => {
+    const state = store.getState();
+    let accessToken = state.userReducer.accessToken;
+
+    try {
+        const res = await axios.post(`${apiUrl}/transactions`, receiver, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
+        });
+
+        dispatch(setUserInfo(res.data));
+        dispatch(newTransaction());
+    } catch (error) {
+        alert(JSON.stringify(error));
     }
 }
 
@@ -101,5 +129,8 @@ export {
     onLogout,
     onGetUserByAccountNumber,
     RestoreAccessToken,
-    onGetUserInfo
+    onGetUserInfo,
+    onSendMoneyToOthers,
+    newTransaction,
+    completedTransaction
 };
