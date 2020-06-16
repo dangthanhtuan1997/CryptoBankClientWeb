@@ -92,8 +92,12 @@ const onGetUserByAccountNumber = async (account_number) => {
 
 /*==============================================     SendMoneyToOthers     ==============================================*/
 
-const newTransaction = () => ({
-    type: 'NEW_TRANSACTION',
+const newSuccessTransaction = () => ({
+    type: 'NEW_SUCCESS_TRANSACTION',
+});
+
+const newFailTransaction = () => ({
+    type: 'NEW_FAIL_TRANSACTION',
 });
 
 const completedTransaction = () => ({
@@ -112,9 +116,9 @@ const onSendMoneyToOthers = (receiver) => async dispatch => {
         });
 
         dispatch(setUserInfo(res.data));
-        dispatch(newTransaction());
+        dispatch(newSuccessTransaction());
     } catch (error) {
-        alert(JSON.stringify(error));
+        dispatch(newFailTransaction());
     }
 }
 
@@ -131,6 +135,7 @@ export {
     RestoreAccessToken,
     onGetUserInfo,
     onSendMoneyToOthers,
-    newTransaction,
+    newSuccessTransaction,
+    newFailTransaction,
     completedTransaction
 };

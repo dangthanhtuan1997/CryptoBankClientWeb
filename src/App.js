@@ -13,6 +13,7 @@ import TransactionModal from './components/TransactionModal';
 import RemindTransactionModal from './components/RemindTransactionModal';
 import ConfirmTransactionModal from './components/ConfirmTransactionModal';
 import ConfirmedTransactionModal from './components/ConfirmedTransactionModal';
+import FailedTransactionModal from './components/FailedTransactionModal';
 import Menu from './components/Menu';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -59,6 +60,7 @@ function App(props) {
         </>
       </Switch>
       
+      <FailedTransactionModal></FailedTransactionModal>
       <ConfirmedTransactionModal></ConfirmedTransactionModal>
       <ConfirmTransactionModal></ConfirmTransactionModal>
       <TransactionModal></TransactionModal>
