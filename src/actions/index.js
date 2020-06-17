@@ -90,7 +90,7 @@ const onGetUserByAccountNumber = async (account_number) => {
     }
 }
 
-/*==============================================     SendMoneyToOthers     ==============================================*/
+/*==============================================     Transactions     ==============================================*/
 
 const newSuccessTransaction = () => ({
     type: 'NEW_SUCCESS_TRANSACTION',
@@ -104,6 +104,31 @@ const newFailTransaction = (failReason) => ({
 const completedTransaction = () => ({
     type: 'COMPLETED_TRANSACTION'
 });
+
+const setTransactions = (transactions) => ({
+    type: 'SET_TRANSACTIONS',
+    transactions: transactions
+});
+
+const onGetTransactions = () => async dispatch => {
+    const state = store.getState();
+    let accessToken = state.userReducer.accessToken;
+
+    try {
+        const res = await axios.get(`${apiUrl}/transactions/me`, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
+        });
+
+        dispatch(setTransactions(res.data));
+        return res.data;
+    } catch (error) {
+        alert(JSON.stringify('get error ', error.response.data.message));
+    }
+}
+
+/*==============================================     SendMoneyToOthers     ==============================================*/
 
 const onSendMoneyToOthers = (receiver) => async dispatch => {
     const state = store.getState();
@@ -150,5 +175,6 @@ export {
     onSendMoneyToOthers,
     newSuccessTransaction,
     newFailTransaction,
-    completedTransaction
+    completedTransaction,
+    onGetTransactions
 };

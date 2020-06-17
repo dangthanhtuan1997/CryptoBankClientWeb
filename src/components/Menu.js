@@ -26,7 +26,15 @@ function Menu(props) {
                             <div className="user-account-info between-center">
                                 <div className="user-account-main">
                                     <h6 className="overline-title-alt">Tổng tài sản</h6>
-                                    <div className="user-balance">{user.userInfo ? user.userInfo.balance : 0} <small className="currency">VND</small></div>
+                                    {user.userInfo ? <div className="user-balance">
+                                        {user.userInfo.balance}<small className="currency">VND
+                                         </small>
+                                    </div> :
+                                        <div class="d-flex justify-content-center">
+                                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </div>}
                                 </div>
                                 <a href="#" className="btn btn-white btn-icon btn-light"><em className="icon ni ni-line-chart" /></a>
                             </div>
@@ -36,7 +44,16 @@ function Menu(props) {
                                         <span className="sub-text">Khả dụng</span>
                                     </div>
                                     <div className="user-account-value">
-                                        <span className="lead-text">{user.userInfo ? user.userInfo.balance : 0} <span className="currency">VND</span></span>
+                                        {user.userInfo ?
+                                            <span className="lead-text">
+                                                {user.userInfo.balance}
+                                                <span className="currency">VND</span>
+                                            </span> :
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border spinner-border-sm text-dark" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>}
                                     </div>
                                 </li>
                                 <li>

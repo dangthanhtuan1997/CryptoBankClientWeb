@@ -1,7 +1,13 @@
-const initialState = { newConfirmedTransaction: false, newFailedTransaction: false, failReason: '' };
+const initialState = { data: null, newConfirmedTransaction: false, newFailedTransaction: false, failReason: '' };
 
 const transactionReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_TRANSACTIONS':
+            return {
+                ...state,
+                data: action.transactions
+            };
+
         case 'NEW_SUCCESS_TRANSACTION':
             return {
                 ...state,
