@@ -1,4 +1,4 @@
-const initialState = { newConfirmedTransaction: false, newFailedTransaction: false };
+const initialState = { newConfirmedTransaction: false, newFailedTransaction: false, failReason: '' };
 
 const transactionReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -12,6 +12,7 @@ const transactionReducer = (state = initialState, action) => {
             return {
                 ...state,
                 newFailedTransaction: true,
+                failReason: action.failReason
             };
 
         case 'COMPLETED_TRANSACTION':

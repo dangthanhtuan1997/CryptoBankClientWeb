@@ -24,7 +24,7 @@ function ConfirmedTransactionModal(props) {
                                 <p>Lệnh chuyển tiền của đã được xử lý. Đừng lo lắng khi chưa nhận được tiền ngay, điều này có thể kéo dài đến <strong>15 phút</strong> tùy thuộc vào ngân hàng đối tác.</p>
                             </div>
                             <div className="nk-modal-action-lg">
-                                <a href="#" onClick={() => close()} className="btn btn-mw btn-light" data-dismiss="modal">Trở về</a>
+                                <a onClick={() => close()} className="btn btn-mw btn-light" data-dismiss="modal">Trở về</a>
                             </div>
                         </div>
                     </div>{/* .modal-body */}

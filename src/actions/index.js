@@ -96,8 +96,9 @@ const newSuccessTransaction = () => ({
     type: 'NEW_SUCCESS_TRANSACTION',
 });
 
-const newFailTransaction = () => ({
+const newFailTransaction = (failReason) => ({
     type: 'NEW_FAIL_TRANSACTION',
+    failReason: failReason
 });
 
 const completedTransaction = () => ({
@@ -107,6 +108,18 @@ const completedTransaction = () => ({
 const onSendMoneyToOthers = (receiver) => async dispatch => {
     const state = store.getState();
     let accessToken = state.userReducer.accessToken;
+
+    if (receiver.receiver.full_name === '') {
+        return dispatch(newFailTransaction('Không tìm thấy người nhận.'));
+    }
+
+    if (isNaN(receiver.amount) || receiver.amount < 0) {
+        return dispatch(newFailTransaction('Số tiền chuyển không hợp lệ.'));
+    }
+
+    if (state.userReducer.userInfo.balance - receiver.amount < 0) {
+        return dispatch(newFailTransaction('Không đủ số dư để thực hiện giao dịch.'));
+    }
 
     try {
         const res = await axios.post(`${apiUrl}/transactions`, receiver, {
@@ -118,7 +131,7 @@ const onSendMoneyToOthers = (receiver) => async dispatch => {
         dispatch(setUserInfo(res.data));
         dispatch(newSuccessTransaction());
     } catch (error) {
-        dispatch(newFailTransaction());
+        dispatch(newFailTransaction(error.response.data.message));
     }
 }
 

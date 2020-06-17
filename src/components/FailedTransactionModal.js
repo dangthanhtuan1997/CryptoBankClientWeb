@@ -20,11 +20,11 @@ function FailedTransactionModal(props) {
                             <em className="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger" />
                             <h4 className="nk-modal-title">Chuyển tiền thất bại!</h4>
                             <div className="nk-modal-text">
-                                <p className="lead">Giao dịch của bạn vừa bị hủy bỏ, vui lòng kiểm tra lại thông tin người nhận.</p>
-                                <p className="text-soft">Nếu giao dịch thất bại nhiều lần, hãy gọi hỗ trợ: 0338.434.323.</p>
+                                <p className="lead">{props.transaction.failReason}</p>
+                                <p className="text-soft">Hotline hỗ trợ: xxxx.xxxx</p>
                             </div>
                             <div className="nk-modal-action-lg">
-                                <a href="#" onClick={() => close()} className="btn btn-mw btn-light" data-dismiss="modal">Trở về</a>
+                                <a onClick={() => close()} className="btn btn-mw btn-light" data-dismiss="modal">Trở về</a>
                             </div>
                         </div>
                     </div>{/* .modal-body */}
