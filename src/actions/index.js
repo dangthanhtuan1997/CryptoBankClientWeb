@@ -132,7 +132,8 @@ const onGetTransactions = () => async dispatch => {
 
 const onSendMoneyToOthers = (receiver) => async dispatch => {
     const state = store.getState();
-    let accessToken = state.userReducer.accessToken;
+    const accessToken = state.userReducer.accessToken;
+    const transactions = state.transactionReducer.data;
 
     if (receiver.receiver.full_name === '') {
         return dispatch(newFailTransaction('Không tìm thấy người nhận.'));
@@ -153,10 +154,15 @@ const onSendMoneyToOthers = (receiver) => async dispatch => {
             }
         });
 
-        dispatch(setUserInfo(res.data));
+        if (transactions){
+            transactions.push(res.data.transaction);
+        }
+        
+        dispatch(setUserInfo(res.data.depositor));
         dispatch(newSuccessTransaction());
+        dispatch(setTransactions(transactions));
     } catch (error) {
-        dispatch(newFailTransaction(error.response.data.message));
+        dispatch(newFailTransaction(JSON.stringify(error)));
     }
 }
 

@@ -5,16 +5,9 @@ import moment from 'moment';
 function Transaction(props) {
     const { depositor, receiver, amount, createdAt, note } = props.data;
     const time = moment(createdAt).format('HH:mm:ss DD/MM/YYYY');
-    const { index } = props;
 
     return (
         <tr className="nk-tb-item">
-            <td className="nk-tb-col nk-tb-col-check">
-                <div className="custom-control custom-control-sm custom-checkbox notext">
-                    <input type="checkbox" className="custom-control-input" id={`uid${index}`} />
-                    <label className="custom-control-label" htmlFor={`uid${index}`} />
-                </div>
-            </td>
             <td className="nk-tb-col">
                 <div className="user-card">
                     <div className="user-avatar bg-dim-primary d-none d-sm-flex">
@@ -38,10 +31,10 @@ function Transaction(props) {
                 </div>
             </td>
             <td className="nk-tb-col tb-col-md">
-                <span>{amount}</span>
+                <span>{amount.toLocaleString('en-US', { currency: 'VND' })}</span>
             </td>
             <td className="nk-tb-col tb-col-lg">
-                <span>{time}</span>
+                    <span>{time}</span>
             </td>
             <td className="nk-tb-col tb-col-lg">
                 <span>{note}</span>

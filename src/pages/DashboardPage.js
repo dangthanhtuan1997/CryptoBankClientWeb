@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Dashboard from '../components/Dashboard';
 
 function DashboardPage(props) {
-    const { user, transaction, onGetTransactions, onGetUserInfo } = props;
+    const { user, onGetUserInfo } = props;
 
     useEffect(() => {
         if (!user.userInfo) {
@@ -21,7 +21,6 @@ function DashboardPage(props) {
 export default connect(state => {
     return {
         user: state.userReducer,
-        transaction: state.transactionReducer
     }
 }, dispatch => {
     return {

@@ -68,7 +68,7 @@ function Header(props) {
                                     </div>
                                     <div className="dropdown-inner user-account-info">
                                         <h6 className="overline-title-alt">Số dư khả dụng</h6>
-                                        <div className="user-balance">{user.userInfo ? user.userInfo.balance : null} <small className="currency">VND</small></div>
+                                        <div className="user-balance">{user.userInfo ? user.userInfo.balance.toLocaleString('en-US', { currency: 'VND' }) : null} <small className="currency"> VND</small></div>
                                         <div className="user-balance-sub">Tiết kiệm <span>{caculatorSaving()} <span className="currency">VND</span></span></div>
                                         <a href="#" className="link" data-toggle="modal" data-target="#new-transaction"><span>Chuyển tiền</span> <em className="icon ni ni-wallet-out" /></a>
                                     </div>

@@ -7,8 +7,8 @@ function TransactionModal(props) {
     const typingTimeoutRef = useRef(null);
 
     const [receiverName, setReceiverName] = useState('');
-    const [receiverAccountNumber, setReceiverAccountNumber] = useState('123456789');
-    const [amount, setAmount] = useState(10000);
+    const [receiverAccountNumber, setReceiverAccountNumber] = useState('0000123456789999');
+    const [amount, setAmount] = useState(1000000);
     const [note, setNote] = useState('');
 
     useEffect(() => {
@@ -78,8 +78,8 @@ function TransactionModal(props) {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" htmlFor="phone-no">Số tiền</label>
-                                                    <input type="text" className="form-control form-control-lg" id="amount" value={amount} onChange={(e) => {
-                                                        setAmount(e.target.value);
+                                                    <input type="text" className="form-control form-control-lg" id="amount" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                        setAmount(parseInt(e.target.value.replace(/,/g,"")));
                                                     }} placeholder="Số tiền" />
                                                 </div>
                                             </div>
@@ -127,13 +127,13 @@ function TransactionModal(props) {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" htmlFor="display-name">Người nhận</label>
-                                                    <input disabled={true} type="text" className="form-control form-control-lg" id="display-name" defaultValue="Đặng Tiến Đạt" placeholder="Enter display name" />
+                                                    <input disabled={true} type="text" className="form-control form-control-lg" id="display-name" placeholder="Enter display name" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" htmlFor="phone-no">Số tiền</label>
-                                                    <input type="text" className="form-control form-control-lg" id="phone-no" defaultValue="16.000.000" placeholder="Phone Number" />
+                                                    <input type="text" className="form-control form-control-lg" id="phone-no" placeholder="Số tiền cần gửi" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">

@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import Transaction from '../components/Transaction';
 
 function TransactionsPage(props) {
-    const { user, transaction, onGetTransactions, onGetUserInfo } = props;
+    const { user, transactions, onGetTransactions, onGetUserInfo } = props;
 
     useEffect(() => {
         if (!user.userInfo) {
             onGetUserInfo();
         }
 
-        if (user.userInfo && !transaction.data) {
+        if (user.userInfo && !transactions.data) {
             onGetTransactions();
         }
     });
@@ -24,21 +24,15 @@ function TransactionsPage(props) {
                         <div className="components-preview wide-md mx-auto">
                             <div className="nk-block-head nk-block-head-lg wide-sm">
                                 <div className="nk-block-head-content">
-                                    <h2 className="nk-block-title fw-normal">Lịch sử giao dịch</h2>
+                                    <h2 className="nk-block-title fw-normal">Lịch sử giao dịch {transactions.data ? <span class="badge badge-primary">{transactions.data.length}</span> : <span class="badge badge-primary">0</span>}</h2>
                                 </div>
                             </div>{/* .nk-block-head */}
                             <div className="nk-block nk-block-lg">
                                 <div className="card card-bordered card-preview">
                                     <div className="card-inner">
-                                        <table id="test" className="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
+                                        <table id="test" className="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="true">
                                             <thead>
                                                 <tr className="nk-tb-item nk-tb-head">
-                                                    <th className="nk-tb-col nk-tb-col-check">
-                                                        <div className="custom-control custom-control-sm custom-checkbox notext">
-                                                            <input type="checkbox" className="custom-control-input" id="uid" />
-                                                            <label className="custom-control-label" htmlFor="uid" />
-                                                        </div>
-                                                    </th>
                                                     <th className="nk-tb-col"><span className="sub-text">Người chuyển</span></th>
                                                     <th className="nk-tb-col tb-col-mb"><span className="sub-text">Người nhận</span></th>
                                                     <th className="nk-tb-col tb-col-md"><span className="sub-text">Số tiền</span></th>
@@ -81,7 +75,7 @@ function TransactionsPage(props) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {transaction.data ? transaction.data.map((item, index) => <Transaction data={item} index={index} />) : <tr></tr>}
+                                                {transactions.data ? transactions.data.map((item, index) => <Transaction data={item} index={index} />) : <tr></tr>}
                                             </tbody>
                                         </table>
                                     </div>
@@ -98,7 +92,7 @@ function TransactionsPage(props) {
 export default connect(state => {
     return {
         user: state.userReducer,
-        transaction: state.transactionReducer
+        transactions: state.transactionReducer
     }
 }, dispatch => {
     return {

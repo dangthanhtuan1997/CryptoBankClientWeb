@@ -27,7 +27,7 @@ function Menu(props) {
                                 <div className="user-account-main">
                                     <h6 className="overline-title-alt">Tổng tài sản</h6>
                                     {user.userInfo ? <div className="user-balance">
-                                        {user.userInfo.balance}<small className="currency">VND
+                                        {user.userInfo.balance.toLocaleString('en-US', { currency: 'VND' })}<small className="currency"> VND
                                          </small>
                                     </div> :
                                         <div class="d-flex justify-content-center">
@@ -46,8 +46,8 @@ function Menu(props) {
                                     <div className="user-account-value">
                                         {user.userInfo ?
                                             <span className="lead-text">
-                                                {user.userInfo.balance}
-                                                <span className="currency">VND</span>
+                                                {user.userInfo.balance.toLocaleString('en-US', { currency: 'VND' })}
+                                                <span className="currency"> VND</span>
                                             </span> :
                                             <div class="d-flex justify-content-center">
                                                 <div class="spinner-border spinner-border-sm text-dark" role="status">
