@@ -10,6 +10,8 @@ function TransactionModal(props) {
     const [receiverAccountNumber, setReceiverAccountNumber] = useState('0000123456789999');
     const [amount, setAmount] = useState(1000000);
     const [note, setNote] = useState('');
+    const [selectedBank, setSelectedBank] = useState('nklbank');
+    const [type, setType] = useState('internal');
 
     useEffect(() => {
         if (typingTimeoutRef.current) {
@@ -21,12 +23,19 @@ function TransactionModal(props) {
         }
 
         typingTimeoutRef.current = setTimeout(async () => {
-            const receiverName = await onGetUserByAccountNumber(receiverAccountNumber);
+            const receiverName = await onGetUserByAccountNumber(receiverAccountNumber, type);
             setReceiverName(receiverName);
-        }, 1000);
+        }, 500);
     });
 
-    function onSendMoney() {
+    function clearState() {
+        setReceiverName('');
+        setReceiverAccountNumber('');
+        setAmount(0);
+        setNote('');
+    }
+
+    function onSendMoneyInternal() {
         props.onSendMoneyToOthers({
             receiver: {
                 full_name: receiverName,
@@ -34,7 +43,18 @@ function TransactionModal(props) {
             },
             amount,
             note
-        });
+        }, 'internal');
+    }
+
+    function onSendMoneyExternal() {
+        props.onSendMoneyToOthers({
+            receiver: {
+                full_name: receiverName,
+                account_number: receiverAccountNumber
+            },
+            amount,
+            note
+        }, 'external');
     }
 
     return (
@@ -50,10 +70,16 @@ function TransactionModal(props) {
                             </div>
                             <ul className="sp-package-plan nav nav-switch nav-tabs">
                                 <li className="nav-item">
-                                    <a className="nav-link active" href="#internal" data-toggle="tab" className="nav-link active">Cùng ngân hàng</a>
+                                    <a className="nav-link active" onClick={() => {
+                                        setType('internal');
+                                        clearState();
+                                    }} href="#internal" data-toggle="tab" className="nav-link active">Cùng ngân hàng</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#external" data-toggle="tab" className="nav-link">Liên ngân hàng</a>
+                                    <a className="nav-link" onClick={() => {
+                                        setType('external');
+                                        clearState();
+                                    }} href="#external" data-toggle="tab" className="nav-link">Liên ngân hàng</a>
                                 </li>
                             </ul>
                             <div className="tab-content">
@@ -62,8 +88,8 @@ function TransactionModal(props) {
                                         <div className="row gy-4">
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label className="form-label" htmlFor="full-name">Số tài khoản</label>
-                                                    <input type="text" className="form-control form-control-lg" id="account-number" value={receiverAccountNumber} onChange={(e) => {
+                                                    <label className="form-label">Số tài khoản</label>
+                                                    <input type="text" className="form-control form-control-lg" value={receiverAccountNumber} onChange={(e) => {
                                                         setReceiverAccountNumber(e.target.value);
                                                         setReceiverName('');
                                                     }} placeholder="Nhập số tài khoản" />
@@ -71,48 +97,52 @@ function TransactionModal(props) {
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label className="form-label" htmlFor="display-name">Người nhận</label>
-                                                    <input disabled={true} type="text" className="form-control form-control-lg" id="receiver-name" value={receiverName} />
+                                                    <label className="form-label">Người nhận</label>
+                                                    <input disabled={true} type="text" className="form-control form-control-lg" value={receiverName} />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label className="form-label" htmlFor="phone-no">Số tiền</label>
-                                                    <input type="text" className="form-control form-control-lg" id="amount" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
-                                                        setAmount(parseInt(e.target.value.replace(/,/g,"")));
+                                                    <label className="form-label">Số tiền</label>
+                                                    <input type="text" className="form-control form-control-lg" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                        setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
                                                     }} placeholder="Số tiền" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label className="form-label" htmlFor="birth-day">Nội dung</label>
-                                                    <input type="text" className="form-control form-control-lg" id="note" value={note} onChange={(e) => {
+                                                    <label className="form-label">Nội dung</label>
+                                                    <input type="text" className="form-control form-control-lg" placeholder="Nội dung" value={note} onChange={(e) => {
                                                         setNote(e.target.value);
                                                     }} />
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" id="fee" />
-                                                    <label className="custom-control-label" htmlFor="latest-sale1">Phí người chuyển chịu </label>
+                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" />
+                                                    <label className="custom-control-label">Phí người chuyển chịu </label>
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" id="save" />
-                                                    <label className="custom-control-label" htmlFor="save1">Lưu người nhận </label>
+                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" />
+                                                    <label className="custom-control-label">Lưu người nhận </label>
                                                 </div>
                                             </div>
                                         </div>
                                     </ul>
+                                    <div className="sp-package-action">
+                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoneyInternal()} data-dismiss="modal" >Chuyển</a>
+                                        <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
+                                    </div>
                                 </div>
                                 <div className="tab-pane" id="external">
                                     <ul className="sp-package-list">
                                         <div className="row gy-4">
                                             <div className="form col-md-12">
                                                 <div className="form-group">
-                                                    <label className="form-label" htmlFor="birth-day">Ngân hàng</label>
-                                                    <select defaultValue="teabank" className="form-select" data-search="off" data-ui="clean">
+                                                    <label className="form-label">Ngân hàng</label>
+                                                    <select defaultValue={selectedBank} onChange={e => setSelectedBank(e.target.value)} className="form-select" data-search="off" data-ui="clean">
                                                         <option value="nklbank">NKL Bank</option>
                                                         <option value="teabank">TeaBank</option>
                                                     </select>
@@ -120,53 +150,60 @@ function TransactionModal(props) {
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label className="form-label" htmlFor="full-name">Số tài khoản</label>
-                                                    <input type="text" className="form-control form-control-lg" id="full-name" defaultValue="0000 1111 2222" placeholder="Enter Full name" />
+                                                    <label className="form-label">Số tài khoản</label>
+                                                    <input type="text" className="form-control form-control-lg" value={receiverAccountNumber} onChange={(e) => {
+                                                        setReceiverAccountNumber(e.target.value);
+                                                        setReceiverName('');
+                                                    }} placeholder="Số tài khoản" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label className="form-label" htmlFor="display-name">Người nhận</label>
-                                                    <input disabled={true} type="text" className="form-control form-control-lg" id="display-name" placeholder="Enter display name" />
+                                                    <label className="form-label">Người nhận</label>
+                                                    <input disabled={true} type="text" className="form-control form-control-lg" value={receiverName} />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label className="form-label" htmlFor="phone-no">Số tiền</label>
-                                                    <input type="text" className="form-control form-control-lg" id="phone-no" placeholder="Số tiền cần gửi" />
+                                                    <label className="form-label" >Số tiền</label>
+                                                    <input type="text" className="form-control form-control-lg" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                        setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
+                                                    }} placeholder="Số tiền" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label className="form-label" htmlFor="birth-day">Nội dung</label>
-                                                    <input type="text" className="form-control form-control-lg" id="birth-day" defaultValue="Thanh toán" />
+                                                    <label className="form-label" >Nội dung</label>
+                                                    <input type="text" className="form-control form-control-lg" value={note} onChange={(e) => {
+                                                        setNote(e.target.value);
+                                                    }} placeholder="Nội dung" />
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" id="latest-sale2" />
-                                                    <label className="custom-control-label" htmlFor="latest-sale2">Phí người chuyển chịu </label>
+                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" />
+                                                    <label className="custom-control-label" >Phí người chuyển chịu </label>
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" id="save2" />
-                                                    <label className="custom-control-label" htmlFor="save2">Lưu người nhận </label>
+                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" />
+                                                    <label className="custom-control-label">Lưu người nhận </label>
                                                 </div>
                                             </div>
                                         </div>
                                     </ul>
+                                    <div className="sp-package-action">
+                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoneyExternal()} data-dismiss="modal" >Chuyển</a>
+                                        <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="sp-package-action">
-                                <a href="#" className="btn btn-primary" onClick={() => onSendMoney()} data-dismiss="modal" >Chuyển</a>
-                                <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                             </div>
                         </div>
                     </div>
                 </div>{/* .modal-content */}
             </div>{/* .modal-dialog */}
-        </div>
+        </div >
     );
 }
 
@@ -176,6 +213,6 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onSendMoneyToOthers: (receiver) => dispatch(onSendMoneyToOthers(receiver)),
+        onSendMoneyToOthers: (receiver, type) => dispatch(onSendMoneyToOthers(receiver, type)),
     }
 })(TransactionModal);

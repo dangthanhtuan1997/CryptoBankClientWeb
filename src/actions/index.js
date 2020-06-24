@@ -73,12 +73,12 @@ const onGetUserInfo = () => async dispatch => {
 
 /*==============================================     GetUserByAccountNumber     ==============================================*/
 
-const onGetUserByAccountNumber = async (account_number) => {
+const onGetUserByAccountNumber = async (accountNumber, type) => {
     const state = store.getState();
     let accessToken = state.userReducer.accessToken;
 
     try {
-        const res = await axios.get(`${apiUrl}/users/${account_number}`, {
+        const res = await axios.get(`${apiUrl}/users/${accountNumber}?type=${type}`, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
             }
@@ -130,22 +130,24 @@ const onGetTransactions = () => async dispatch => {
 
 /*==============================================     SendMoneyToOthers     ==============================================*/
 
-const onSendMoneyToOthers = (receiver) => async dispatch => {
+const onSendMoneyToOthers = (receiver, type) => async dispatch => {
     const state = store.getState();
     const accessToken = state.userReducer.accessToken;
     const transactions = state.transactionReducer.data;
+    receiver.type = type;
 
     if (receiver.receiver.full_name === '') {
         return dispatch(newFailTransaction('Không tìm thấy người nhận.'));
     }
 
-    if (isNaN(receiver.amount) || receiver.amount < 0) {
+    if (isNaN(receiver.amount) || receiver.amount <= 0) {
         return dispatch(newFailTransaction('Số tiền chuyển không hợp lệ.'));
     }
 
     if (state.userReducer.userInfo.balance - receiver.amount < 0) {
         return dispatch(newFailTransaction('Không đủ số dư để thực hiện giao dịch.'));
     }
+
 
     try {
         const res = await axios.post(`${apiUrl}/transactions`, receiver, {
@@ -154,15 +156,15 @@ const onSendMoneyToOthers = (receiver) => async dispatch => {
             }
         });
 
-        if (transactions){
-            transactions.push(res.data.transaction);
+        if (transactions) {
+            transactions.unshift(res.data.transaction);
         }
-        
+
         dispatch(setUserInfo(res.data.depositor));
         dispatch(newSuccessTransaction());
         dispatch(setTransactions(transactions));
     } catch (error) {
-        dispatch(newFailTransaction(JSON.stringify(error)));
+        dispatch(newFailTransaction(JSON.stringify(error.response.data.message)));
     }
 }
 
