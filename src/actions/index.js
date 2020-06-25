@@ -73,12 +73,12 @@ const onGetUserInfo = () => async dispatch => {
 
 /*==============================================     GetUserByAccountNumber     ==============================================*/
 
-const onGetUserByAccountNumber = async (accountNumber, type) => {
+const onGetUserByAccountNumber = async (accountNumber, type, partner) => {
     const state = store.getState();
     let accessToken = state.userReducer.accessToken;
 
     try {
-        const res = await axios.get(`${apiUrl}/users/${accountNumber}?type=${type}`, {
+        const res = await axios.get(`${apiUrl}/users/${accountNumber}?type=${type}&partner=${partner}`, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
             }
@@ -130,27 +130,28 @@ const onGetTransactions = () => async dispatch => {
 
 /*==============================================     SendMoneyToOthers     ==============================================*/
 
-const onSendMoneyToOthers = (receiver, type) => async dispatch => {
+const onSendMoneyToOthers = (transaction, type, partner) => async dispatch => {
     const state = store.getState();
     const accessToken = state.userReducer.accessToken;
     const transactions = state.transactionReducer.data;
-    receiver.type = type;
+    transaction.type = type;
+    transaction.partner = partner;
 
-    if (receiver.receiver.full_name === '') {
+    if (transaction.receiver.full_name === '') {
         return dispatch(newFailTransaction('Không tìm thấy người nhận.'));
     }
 
-    if (isNaN(receiver.amount) || receiver.amount <= 0) {
+    if (isNaN(transaction.amount) || transaction.amount <= 0) {
         return dispatch(newFailTransaction('Số tiền chuyển không hợp lệ.'));
     }
 
-    if (state.userReducer.userInfo.balance - receiver.amount < 0) {
+    if (state.userReducer.userInfo.balance - transaction.amount < 0) {
         return dispatch(newFailTransaction('Không đủ số dư để thực hiện giao dịch.'));
     }
 
 
     try {
-        const res = await axios.post(`${apiUrl}/transactions`, receiver, {
+        const res = await axios.post(`${apiUrl}/transactions`, transaction, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
             }

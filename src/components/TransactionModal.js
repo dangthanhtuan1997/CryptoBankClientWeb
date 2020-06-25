@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import { connect } from 'react-redux';
 import { onGetUserByAccountNumber, onSendMoneyToOthers } from '../actions';
+import Select from 'react-select';
+
+const options = [
+    { value: 'nklbank', label: 'Ngân hàng NKLBank' },
+    { value: 'teabank', label: 'Ngân hàng TeaBank' }
+];
 
 function TransactionModal(props) {
     const typingTimeoutRef = useRef(null);
 
     const [receiverName, setReceiverName] = useState('');
-    const [receiverAccountNumber, setReceiverAccountNumber] = useState('0000123456789999');
-    const [amount, setAmount] = useState(1000000);
+    const [receiverAccountNumber, setReceiverAccountNumber] = useState('');
+    const [amount, setAmount] = useState('');
     const [note, setNote] = useState('');
     const [selectedBank, setSelectedBank] = useState('nklbank');
     const [type, setType] = useState('internal');
@@ -23,10 +29,15 @@ function TransactionModal(props) {
         }
 
         typingTimeoutRef.current = setTimeout(async () => {
-            const receiverName = await onGetUserByAccountNumber(receiverAccountNumber, type);
+            const receiverName = await onGetUserByAccountNumber(receiverAccountNumber, type, selectedBank);
             setReceiverName(receiverName);
-        }, 500);
+        }, 300);
     });
+
+    const handleChangeSelectedBank = (value) => {
+        setSelectedBank(value);
+        clearState();
+    }
 
     function clearState() {
         setReceiverName('');
@@ -35,7 +46,7 @@ function TransactionModal(props) {
         setNote('');
     }
 
-    function onSendMoneyInternal() {
+    function onSendMoney(type) {
         props.onSendMoneyToOthers({
             receiver: {
                 full_name: receiverName,
@@ -43,18 +54,7 @@ function TransactionModal(props) {
             },
             amount,
             note
-        }, 'internal');
-    }
-
-    function onSendMoneyExternal() {
-        props.onSendMoneyToOthers({
-            receiver: {
-                full_name: receiverName,
-                account_number: receiverAccountNumber
-            },
-            amount,
-            note
-        }, 'external');
+        }, type, selectedBank);
     }
 
     return (
@@ -89,24 +89,31 @@ function TransactionModal(props) {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Số tài khoản</label>
-                                                    <input type="text" className="form-control form-control-lg" value={receiverAccountNumber} onChange={(e) => {
+                                                    {receiverAccountNumber ? <input type="number" className="form-control form-control-lg" onChange={(e) => {
                                                         setReceiverAccountNumber(e.target.value);
                                                         setReceiverName('');
-                                                    }} placeholder="Nhập số tài khoản" />
+                                                    }} placeholder="Nhập số tài khoản" /> : <input type="number" className="form-control form-control-lg error" onChange={(e) => {
+                                                        setReceiverAccountNumber(e.target.value);
+                                                        setReceiverName('');
+                                                    }} placeholder="Nhập số tài khoản" />}
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Người nhận</label>
-                                                    <input disabled={true} type="text" className="form-control form-control-lg" value={receiverName} />
+                                                    {receiverName ? <input disabled={true} type="text" className="form-control form-control-lg" value={receiverName} /> :
+                                                        <input disabled={true} type="text" className="form-control form-control-lg error" value={receiverName} />}
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Số tiền</label>
-                                                    <input type="text" className="form-control form-control-lg" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                    {amount ? <input type="text" className="form-control form-control-lg" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
                                                         setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
-                                                    }} placeholder="Số tiền" />
+                                                    }} placeholder="Số tiền" /> :
+                                                        <input type="text" className="form-control form-control-lg error" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                            setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
+                                                        }} placeholder="Số tiền" />}
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
@@ -132,7 +139,7 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoneyInternal()} data-dismiss="modal" >Chuyển</a>
+                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoney('internal')} data-dismiss="modal" >Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                     </div>
                                 </div>
@@ -142,33 +149,44 @@ function TransactionModal(props) {
                                             <div className="form col-md-12">
                                                 <div className="form-group">
                                                     <label className="form-label">Ngân hàng</label>
-                                                    <select defaultValue={selectedBank} onChange={e => setSelectedBank(e.target.value)} className="form-select" data-search="off" data-ui="clean">
-                                                        <option value="nklbank">NKL Bank</option>
-                                                        <option value="teabank">TeaBank</option>
-                                                    </select>
+                                                    <div className="form-control-wrap">
+                                                        <Select options={options} defaultValue={options[0]} placeholder='Chọn ngân hàng...' onChange={(e) => handleChangeSelectedBank(e.value)}>
+                                                        </Select>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Số tài khoản</label>
-                                                    <input type="text" className="form-control form-control-lg" value={receiverAccountNumber} onChange={(e) => {
+                                                    {receiverAccountNumber ? <input type="text" className="form-control form-control-lg" value={receiverAccountNumber} onChange={(e) => {
                                                         setReceiverAccountNumber(e.target.value);
                                                         setReceiverName('');
-                                                    }} placeholder="Số tài khoản" />
+                                                    }} placeholder="Số tài khoản" /> :
+                                                        <input type="text" className="form-control form-control-lg error" value={receiverAccountNumber} onChange={(e) => {
+                                                            setReceiverAccountNumber(e.target.value);
+                                                            setReceiverName('');
+                                                        }} placeholder="Số tài khoản" />}
+
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Người nhận</label>
-                                                    <input disabled={true} type="text" className="form-control form-control-lg" value={receiverName} />
+                                                    {receiverName ? <input disabled={true} type="text" className="form-control form-control-lg" value={receiverName} /> :
+                                                        <input disabled={true} type="text" className="form-control form-control-lg error" value={receiverName} />}
+
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" >Số tiền</label>
-                                                    <input type="text" className="form-control form-control-lg" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                    {amount ? <input type="text" className="form-control form-control-lg" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
                                                         setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
-                                                    }} placeholder="Số tiền" />
+                                                    }} placeholder="Số tiền" /> :
+                                                        <input type="text" className="form-control form-control-lg error" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                            setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
+                                                        }} placeholder="Số tiền" />}
+
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
@@ -194,7 +212,7 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoneyExternal()} data-dismiss="modal" >Chuyển</a>
+                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoney('external')} data-dismiss="modal" >Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                     </div>
                                 </div>
@@ -213,6 +231,6 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onSendMoneyToOthers: (receiver, type) => dispatch(onSendMoneyToOthers(receiver, type)),
+        onSendMoneyToOthers: (receiver, type, partner) => dispatch(onSendMoneyToOthers(receiver, type, partner)),
     }
 })(TransactionModal);
