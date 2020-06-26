@@ -31,7 +31,7 @@ function Transaction(props) {
                 </div>
             </td>
             <td className="nk-tb-col tb-col-md">
-                <span>{amount.toLocaleString('en-US', { currency: 'VND' })}</span>
+                <span>{Number(amount).toLocaleString('en-US', { currency: 'VND' })}</span>
             </td>
             <td className="nk-tb-col tb-col-lg">
                     <span>{time}</span>
