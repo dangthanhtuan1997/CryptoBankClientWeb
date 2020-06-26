@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 function Transaction(props) {
+    const { user } = props;
     const { depositor, receiver, amount, createdAt, note } = props.data;
     const time = moment(createdAt).format('HH:mm:ss DD/MM/YYYY');
 
@@ -11,7 +12,7 @@ function Transaction(props) {
             <td className="nk-tb-col">
                 <div className="user-card">
                     <div className="user-avatar bg-dim-primary d-none d-sm-flex">
-                        <span>ĐT</span>
+                        <span>S</span>
                     </div>
                     <div className="user-info">
                         <span className="tb-lead">{depositor.full_name}<span className="dot dot-success d-md-none ml-1" /></span>
@@ -22,7 +23,7 @@ function Transaction(props) {
             <td className="nk-tb-col">
                 <div className="user-card">
                     <div className="user-avatar bg-success d-none d-sm-flex">
-                        <span>NV</span>
+                        <span>R</span>
                     </div>
                     <div className="user-info">
                         <span className="tb-lead">{receiver.full_name}<span className="dot dot-success d-md-none ml-1" /></span>
@@ -34,13 +35,15 @@ function Transaction(props) {
                 <span>{Number(amount).toLocaleString('en-US', { currency: 'VND' })}</span>
             </td>
             <td className="nk-tb-col tb-col-lg">
-                    <span>{time}</span>
+                <span>{time}</span>
             </td>
             <td className="nk-tb-col tb-col-lg">
                 <span>{note}</span>
             </td>
             <td className="nk-tb-col tb-col-md">
-                <span className="tb-status text-success">Chuyển tiền</span>
+                {depositor.account_number === user.userInfo.account_number ? <span className="tb-status text-success">Chuyển tiền</span> :
+                    <span className="tb-status text-danger">Nhận tiền</span>}
+
             </td>
             <td className="nk-tb-col nk-tb-col-tools">
                 <ul className="nk-tb-actions gx-1">

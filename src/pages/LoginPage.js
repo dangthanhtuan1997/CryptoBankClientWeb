@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { onLogin } from '../actions';
+import Recaptcha from 'react-recaptcha';
 
 class LoginPage extends React.Component {
   state = {
     username: 'dangthanhtuan',
     password: '123456',
-    loading: false
+    loading: false,
+    isVerified: false
   }
 
   onChangeText = (key, val) => {
@@ -15,13 +17,22 @@ class LoginPage extends React.Component {
 
   handleLogin = (event) => {
     event.preventDefault();
-    const { onLogin } = this.props;
-    this.setState({ loading: true });
-    onLogin(this.state.username, this.state.password);
+
+    if (this.state.isVerified) {
+      const { onLogin } = this.props;
+      this.setState({ loading: true });
+      onLogin(this.state.username, this.state.password);
+    }
   }
 
-  componentWillReceiveProps(){
-    this.setState({loading: false});
+  verifyCallback = (response) => {
+    if (response) {
+      this.setState({ isVerified: true });
+    }
+  }
+
+  componentWillReceiveProps() {
+    this.setState({ loading: false });
   }
 
   render() {
@@ -70,6 +81,14 @@ class LoginPage extends React.Component {
                     <em className="icon ni ni-cross-circle"></em> <strong>{this.props.user.loginError}</strong>!
                   </div>
                 </div> : null}
+                <div className="form-group">
+                  <Recaptcha
+                    sitekey="6LfKt6kZAAAAACSb1vSJ8vgM437YQezW3vb8kbcw"
+                    render="explicit"
+                    onloadCallback={() => { }}
+                    verifyCallback={this.verifyCallback}
+                  />
+                </div>
                 <div className="form-group">
                   <button onClick={(event) => this.handleLogin(event)} className="btn btn-lg btn-primary btn-block" disabled={this.state.loading}>
                     {this.state.loading ? <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> : null}
