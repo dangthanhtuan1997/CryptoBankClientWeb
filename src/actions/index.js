@@ -39,7 +39,7 @@ const logout = () => ({
 const onLogout = () => async dispatch => {
     cookie.remove('CryptoBankAccessToken');
     dispatch(logout());
-    history.replace({ pathname: '/login' });
+    //history.replace({ pathname: '/login' });
 };
 
 
