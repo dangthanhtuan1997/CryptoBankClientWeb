@@ -14,7 +14,7 @@ const login = (accessToken, error) => ({
 
 const onLogin = (username, password) => async dispatch => {
     try {
-        const res = await axios.post(`${apiUrl}/auth/login`, {
+        const res = await axios.post(`${apiUrl}/auth/user/login`, {
             username: username,
             password: password
         });
@@ -115,7 +115,7 @@ const onGetTransactions = () => async dispatch => {
     let accessToken = state.userReducer.accessToken;
 
     try {
-        const res = await axios.get(`${apiUrl}/transactions/me`, {
+        const res = await axios.get(`${apiUrl}/transactions/user`, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
             }
@@ -149,9 +149,8 @@ const onSendMoneyToOthers = (transaction, type, partner) => async dispatch => {
         return dispatch(newFailTransaction('Không đủ số dư để thực hiện giao dịch.'));
     }
 
-
     try {
-        const res = await axios.post(`${apiUrl}/transactions`, transaction, {
+        const res = await axios.post(`${apiUrl}/transactions/user`, transaction, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
             }

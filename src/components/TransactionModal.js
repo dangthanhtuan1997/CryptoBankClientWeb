@@ -15,7 +15,7 @@ function TransactionModal(props) {
     const [receiverName, setReceiverName] = useState('');
     const [receiverAccountNumber, setReceiverAccountNumber] = useState('');
     const [amount, setAmount] = useState('');
-    const [note, setNote] = useState('');
+    const [note, setNote] = useState('Chuyển tiền');
     const [selectedBank, setSelectedBank] = useState('nklbank');
     const [type, setType] = useState('internal');
 

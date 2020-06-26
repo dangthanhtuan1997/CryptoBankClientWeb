@@ -75,7 +75,7 @@ function TransactionsPage(props) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {transactions.data ? transactions.data.reverse().map((item, index) => <Transaction data={item} index={index} />) : <tr></tr>}
+                                                {transactions.data ? transactions.data.length > 0 ? transactions.data.reverse().map((item, index) => <Transaction data={item} index={index} />) : <tr><div>Không có giao dịch nào.</div></tr> : <tr></tr>}
                                             </tbody>
                                         </table>
                                     </div>
