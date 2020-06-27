@@ -39,7 +39,7 @@ const logout = () => ({
 const onLogout = () => async dispatch => {
     cookie.remove('CryptoBankAccessToken');
     dispatch(logout());
-    //history.replace({ pathname: '/login' });
+    history.replace({ pathname: '/login' });
 };
 
 
@@ -130,18 +130,17 @@ const onGetTransactions = () => async dispatch => {
 
 /*==============================================     SendMoneyToOthers     ==============================================*/
 
-const onSendMoneyToOthers = (transaction, type, partner) => async dispatch => {
+const onSendMoneyToOthers = (transaction) => async dispatch => {
     const state = store.getState();
     const accessToken = state.userReducer.accessToken;
     const transactions = state.transactionReducer.data;
-    transaction.type = type;
-    transaction.partner = partner;
 
     if (transaction.receiver.full_name === '') {
         return dispatch(newFailTransaction('Không tìm thấy người nhận.'));
     }
 
     if (isNaN(transaction.amount) || transaction.amount <= 0) {
+        alert(transaction.amount)
         return dispatch(newFailTransaction('Số tiền chuyển không hợp lệ.'));
     }
 

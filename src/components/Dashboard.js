@@ -121,9 +121,9 @@ function Dashboard(props) {
                         <div className="nk-block-between-md g-4">
                             <div className="nk-block-head-content" >
                                 {user.userInfo ? <h2 className="nk-block-title fw-normal">Số tài khoản: {user.userInfo.account_number} </h2> :
-                                    <div class="d-flex justify-content-center">
-                                        <div class="spinner-border text-dark" role="status">
-                                            <span class="sr-only">Loading...</span>
+                                    <div className="d-flex justify-content-center">
+                                        <div className="spinner-border text-dark" role="status">
+                                            <span className="sr-only">Loading...</span>
                                         </div>
                                     </div>}
                             </div>

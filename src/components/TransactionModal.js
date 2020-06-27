@@ -14,10 +14,12 @@ function TransactionModal(props) {
 
     const [receiverName, setReceiverName] = useState('');
     const [receiverAccountNumber, setReceiverAccountNumber] = useState('');
-    const [amount, setAmount] = useState('');
+    const [amount, setAmount] = useState(0);
     const [note, setNote] = useState('Chuyển tiền');
     const [selectedBank, setSelectedBank] = useState('nklbank');
     const [type, setType] = useState('internal');
+    const [fee, setFee] = useState(true);
+    const [save, setSave] = useState(true);
 
     useEffect(() => {
         if (typingTimeoutRef.current) {
@@ -44,6 +46,8 @@ function TransactionModal(props) {
         setReceiverAccountNumber('');
         setAmount(0);
         setNote('');
+        setFee(true);
+        setSave(true);
     }
 
     function onSendMoney(type) {
@@ -53,8 +57,12 @@ function TransactionModal(props) {
                 account_number: receiverAccountNumber
             },
             amount,
-            note
-        }, type, selectedBank);
+            note,
+            type,
+            selectedBank,
+            fee,
+            save
+        });
     }
 
     return (
@@ -108,11 +116,13 @@ function TransactionModal(props) {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Số tiền</label>
-                                                    {amount ? <input type="text" className="form-control form-control-lg" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
-                                                        setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
+                                                    {amount != 0 ? <input type="text" className="form-control form-control-lg" value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                        const val = parseInt(e.target.value.replace(/,/g, "")) || 0;
+                                                        setAmount(val);
                                                     }} placeholder="Số tiền" /> :
-                                                        <input type="text" className="form-control form-control-lg error" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
-                                                            setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
+                                                        <input type="text" className="form-control form-control-lg error" value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                            const val = parseInt(e.target.value.replace(/,/g, "")) || 0;
+                                                            setAmount(val);
                                                         }} placeholder="Số tiền" />}
                                                 </div>
                                             </div>
@@ -126,14 +136,14 @@ function TransactionModal(props) {
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" />
-                                                    <label className="custom-control-label">Phí người chuyển chịu </label>
+                                                    <input id="fee" type="checkbox" checked={fee} onChange={(e) => setFee(e.target.checked)} className="custom-control-input" />
+                                                    <label htmlFor="fee" className="custom-control-label">Phí người chuyển chịu </label>
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" />
-                                                    <label className="custom-control-label">Lưu người nhận </label>
+                                                    <input id="save" type="checkbox" checked={save} onChange={(e) => setSave(e.target.checked)} className="custom-control-input" />
+                                                    <label htmlFor="save" className="custom-control-label">Lưu người nhận </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -180,13 +190,14 @@ function TransactionModal(props) {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" >Số tiền</label>
-                                                    {amount ? <input type="text" className="form-control form-control-lg" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
-                                                        setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
+                                                    {amount != 0 ? <input type="text" className="form-control form-control-lg" value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                        const val = parseInt(e.target.value.replace(/,/g, "")) || 0;
+                                                        setAmount(val);
                                                     }} placeholder="Số tiền" /> :
-                                                        <input type="text" className="form-control form-control-lg error" value={amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
-                                                            setAmount(isNaN(e.target.value.replace(/,/g, "")) ? 0 : parseInt(e.target.value.replace(/,/g, "")));
+                                                        <input type="text" className="form-control form-control-lg error" value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                            const val = parseInt(e.target.value.replace(/,/g, "")) || 0;
+                                                            setAmount(val);
                                                         }} placeholder="Số tiền" />}
-
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
@@ -231,6 +242,6 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onSendMoneyToOthers: (receiver, type, partner) => dispatch(onSendMoneyToOthers(receiver, type, partner)),
+        onSendMoneyToOthers: (transaction) => dispatch(onSendMoneyToOthers(transaction)),
     }
 })(TransactionModal);
