@@ -17,7 +17,7 @@ function ConfirmTransactionModal(props) {
         <div className="modal fade show" tabIndex={-1} id="confirm-transaction" style={{ display: 'block' }} aria-modal="true">
             <div className="modal-dialog modal-md">
                 <div className="modal-content">
-                    <a href="#" className="close" data-dismiss="modal" aria-label="Close"><em className="icon ni ni-cross" /></a>
+                <a onClick={() => close()} className="btn close" data-dismiss="modal" aria-label="Close"><em className="icon ni ni-cross" /></a>
                     <div className="modal-body modal-body-md">
                         <h4 className="nk-modal-title title">Xác nhận chuyển tiền</h4>
                         <p><strong>Để đảm bảo an toàn, chúng tôi đã gửi mã xác nhận vào email của bạn.</strong></p>
@@ -34,7 +34,10 @@ function ConfirmTransactionModal(props) {
                             </div>
                             <ul className="align-center flex-wrap g-3">
                                 <li>
-                                    <button onClick={() => props.onConfirmSendMoneyToOthers(otp)} className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#confirmed-transaction">Xác nhận</button>
+                                    <button onClick={() => {
+                                        props.resetStatusTransaction();
+                                        props.onConfirmSendMoneyToOthers(otp);
+                                    }} className="btn btn-primary" data-dismiss="modal">Xác nhận</button>
                                 </li>
                                 <li>
                                     <a onClick={() => close()} className="btn btn-light" data-dismiss="modal">Hủy chuyển</a>
@@ -56,6 +59,6 @@ export default connect(state => {
 }, dispatch => {
     return {
         onConfirmSendMoneyToOthers: (otp) => dispatch(onConfirmSendMoneyToOthers(otp)),
-        resetStatusTransaction: () => dispatch(resetStatusTransaction())
+        resetStatusTransaction: () => dispatch(resetStatusTransaction()),
     }
 })(ConfirmTransactionModal);

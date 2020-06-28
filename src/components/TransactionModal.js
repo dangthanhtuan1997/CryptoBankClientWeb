@@ -50,7 +50,7 @@ function TransactionModal(props) {
         setSave(true);
     }
 
-    function onSendMoney(type) {
+    function sendTransactionInfo(type) {
         props.onSendMoneyToOthers({
             receiver: {
                 full_name: receiverName,
@@ -59,7 +59,7 @@ function TransactionModal(props) {
             amount,
             note,
             type,
-            selectedBank,
+            partner_code: selectedBank,
             fee,
             save
         });
@@ -149,7 +149,7 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoney('internal')} data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Chuyển</a>
+                                        <a href="#" className="btn btn-primary" onClick={() => sendTransactionInfo('internal')} data-dismiss="modal">Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                     </div>
                                 </div>
@@ -223,7 +223,7 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoney('external')} data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Chuyển</a>
+                                        <a href="#" className="btn btn-primary" onClick={() => sendTransactionInfo('external')} data-dismiss="modal">Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                     </div>
                                 </div>
