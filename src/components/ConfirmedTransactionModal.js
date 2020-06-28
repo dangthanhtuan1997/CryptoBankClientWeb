@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { completedTransaction } from '../actions';
+import { resetStatusTransaction } from '../actions';
 
 function ConfirmedTransactionModal(props) {
     function close() {
-        props.completedTransaction();
+        props.resetStatusTransaction();
     }
 
-
-    if (!props.transaction.newConfirmedTransaction) {
+    if (props.transaction.status !== 'confirmed') {
         return null;
     }
 
@@ -40,6 +39,6 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        completedTransaction: () => dispatch(completedTransaction()),
+        resetStatusTransaction: () => dispatch(resetStatusTransaction()),
     }
 })(ConfirmedTransactionModal);

@@ -92,17 +92,14 @@ const onGetUserByAccountNumber = async (accountNumber, type, partner) => {
 
 /*==============================================     Transactions     ==============================================*/
 
-const newSuccessTransaction = () => ({
-    type: 'NEW_SUCCESS_TRANSACTION',
+const updateStatusTransaction = (status, reason = '') => ({
+    type: 'UPDATE_STATUS',
+    status: status,
+    reason: reason
 });
 
-const newFailTransaction = (failReason) => ({
-    type: 'NEW_FAIL_TRANSACTION',
-    failReason: failReason
-});
-
-const completedTransaction = () => ({
-    type: 'COMPLETED_TRANSACTION'
+const resetStatusTransaction = () => ({
+    type: 'RESET_STATUS'
 });
 
 const setTransactions = (transactions) => ({
@@ -133,23 +130,39 @@ const onGetTransactions = () => async dispatch => {
 const onSendMoneyToOthers = (transaction) => async dispatch => {
     const state = store.getState();
     const accessToken = state.userReducer.accessToken;
-    const transactions = state.transactionReducer.data;
 
     if (transaction.receiver.full_name === '') {
-        return dispatch(newFailTransaction('Không tìm thấy người nhận.'));
+        return dispatch(updateStatusTransaction('fail', 'Không tìm thấy người nhận.'));
     }
 
     if (isNaN(transaction.amount) || transaction.amount <= 0) {
-        alert(transaction.amount)
-        return dispatch(newFailTransaction('Số tiền chuyển không hợp lệ.'));
+        return dispatch(updateStatusTransaction('fail', 'Số tiền chuyển không hợp lệ.'));
     }
 
     if (state.userReducer.userInfo.balance - transaction.amount < 0) {
-        return dispatch(newFailTransaction('Không đủ số dư để thực hiện giao dịch.'));
+        return dispatch(updateStatusTransaction('fail', 'Không đủ số dư để thực hiện giao dịch.'));
     }
 
     try {
         const res = await axios.post(`${apiUrl}/transactions/user`, transaction, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
+        });
+        dispatch(updateStatusTransaction('pending'));
+    } catch (error) {
+        dispatch(updateStatusTransaction('fail', JSON.stringify(error.response.data.message)));
+    }
+}
+
+const onConfirmSendMoneyToOthers = (otp) => async dispatch => {
+    const state = store.getState();
+    const accessToken = state.userReducer.accessToken;
+    const transactions = state.transactionReducer.data;
+    const data = { otp };
+
+    try {
+        const res = await axios.post(`${apiUrl}/transactions/user/confirm`, data, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
             }
@@ -160,10 +173,10 @@ const onSendMoneyToOthers = (transaction) => async dispatch => {
         }
 
         dispatch(setUserInfo(res.data.depositor));
-        dispatch(newSuccessTransaction());
+        dispatch(updateStatusTransaction('confirmed'));
         dispatch(setTransactions(transactions));
     } catch (error) {
-        dispatch(newFailTransaction(JSON.stringify(error.response.data.message)));
+        dispatch(updateStatusTransaction('fail', JSON.stringify(error.response.data.message)));
     }
 }
 
@@ -180,8 +193,8 @@ export {
     RestoreAccessToken,
     onGetUserInfo,
     onSendMoneyToOthers,
-    newSuccessTransaction,
-    newFailTransaction,
-    completedTransaction,
-    onGetTransactions
+    updateStatusTransaction,
+    resetStatusTransaction,
+    onGetTransactions,
+    onConfirmSendMoneyToOthers
 };

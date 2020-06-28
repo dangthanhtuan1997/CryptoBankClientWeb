@@ -13,8 +13,8 @@ function TransactionModal(props) {
     const typingTimeoutRef = useRef(null);
 
     const [receiverName, setReceiverName] = useState('');
-    const [receiverAccountNumber, setReceiverAccountNumber] = useState('');
-    const [amount, setAmount] = useState(0);
+    const [receiverAccountNumber, setReceiverAccountNumber] = useState('0123456789012345');
+    const [amount, setAmount] = useState(10000);
     const [note, setNote] = useState('Chuyển tiền');
     const [selectedBank, setSelectedBank] = useState('nklbank');
     const [type, setType] = useState('internal');
@@ -66,7 +66,7 @@ function TransactionModal(props) {
     }
 
     return (
-        <div className="modal fade" tabIndex={-1} id="new-transaction">
+        <div className="modal fade show" tabIndex={-1} id="new-transaction">
             <div className="modal-dialog modal-lg">
                 <div className="modal-content">
                     <a href="#" className="close" data-dismiss="modal" aria-label="Close"><em className="icon ni ni-cross" /></a>
@@ -97,10 +97,10 @@ function TransactionModal(props) {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Số tài khoản</label>
-                                                    {receiverAccountNumber ? <input type="number" className="form-control form-control-lg" onChange={(e) => {
+                                                    {receiverAccountNumber ? <input type="number" value={receiverAccountNumber} className="form-control form-control-lg" onChange={(e) => {
                                                         setReceiverAccountNumber(e.target.value);
                                                         setReceiverName('');
-                                                    }} placeholder="Nhập số tài khoản" /> : <input type="number" className="form-control form-control-lg error" onChange={(e) => {
+                                                    }} placeholder="Nhập số tài khoản" /> : <input type="number" value={receiverAccountNumber} className="form-control form-control-lg error" onChange={(e) => {
                                                         setReceiverAccountNumber(e.target.value);
                                                         setReceiverName('');
                                                     }} placeholder="Nhập số tài khoản" />}
@@ -149,7 +149,7 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoney('internal')} data-dismiss="modal" >Chuyển</a>
+                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoney('internal')} data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                     </div>
                                 </div>
@@ -223,7 +223,7 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoney('external')} data-dismiss="modal" >Chuyển</a>
+                                        <a href="#" className="btn btn-primary" onClick={() => onSendMoney('external')} data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                     </div>
                                 </div>
