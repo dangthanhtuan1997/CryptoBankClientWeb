@@ -8,12 +8,15 @@ import { connect } from 'react-redux';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import TransactionsPage from './pages/TransactionsPage';
+import PersonalInfoPage from './pages/PersonalInfoPage';
 
 import TransactionModal from './components/TransactionModal';
 import RemindTransactionModal from './components/RemindTransactionModal';
 import ConfirmTransactionModal from './components/ConfirmTransactionModal';
 import ConfirmedTransactionModal from './components/ConfirmedTransactionModal';
 import FailedTransactionModal from './components/FailedTransactionModal';
+import ChangePasswordModal from './components/ChangePasswordModal';
+
 import Menu from './components/Menu';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -52,6 +55,7 @@ function App(props) {
                 <Header />
                 <PrivateRoute exact path="/" component={DashboardPage} />
                 <PrivateRoute exact path="/transactions" component={TransactionsPage} />
+                <PrivateRoute exact path="/personal_info" component={PersonalInfoPage} />
                 <Footer />
                 
               </div>
@@ -65,6 +69,7 @@ function App(props) {
       <ConfirmTransactionModal></ConfirmTransactionModal>
       <TransactionModal></TransactionModal>
       <RemindTransactionModal></RemindTransactionModal>
+      <ChangePasswordModal></ChangePasswordModal>
     </Router>
   );
 }

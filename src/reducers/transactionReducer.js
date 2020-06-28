@@ -1,4 +1,4 @@
-const initialState = { data: null, status: '', reason: '' };
+const initialState = { data: null };
 
 const transactionReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -6,20 +6,6 @@ const transactionReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: action.transactions
-            };
-
-        case 'UPDATE_STATUS':
-            return {
-                ...state,
-                status: action.status,
-                reason: action.reason
-            };
-
-        case 'RESET_STATUS':
-            return {
-                ...state,
-                status: '',
-                reason: ''
             };
 
         default:

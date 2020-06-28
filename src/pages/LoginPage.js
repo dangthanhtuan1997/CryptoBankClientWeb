@@ -66,7 +66,7 @@ class LoginPage extends React.Component {
                 <div className="form-group">
                   <div className="form-label-group">
                     <label className="form-label" htmlFor="password">Mật khẩu</label>
-                    <a className="link link-primary link-sm" tabIndex={-1} href="html/general/pages/auths/auth-reset.html">Quên mật khẩu?</a>
+                    <a className="link link-primary link-sm" tabIndex={-1} href="/forgot">Quên mật khẩu?</a>
                   </div>
                   <div className="form-control-wrap">
                     <a tabIndex={-1} href="#" className="form-icon form-icon-right passcode-switch" data-target="password">

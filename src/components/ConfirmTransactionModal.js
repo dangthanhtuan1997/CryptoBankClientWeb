@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { onConfirmSendMoneyToOthers, resetStatusTransaction } from '../actions';
+import { onConfirmSendMoneyToOthers, clearPopup } from '../actions';
 
 function ConfirmTransactionModal(props) {
     const [otp, setOtp] = useState('');
 
     function close() {
-        props.resetStatusTransaction();
+        props.clearPopup();
     }
 
-    if (props.transaction.status !== 'pending') {
+    if (props.popup.status !== 'success' || props.popup.title !== 'pending-transaction') {
         return null;
     }
 
@@ -35,7 +35,7 @@ function ConfirmTransactionModal(props) {
                             <ul className="align-center flex-wrap g-3">
                                 <li>
                                     <button onClick={() => {
-                                        props.resetStatusTransaction();
+                                        props.clearPopup();
                                         props.onConfirmSendMoneyToOthers(otp);
                                     }} className="btn btn-primary" data-dismiss="modal">Xác nhận</button>
                                 </li>
@@ -54,11 +54,11 @@ function ConfirmTransactionModal(props) {
 export default connect(state => {
     return {
         user: state.userReducer,
-        transaction: state.transactionReducer
+        popup: state.popupReducer
     }
 }, dispatch => {
     return {
         onConfirmSendMoneyToOthers: (otp) => dispatch(onConfirmSendMoneyToOthers(otp)),
-        resetStatusTransaction: () => dispatch(resetStatusTransaction()),
+        clearPopup: () => dispatch(clearPopup()),
     }
 })(ConfirmTransactionModal);

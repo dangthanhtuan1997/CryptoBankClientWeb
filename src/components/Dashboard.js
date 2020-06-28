@@ -106,11 +106,30 @@ function accountSummary() {
 }
 
 function Dashboard(props) {
-    const { user } = props;
+    const { user, transaction } = props;
+    const [totalSend, setTotalSend] = useState(0);
+    const [totalReceive, setTotalReceive] = useState(0);
 
     useEffect(() => {
         accountSummary();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (transaction.data) {
+            let s = 0;
+            let r = 0;
+            transaction.data.map((item) => {
+                if (item.depositor.account_number === user.userInfo.account_number) {
+                    s += +item.amount;
+                }
+                else {
+                    r += +item.amount;
+                }
+            });
+            setTotalReceive(r);
+            setTotalSend(s);
+        }
+    });
 
     return (
         <div className="nk-content nk-content-fluid">
@@ -157,13 +176,13 @@ function Dashboard(props) {
                                                     <div className="sub-text">
                                                         <div className="dot dot-lg sq" data-bg="#5ce0aa" /> <span>Chuyển tiền</span>
                                                     </div>
-                                                    <div className="lead-text-lg">52.000.000 <span className="currency currency-btc">VND</span></div>
+                                                    <div className="lead-text-lg">{Number(totalSend).toLocaleString('en-US', { currency: 'VND' })}<span className="currency currency-btc">VND</span></div>
                                                 </div>
                                                 <div className="nk-wg4-sub">
                                                     <div className="sub-text">
                                                         <div className="dot dot-lg sq" data-bg="#f6ca3e" /><span>Nhận tiền</span>
                                                     </div>
-                                                    <div className="lead-text-lg">76.000.000 <span className="currency currency-btc">VND</span></div>
+                                                    <div className="lead-text-lg">{Number(totalReceive).toLocaleString('en-US', { currency: 'VND' })}<span className="currency currency-btc">VND</span></div>
                                                 </div>
                                             </div>{/* .nk-wg4-group */}
                                         </div>{/* .nk-wg4-item */}
@@ -203,7 +222,7 @@ function Dashboard(props) {
                                                     </div>
                                                 </li>
                                             </ul>{/* .nk-wg4-switcher */}
-                                            <div className="nk-wg4-note">Tổng cộng <span>32</span> giao dịch</div>
+                                            <div className="nk-wg4-note">Tổng cộng <span>{props.transaction.data ? props.transaction.data.length : 0}</span> giao dịch</div>
                                         </div>{/* .nk-wg4-item */}
                                     </div>{/* .nk-wg4-group */}
                                 </div>{/* .nk-wg4 */}
@@ -221,7 +240,8 @@ function Dashboard(props) {
 
 export default connect(state => {
     return {
-        user: state.userReducer
+        user: state.userReducer,
+        transaction: state.transactionReducer
     }
 }, dispatch => {
     return {

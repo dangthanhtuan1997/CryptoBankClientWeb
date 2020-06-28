@@ -91,7 +91,7 @@ function Menu(props) {
                                 <li className="nk-menu-item">
                                     <a href="#" onClick={(e) => {
                                         e.preventDefault();
-                                        history.push('/');
+                                        history.push('/personal_info');
                                     }} className="nk-menu-link" >
                                         <span className="nk-menu-icon"><em className="icon ni ni-user-c" /></span>
                                         <span className="nk-menu-text">Thông tin tài khoản</span>

@@ -1,14 +1,40 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { resetStatusTransaction } from '../actions';
+import { clearPopup } from '../actions';
+
+const successTransactionTitle = 'Chuyển tiền thành công!';
+const successTransactionContent = 'Lệnh chuyển tiền của đã được xử lý. Đừng lo lắng khi chưa nhận được tiền ngay, điều này có thể kéo dài đến 15 phút tùy thuộc vào ngân hàng đối tác.';
+
+const successUpdatePasswordTitle = 'Đổi mật khẩu thành công!';
+const successUpdatePasswordContent = 'Mật khẩu của bạn đã được cập nhật, vui lòng sử dụng mật khẩu mới khi đăng nhập lại.';
 
 function ConfirmedTransactionModal(props) {
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+
     function close() {
-        props.resetStatusTransaction();
+        props.clearPopup();
     }
 
-    if (props.transaction.status !== 'confirmed') {
+    if (props.popup.status !== 'success' || (props.popup.title !== 'success-transaction' && props.popup.title !== 'success-update-password')) {
         return null;
+    }
+    else {
+        if (!title && !content) {
+            switch (props.popup.title) {
+                case 'success-transaction': {
+                    setTitle(successTransactionTitle);
+                    setContent(successTransactionContent);
+                }
+                    break;
+                case 'success-update-password': {
+                    setTitle(successUpdatePasswordTitle);
+                    setContent(successUpdatePasswordContent);
+                }
+                    break;
+                default:
+            }
+        }
     }
 
     return (
@@ -18,9 +44,9 @@ function ConfirmedTransactionModal(props) {
                     <div className="modal-body modal-body-md text-center">
                         <div className="nk-modal">
                             <em className="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-check bg-success" />
-                            <h4 className="nk-modal-title">Chuyển tiền thành công!</h4>
+                            <h4 className="nk-modal-title">{title}</h4>
                             <div className="nk-modal-text">
-                                <p>Lệnh chuyển tiền của đã được xử lý. Đừng lo lắng khi chưa nhận được tiền ngay, điều này có thể kéo dài đến <strong>15 phút</strong> tùy thuộc vào ngân hàng đối tác.</p>
+                                <p>{content}</p>
                             </div>
                             <div className="nk-modal-action-lg">
                                 <a onClick={() => close()} className="btn btn-mw btn-light" data-dismiss="modal">Trở về</a>
@@ -35,10 +61,10 @@ function ConfirmedTransactionModal(props) {
 
 export default connect(state => {
     return {
-        transaction: state.transactionReducer
+        popup: state.popupReducer
     }
 }, dispatch => {
     return {
-        resetStatusTransaction: () => dispatch(resetStatusTransaction()),
+        clearPopup: () => dispatch(clearPopup()),
     }
 })(ConfirmedTransactionModal);

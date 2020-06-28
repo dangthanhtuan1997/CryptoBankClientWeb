@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { resetStatusTransaction } from '../actions';
+import { clearPopup } from '../actions';
 
 function FailedTransactionModal(props) {
     function close() {
-        props.resetStatusTransaction();
+        props.clearPopup();
     }
 
-    if (props.transaction.status !== 'fail') {
+    if (props.popup.status !== 'error') {
         return null;
     }
 
@@ -20,7 +20,7 @@ function FailedTransactionModal(props) {
                             <em className="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger" />
                             <h4 className="nk-modal-title">Chuyển tiền thất bại!</h4>
                             <div className="nk-modal-text">
-                                <p className="lead">{props.transaction.reason}</p>
+                                <p className="lead">{props.popup.detail}</p>
                                 <p className="text-soft">Hotline hỗ trợ: xxxx.xxxx</p>
                             </div>
                             <div className="nk-modal-action-lg">
@@ -36,10 +36,10 @@ function FailedTransactionModal(props) {
 
 export default connect(state => {
     return {
-        transaction: state.transactionReducer
+        popup: state.popupReducer
     }
 }, dispatch => {
     return {
-        resetStatusTransaction: () => dispatch(resetStatusTransaction()),
+        clearPopup: () => dispatch(clearPopup()),
     }
 })(FailedTransactionModal);

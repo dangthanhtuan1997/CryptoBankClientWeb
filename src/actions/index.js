@@ -92,14 +92,15 @@ const onGetUserByAccountNumber = async (accountNumber, type, partner) => {
 
 /*==============================================     Transactions     ==============================================*/
 
-const updateStatusTransaction = (status, reason = '') => ({
-    type: 'UPDATE_STATUS',
+const setPopup = (status, title, detail = '') => ({
+    type: 'SET_POPUP',
     status: status,
-    reason: reason
+    title: title,
+    detail: detail
 });
 
-const resetStatusTransaction = () => ({
-    type: 'RESET_STATUS'
+const clearPopup = () => ({
+    type: 'CLEAR_POPUP'
 });
 
 const setTransactions = (transactions) => ({
@@ -121,7 +122,7 @@ const onGetTransactions = () => async dispatch => {
         dispatch(setTransactions(res.data));
         return res.data;
     } catch (error) {
-        alert(JSON.stringify('get error ', error.response.data.message));
+        alert(JSON.stringify(error.response.data.message));
     }
 }
 
@@ -131,27 +132,16 @@ const onSendMoneyToOthers = (transaction) => async dispatch => {
     const state = store.getState();
     const accessToken = state.userReducer.accessToken;
 
-    if (transaction.receiver.full_name === '') {
-        return dispatch(updateStatusTransaction('fail', 'Không tìm thấy người nhận.'));
-    }
-
-    if (isNaN(transaction.amount) || transaction.amount <= 0) {
-        return dispatch(updateStatusTransaction('fail', 'Số tiền chuyển không hợp lệ.'));
-    }
-
-    if (state.userReducer.userInfo.balance - transaction.amount < 0) {
-        return dispatch(updateStatusTransaction('fail', 'Không đủ số dư để thực hiện giao dịch.'));
-    }
-
     try {
         const res = await axios.post(`${apiUrl}/transactions/user`, transaction, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
             }
         });
-        dispatch(updateStatusTransaction('pending'));
+        dispatch(setPopup('success', 'pending-transaction'));
+        alert(res.data.otp)
     } catch (error) {
-        dispatch(updateStatusTransaction('fail', JSON.stringify(error.response.data.message)));
+        dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
     }
 }
 
@@ -173,10 +163,28 @@ const onConfirmSendMoneyToOthers = (otp) => async dispatch => {
         }
 
         dispatch(setUserInfo(res.data.depositor));
-        dispatch(updateStatusTransaction('confirmed'));
+        dispatch(setPopup('success', 'success-transaction'));
         dispatch(setTransactions(transactions));
     } catch (error) {
-        dispatch(updateStatusTransaction('fail', JSON.stringify(error.response.data.message)));
+        dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
+    }
+}
+
+/*==============================================     UpdatePassword     ==============================================*/
+
+const onUpdatePassword = (oldPassword, newPassword) => async dispatch => {
+    const state = store.getState();
+    const accessToken = state.userReducer.accessToken;
+
+    try {
+        const res = await axios.patch(`${apiUrl}/users/password`, { oldPassword, newPassword }, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
+        });
+        dispatch(setPopup('success', 'success-update-password'));
+    } catch (error) {
+        dispatch(setPopup('error', 'error-update-password', error.response.data.message));
     }
 }
 
@@ -193,8 +201,9 @@ export {
     RestoreAccessToken,
     onGetUserInfo,
     onSendMoneyToOthers,
-    updateStatusTransaction,
-    resetStatusTransaction,
+    setPopup,
+    clearPopup,
     onGetTransactions,
-    onConfirmSendMoneyToOthers
+    onConfirmSendMoneyToOthers,
+    onUpdatePassword
 };
