@@ -23,30 +23,30 @@ function PersonalInfoPage(props) {
                         <div className="nk-content-wrap">
                             <div className="nk-block-head">
                                 <div className="nk-block-head-content">
-                                    <h2 className="nk-block-title fw-normal">My Profile</h2>
-                                    <div className="nk-block-des">
+                                    <h2 className="nk-block-title fw-normal">Thông tin cá nhân</h2>
+                                    {/* <div className="nk-block-des">
                                         <p>You have full control to manage your own account setting. <span className="text-primary"><em className="icon ni ni-info" /></span></p>
-                                    </div>
+                                    </div> */}
                                 </div>
-                            </div>{/* .nk-block-head */}
-                            <ul className="nk-nav nav nav-tabs">
+                            </div>
+                            {/* <ul className="nk-nav nav nav-tabs">
                                 <li className="nav-item">
-                                    <a className="nav-link" href="html/subscription/profile.html">Personal</a>
+                                    <a className="nav-link" href="">Personal</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="html/subscription/profile-billing.html">Billing</a>
+                                    <a className="nav-link" href="">Billing</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="html/subscription/profile-setting.html">Settings</a>
+                                    <a className="nav-link" href="">Settings</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="html/subscription/profile-notify.html">Notifications</a>
+                                    <a className="nav-link" href="">Notifications</a>
                                 </li>
-                            </ul>{/* nav-tabs */}
+                            </ul> */}
                             <div className="nk-block">
                                 <div className="nk-block-head">
                                     <div className="nk-block-head-content">
-                                        <h5 className="nk-block-title">Thông tin cá nhân</h5>
+                                        {/* <h5 className="nk-block-title">Thông tin cá nhân</h5> */}
                                         <div className="nk-block-des">
                                             <p>Xem thông tin cá nhân của bạn và đổi mật khẩu.</p>
                                         </div>

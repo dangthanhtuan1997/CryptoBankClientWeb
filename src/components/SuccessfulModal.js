@@ -8,7 +8,7 @@ const successTransactionContent = 'Lệnh chuyển tiền của đã được x�
 const successUpdatePasswordTitle = 'Đổi mật khẩu thành công!';
 const successUpdatePasswordContent = 'Mật khẩu của bạn đã được cập nhật, vui lòng sử dụng mật khẩu mới khi đăng nhập lại.';
 
-function ConfirmedTransactionModal(props) {
+function SuccessfulModal(props) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
@@ -67,4 +67,4 @@ export default connect(state => {
     return {
         clearPopup: () => dispatch(clearPopup()),
     }
-})(ConfirmedTransactionModal);
+})(SuccessfulModal);

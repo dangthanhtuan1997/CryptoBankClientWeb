@@ -12,9 +12,9 @@ import PersonalInfoPage from './pages/PersonalInfoPage';
 
 import TransactionModal from './components/TransactionModal';
 import RemindTransactionModal from './components/RemindTransactionModal';
-import ConfirmTransactionModal from './components/ConfirmTransactionModal';
-import ConfirmedTransactionModal from './components/ConfirmedTransactionModal';
-import FailedTransactionModal from './components/FailedTransactionModal';
+import OTPModal from './components/OTPModal';
+import SuccessfulModal from './components/SuccessfulModal';
+import ErrorModal from './components/ErrorModal';
 import ChangePasswordModal from './components/ChangePasswordModal';
 
 import Menu from './components/Menu';
@@ -64,9 +64,9 @@ function App(props) {
         </>
       </Switch>
       
-      <FailedTransactionModal></FailedTransactionModal>
-      <ConfirmedTransactionModal></ConfirmedTransactionModal>
-      <ConfirmTransactionModal></ConfirmTransactionModal>
+      <ErrorModal></ErrorModal>
+      <SuccessfulModal></SuccessfulModal>
+      <OTPModal></OTPModal>
       <TransactionModal></TransactionModal>
       <RemindTransactionModal></RemindTransactionModal>
       <ChangePasswordModal></ChangePasswordModal>

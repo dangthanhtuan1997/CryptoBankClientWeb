@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { onConfirmSendMoneyToOthers, clearPopup } from '../actions';
 
-function ConfirmTransactionModal(props) {
+function OTPModal(props) {
     const [otp, setOtp] = useState('');
 
     function close() {
@@ -61,4 +61,4 @@ export default connect(state => {
         onConfirmSendMoneyToOthers: (otp) => dispatch(onConfirmSendMoneyToOthers(otp)),
         clearPopup: () => dispatch(clearPopup()),
     }
-})(ConfirmTransactionModal);
+})(OTPModal);

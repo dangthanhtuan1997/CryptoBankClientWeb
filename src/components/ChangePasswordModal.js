@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { onUpdatePassword, setPopup, clearPopup } from '../actions';
+import { onUpdatePassword } from '../actions';
 
 function ChangePasswordModal(props) {
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+    function handleUpdatePassword() {
+        if (!oldPassword || !newPassword || !confirmNewPassword) {
+            return;
+        }
+
+        if (newPassword !== confirmNewPassword) {
+            return;
+        }
+
+        props.onUpdatePassword(oldPassword, newPassword);
+    }
 
     return (
         <div className="modal fade" tabIndex={-1} role="dialog" id="password-edit">
@@ -27,7 +39,9 @@ function ChangePasswordModal(props) {
                                                 <em className="passcode-icon icon-show icon ni ni-eye" />
                                                 <em className="passcode-icon icon-hide icon ni ni-eye-off" />
                                             </a>
-                                            <input type="password" onChange={(e) => setOldPassword(e.target.value)} className="form-control form-control-lg" id="old-password" placeholder="******" />
+                                            {oldPassword ? <input type="password" onChange={(e) => setOldPassword(e.target.value)} className="form-control form-control-lg" id="old-password" placeholder="******" /> :
+                                                <input type="password" onChange={(e) => setOldPassword(e.target.value)} className="form-control form-control-lg error" id="old-password" placeholder="******" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -41,7 +55,8 @@ function ChangePasswordModal(props) {
                                                 <em className="passcode-icon icon-show icon ni ni-eye" />
                                                 <em className="passcode-icon icon-hide icon ni ni-eye-off" />
                                             </a>
-                                            <input type="password" onChange={(e) => setNewPassword(e.target.value)} className="form-control form-control-lg" id="new-password" placeholder="******" />
+                                            {newPassword ? <input type="password" onChange={(e) => setNewPassword(e.target.value)} className="form-control form-control-lg" id="new-password" placeholder="******" /> :
+                                                <input type="password" onChange={(e) => setNewPassword(e.target.value)} className="form-control form-control-lg error" id="new-password" placeholder="******" />}
                                         </div>
                                     </div>
                                 </div>
@@ -55,16 +70,15 @@ function ChangePasswordModal(props) {
                                                 <em className="passcode-icon icon-show icon ni ni-eye" />
                                                 <em className="passcode-icon icon-hide icon ni ni-eye-off" />
                                             </a>
-                                            <input type="password" onChange={(e) => setConfirmNewPassword(e.target.value)} className="form-control form-control-lg" id="confirm-new-password" placeholder="******" />
+                                            {confirmNewPassword && newPassword === confirmNewPassword ? <input type="password" onChange={(e) => setConfirmNewPassword(e.target.value)} className="form-control form-control-lg" id="confirm-new-password" placeholder="******" /> :
+                                                <input type="password" onChange={(e) => setConfirmNewPassword(e.target.value)} className="form-control form-control-lg error" id="confirm-new-password" placeholder="******" />}
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-12 mt-3">
                                     <ul className="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                                         <li>
-                                            <a href="" onClick={() => {
-                                                props.onUpdatePassword(oldPassword, newPassword);
-                                            }} className="btn btn-lg btn-primary" data-dismiss="modal">Xác nhận</a>
+                                            <a href="" onClick={() => handleUpdatePassword()} className="btn btn-lg btn-primary" data-dismiss="modal">Xác nhận</a>
                                         </li>
                                         <li>
                                             <a href="#" data-dismiss="modal" className="link link-light">Hủy</a>
@@ -86,6 +100,6 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onUpdatePassword: (oldPassword, newPassword)=>dispatch(onUpdatePassword(oldPassword, newPassword))
+        onUpdatePassword: (oldPassword, newPassword) => dispatch(onUpdatePassword(oldPassword, newPassword))
     }
 })(ChangePasswordModal);

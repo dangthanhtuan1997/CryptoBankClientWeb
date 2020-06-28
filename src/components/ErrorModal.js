@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { clearPopup } from '../actions';
 
-function FailedTransactionModal(props) {
+function ErrorModal(props) {
     function close() {
         props.clearPopup();
     }
@@ -42,4 +42,4 @@ export default connect(state => {
     return {
         clearPopup: () => dispatch(clearPopup()),
     }
-})(FailedTransactionModal);
+})(ErrorModal);
