@@ -146,7 +146,7 @@ const onCreateNewTransaction = (transaction) => async dispatch => {
         }
         else {
             if (transactions) {
-                transactions.unshift(res.data.transaction);
+                transactions.push(res.data.transaction);
             }
 
             dispatch(setPopup('success', 'success-debt-remind'));
@@ -190,7 +190,7 @@ const onConfirmSendMoneyToOthers = (otp) => async dispatch => {
 
         if (transactions) {
             if (res.data.transaction.type === 'transfer') {
-                transactions.unshift(res.data.transaction);
+                transactions.push(res.data.transaction);
             }
             else {
                 transactions[transactions.findIndex(item => item._id === res.data.transaction._id)].status = 'confirmed';

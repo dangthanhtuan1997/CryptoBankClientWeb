@@ -119,11 +119,13 @@ function Dashboard(props) {
             let s = 0;
             let r = 0;
             transaction.data.map((item) => {
-                if (item.depositor.account_number === user.userInfo.account_number) {
-                    s += +item.amount;
-                }
-                else {
-                    r += +item.amount;
+                if (item.status === 'confirmed'){
+                    if (item.depositor.account_number === user.userInfo.account_number) {
+                        s += +item.amount;
+                    }
+                    else {
+                        r += +item.amount;
+                    }
                 }
             });
             setTotalReceive(r);

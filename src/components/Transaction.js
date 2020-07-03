@@ -58,8 +58,7 @@ function Transaction({ onGetOTP, user, data }) {
                             <em className="icon ni ni-wallet-fill" />
                         </a>
                     </li> : null}
-
-                    <li className="nk-tb-action-hidden">
+                    {/* <li className="nk-tb-action-hidden">
                         <a href="#" className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Send Email">
                             <em className="icon ni ni-mail-fill" />
                         </a>
@@ -68,7 +67,7 @@ function Transaction({ onGetOTP, user, data }) {
                         <a href="#" className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Suspend">
                             <em className="icon ni ni-user-cross-fill" />
                         </a>
-                    </li>
+                    </li> */}
                     <li>
                         <div className="drodown">
                             <a href="#" className="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em className="icon ni ni-more-h" /></a>

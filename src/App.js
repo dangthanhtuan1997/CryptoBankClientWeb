@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import TransactionsPage from './pages/TransactionsPage';
 import PersonalInfoPage from './pages/PersonalInfoPage';
+import DebtPage from './pages/DebtPage';
 
 import TransactionModal from './components/TransactionModal';
 import RemindTransactionModal from './components/RemindTransactionModal';
@@ -67,6 +68,7 @@ function App(props) {
                 <PrivateRoute exact path="/" component={DashboardPage} />
                 <PrivateRoute exact path="/transactions" component={TransactionsPage} />
                 <PrivateRoute exact path="/personal_info" component={PersonalInfoPage} />
+                <PrivateRoute exact path="/debt" component={DebtPage} />
                 <Footer />
 
               </div>

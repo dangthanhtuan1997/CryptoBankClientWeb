@@ -112,13 +112,13 @@ function Menu(props) {
                                         history.push('/transactions');
                                     }} className="nk-menu-link">
                                         <span className="nk-menu-icon"><em className="icon ni ni-repeat" /></span>
-                                        <span className="nk-menu-text">Giao dịch</span>
+                                        <span className="nk-menu-text">Tất cả giao dịch</span>
                                     </a>
                                 </li>
                                 <li className="nk-menu-item">
                                     <a href="#" onClick={(e) => {
                                         e.preventDefault();
-                                        history.push('/');
+                                        history.push('/debt');
                                     }} className="nk-menu-link">
                                         <span className="nk-menu-icon"><em className="icon ni ni-file-text" /></span>
                                         <span className="nk-menu-text">Yêu cầu trả nợ</span>
