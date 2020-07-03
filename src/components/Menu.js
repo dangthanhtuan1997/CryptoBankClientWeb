@@ -100,7 +100,7 @@ function Menu(props) {
                                 <li className="nk-menu-item">
                                     <a href="#" onClick={(e) => {
                                         e.preventDefault();
-                                        history.push('/');
+                                        history.push('/card');
                                     }} className="nk-menu-link">
                                         <span className="nk-menu-icon"><em className="icon ni ni-wallet-alt" /></span>
                                         <span className="nk-menu-text">Danh sách tài khoản</span>

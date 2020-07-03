@@ -11,6 +11,7 @@ import DashboardPage from './pages/DashboardPage';
 import TransactionsPage from './pages/TransactionsPage';
 import PersonalInfoPage from './pages/PersonalInfoPage';
 import DebtPage from './pages/DebtPage';
+import CardPage from './pages/CardPage';
 
 import TransactionModal from './components/TransactionModal';
 import RemindTransactionModal from './components/RemindTransactionModal';
@@ -69,6 +70,7 @@ function App(props) {
                 <PrivateRoute exact path="/transactions" component={TransactionsPage} />
                 <PrivateRoute exact path="/personal_info" component={PersonalInfoPage} />
                 <PrivateRoute exact path="/debt" component={DebtPage} />
+                <PrivateRoute exact path="/card" component={CardPage} />
                 <Footer />
 
               </div>
