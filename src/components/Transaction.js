@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { onGetOTP } from '../actions';
 
-function Transaction(props) {
-    const { user } = props;
-    const { depositor, receiver, amount, createdAt, note } = props.data;
+function Transaction({ onGetOTP, user, data }) {
+    const { depositor, receiver, amount, createdAt, note, type, status, _id } = data;
     const time = moment(createdAt).format('HH:mm:ss DD/MM/YYYY');
 
     return (
@@ -41,17 +41,24 @@ function Transaction(props) {
                 <span>{note}</span>
             </td>
             <td className="nk-tb-col tb-col-md">
-                {depositor.account_number === user.userInfo.account_number ? <span className="tb-status text-success">Chuyển tiền</span> :
-                    <span className="tb-status text-danger">Nhận tiền</span>}
-
+                {type === 'transfer' ? depositor.account_number === user.userInfo.account_number ? <span className="tb-status text-danger">Chuyển tiền</span> :
+                    <span className="tb-status text-success">Nhận tiền</span> : <span className="tb-status text-warning">Nhắc nợ</span>}
+            </td>
+            <td className="nk-tb-col tb-col-md">
+                {status === 'pending' ? <span className="tb-status text-warning">Đang chờ</span> :
+                    <span className="tb-status text-success">Thành công</span>}
             </td>
             <td className="nk-tb-col nk-tb-col-tools">
                 <ul className="nk-tb-actions gx-1">
-                    <li className="nk-tb-action-hidden">
-                        <a href="#" className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Wallet">
+                    {type === 'debt' && status === 'pending' && depositor.account_number === user.userInfo.account_number ? <li className="nk-tb-action-hidden">
+                        <a href="" onClick={(e) => {
+                            e.preventDefault();
+                            onGetOTP(_id);
+                        }} className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Wallet">
                             <em className="icon ni ni-wallet-fill" />
                         </a>
-                    </li>
+                    </li> : null}
+
                     <li className="nk-tb-action-hidden">
                         <a href="#" className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Send Email">
                             <em className="icon ni ni-mail-fill" />
@@ -91,5 +98,6 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
+        onGetOTP: (transactionId) => dispatch(onGetOTP(transactionId))
     }
 })(Transaction);

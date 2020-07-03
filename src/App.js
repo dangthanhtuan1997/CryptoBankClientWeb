@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import cookie from 'react-cookies';
 import history from './history';
 import { RestoreAccessToken } from './actions/index';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
 
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
@@ -20,6 +21,7 @@ import ChangePasswordModal from './components/ChangePasswordModal';
 import Menu from './components/Menu';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import config from './config';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const accessToken = cookie.load('CryptoBankAccessToken');
@@ -32,7 +34,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
+const socket = io(config.socketUrl);
+
 function App(props) {
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const accessToken = cookie.load('CryptoBankAccessToken');
@@ -42,6 +47,12 @@ function App(props) {
       RestoreAccessToken(accessToken);
     }
   }, []);
+
+  useEffect(() => {
+    if (props.user.userInfo) {
+      socket.emit('init', props.user.userInfo.account_number);
+    }
+  }, [props.user.userInfo]);
 
   return (
     <Router history={history}>
@@ -57,13 +68,13 @@ function App(props) {
                 <PrivateRoute exact path="/transactions" component={TransactionsPage} />
                 <PrivateRoute exact path="/personal_info" component={PersonalInfoPage} />
                 <Footer />
-                
+
               </div>
             </div>
           </div>
         </>
       </Switch>
-      
+
       <ErrorModal></ErrorModal>
       <SuccessfulModal></SuccessfulModal>
       <OTPModal></OTPModal>

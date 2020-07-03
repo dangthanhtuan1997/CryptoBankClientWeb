@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import { connect } from 'react-redux';
-import { onGetUserByAccountNumber, onSendMoneyToOthers } from '../actions';
+import { onGetUserByAccountNumber, onCreateNewTransaction } from '../actions';
 import Select from 'react-select';
 
 const options = [
@@ -17,7 +17,7 @@ function TransactionModal(props) {
     const [amount, setAmount] = useState(10000);
     const [note, setNote] = useState('Chuyển tiền');
     const [selectedBank, setSelectedBank] = useState('nklbank');
-    const [type, setType] = useState('internal');
+    const [scope, setScope] = useState('internal');
     const [fee, setFee] = useState(true);
     const [save, setSave] = useState(true);
 
@@ -31,7 +31,7 @@ function TransactionModal(props) {
         }
 
         typingTimeoutRef.current = setTimeout(async () => {
-            const receiverName = await onGetUserByAccountNumber(receiverAccountNumber, type, selectedBank);
+            const receiverName = await onGetUserByAccountNumber(receiverAccountNumber, scope, selectedBank);
             setReceiverName(receiverName);
         }, 300);
     });
@@ -50,18 +50,19 @@ function TransactionModal(props) {
         setSave(true);
     }
 
-    function sendTransactionInfo(type) {
-        props.onSendMoneyToOthers({
+    function sendTransactionInfo(scope) {
+        props.onCreateNewTransaction({
             receiver: {
                 full_name: receiverName,
                 account_number: receiverAccountNumber
             },
             amount,
             note,
-            type,
+            scope,
             partner_code: selectedBank,
             fee,
-            save
+            save,
+            type: 'transfer'
         });
     }
 
@@ -79,13 +80,13 @@ function TransactionModal(props) {
                             <ul className="sp-package-plan nav nav-switch nav-tabs">
                                 <li className="nav-item">
                                     <a className="nav-link active" onClick={() => {
-                                        setType('internal');
+                                        setScope('internal');
                                         clearState();
                                     }} href="#internal" data-toggle="tab" className="nav-link active">Cùng ngân hàng</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" onClick={() => {
-                                        setType('external');
+                                        setScope('external');
                                         clearState();
                                     }} href="#external" data-toggle="tab" className="nav-link">Liên ngân hàng</a>
                                 </li>
@@ -242,6 +243,6 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onSendMoneyToOthers: (transaction) => dispatch(onSendMoneyToOthers(transaction)),
+        onCreateNewTransaction: (transaction) => dispatch(onCreateNewTransaction(transaction)),
     }
 })(TransactionModal);

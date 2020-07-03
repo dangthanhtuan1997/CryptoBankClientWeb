@@ -39,6 +39,7 @@ function TransactionsPage(props) {
                                                     <th className="nk-tb-col tb-col-lg"><span className="sub-text">Thời gian</span></th>
                                                     <th className="nk-tb-col tb-col-md"><span className="sub-text">Ghi chú</span></th>
                                                     <th className="nk-tb-col tb-col-md"><span className="sub-text">Loại</span></th>
+                                                    <th className="nk-tb-col tb-col-md"><span className="sub-text">Trạng thái</span></th>
                                                     <th className="nk-tb-col nk-tb-col-tools text-right">
                                                         <div className="dropdown">
                                                             <a href="#" className="btn btn-xs btn-outline-light btn-icon dropdown-toggle" data-toggle="dropdown" data-offset="0,5"><em className="icon ni ni-plus" /></a>

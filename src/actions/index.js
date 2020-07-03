@@ -73,12 +73,12 @@ const onGetUserInfo = () => async dispatch => {
 
 /*==============================================     GetUserByAccountNumber     ==============================================*/
 
-const onGetUserByAccountNumber = async (accountNumber, type, partner) => {
+const onGetUserByAccountNumber = async (accountNumber, scope, partner) => {
     const state = store.getState();
     let accessToken = state.userReducer.accessToken;
 
     try {
-        const res = await axios.get(`${apiUrl}/users/${accountNumber}?type=${type}&partner=${partner}`, {
+        const res = await axios.get(`${apiUrl}/users/${accountNumber}?scope=${scope}&partner=${partner}`, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
             }
@@ -128,9 +128,10 @@ const onGetTransactions = () => async dispatch => {
 
 /*==============================================     SendMoneyToOthers     ==============================================*/
 
-const onSendMoneyToOthers = (transaction) => async dispatch => {
+const onCreateNewTransaction = (transaction) => async dispatch => {
     const state = store.getState();
     const accessToken = state.userReducer.accessToken;
+    const transactions = state.transactionReducer.data;
 
     try {
         const res = await axios.post(`${apiUrl}/transactions/user`, transaction, {
@@ -138,8 +139,37 @@ const onSendMoneyToOthers = (transaction) => async dispatch => {
                 "x-access-token": `JWT ${accessToken}`
             }
         });
+
+        if (transaction.type === 'transfer') {
+            dispatch(setPopup('success', 'pending-transaction'));
+            alert(res.data.otp)
+        }
+        else {
+            if (transactions) {
+                transactions.unshift(res.data.transaction);
+            }
+
+            dispatch(setPopup('success', 'success-debt-remind'));
+            dispatch(setTransactions(transactions));
+        }
+    } catch (error) {
+        dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
+    }
+}
+
+const onGetOTP = (transactionId) => async dispatch => {
+    const state = store.getState();
+    const accessToken = state.userReducer.accessToken;
+
+    try {
+        const res = await axios.get(`${apiUrl}/transactions/otp?transaction_id=${transactionId}`, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
+        });
+
         dispatch(setPopup('success', 'pending-transaction'));
-        alert(res.data.otp)
+        alert(res.data.otp);
     } catch (error) {
         dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
     }
@@ -159,12 +189,17 @@ const onConfirmSendMoneyToOthers = (otp) => async dispatch => {
         });
 
         if (transactions) {
-            transactions.unshift(res.data.transaction);
+            if (res.data.transaction.type === 'transfer') {
+                transactions.unshift(res.data.transaction);
+            }
+            else {
+                transactions[transactions.findIndex(item => item._id === res.data.transaction._id)].status = 'confirmed';
+            }
         }
 
         dispatch(setUserInfo(res.data.depositor));
         dispatch(setPopup('success', 'success-transaction'));
-        dispatch(setTransactions(transactions));
+        dispatch(setTransactions(res.data.transactions));
     } catch (error) {
         dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
     }
@@ -200,10 +235,11 @@ export {
     onGetUserByAccountNumber,
     RestoreAccessToken,
     onGetUserInfo,
-    onSendMoneyToOthers,
+    onCreateNewTransaction,
     setPopup,
     clearPopup,
     onGetTransactions,
     onConfirmSendMoneyToOthers,
-    onUpdatePassword
+    onUpdatePassword,
+    onGetOTP
 };

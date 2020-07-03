@@ -8,6 +8,9 @@ const successTransactionContent = 'Lệnh chuyển tiền của đã được x�
 const successUpdatePasswordTitle = 'Đổi mật khẩu thành công!';
 const successUpdatePasswordContent = 'Mật khẩu của bạn đã được cập nhật, vui lòng sử dụng mật khẩu mới khi đăng nhập lại.';
 
+const successRemindDebtTitle = 'Gửi yêu cầu thanh toán nợ thành công!';
+const successRemindDebtContent = 'Một thông báo đã được gửi tới người nhận, bạn sẽ nhận được tiền khi người đó thanh toán cho bạn.';
+
 function SuccessfulModal(props) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -16,7 +19,7 @@ function SuccessfulModal(props) {
         props.clearPopup();
     }
 
-    if (props.popup.status !== 'success' || (props.popup.title !== 'success-transaction' && props.popup.title !== 'success-update-password')) {
+    if (props.popup.status !== 'success' || (props.popup.title !== 'success-transaction' && props.popup.title !== 'success-update-password' && props.popup.title !== 'success-debt-remind')) {
         return null;
     }
     else {
@@ -30,6 +33,11 @@ function SuccessfulModal(props) {
                 case 'success-update-password': {
                     setTitle(successUpdatePasswordTitle);
                     setContent(successUpdatePasswordContent);
+                }
+                    break;
+                case 'success-debt-remind': {
+                    setTitle(successRemindDebtTitle);
+                    setContent(successRemindDebtContent);
                 }
                     break;
                 default:
