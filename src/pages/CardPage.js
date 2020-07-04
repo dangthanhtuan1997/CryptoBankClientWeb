@@ -126,7 +126,7 @@ function CardPage(props) {
                                             <p className="text-soft">Hãy để lại thông tin liên lạc, nhân viên sẽ nhanh chóng liên lạc với bạn sớm nhất!</p>
                                         </div>
                                         <div className="nk-help-action">
-                                            <a href="html/subscription/contact.html" className="btn btn-lg btn-outline-primary">Cần hỗ trợ</a>
+                                            <a href="" className="btn btn-lg btn-outline-primary">Cần hỗ trợ</a>
                                         </div>
                                     </div>{/* .nk-help */}
                                 </div>

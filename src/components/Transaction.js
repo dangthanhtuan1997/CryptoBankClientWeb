@@ -11,8 +11,8 @@ function Transaction({ onGetOTP, user, data }) {
         <tr className="nk-tb-item">
             <td className="nk-tb-col">
                 <div className="user-card">
-                    <div className="user-avatar bg-dim-primary d-none d-sm-flex">
-                        <span>S</span>
+                    <div class="nk-tnx-type-icon bg-danger-dim text-danger">
+                        <em class="icon ni ni-arrow-up-right"></em>
                     </div>
                     <div className="user-info">
                         <span className="tb-lead">{depositor.full_name}<span className="dot dot-success d-md-none ml-1" /></span>
@@ -22,8 +22,8 @@ function Transaction({ onGetOTP, user, data }) {
             </td>
             <td className="nk-tb-col">
                 <div className="user-card">
-                    <div className="user-avatar bg-success d-none d-sm-flex">
-                        <span>R</span>
+                    <div class="nk-tnx-type-icon bg-success-dim text-success">
+                        <em class="icon ni ni-arrow-down-left"></em>
                     </div>
                     <div className="user-info">
                         <span className="tb-lead">{receiver.full_name}<span className="dot dot-success d-md-none ml-1" /></span>
@@ -32,7 +32,10 @@ function Transaction({ onGetOTP, user, data }) {
                 </div>
             </td>
             <td className="nk-tb-col tb-col-md">
-                <span>{Number(amount).toLocaleString('en-US', { currency: 'VND' })}</span>
+                <span className="tb-lead">{Number(amount).toLocaleString('en-US', { currency: 'VND' })}</span>
+                {type === 'transfer' ? depositor.account_number === user.userInfo.account_number ? <span className="tb-status text-danger">Chuyển tiền</span> :
+                    <span className="tb-status text-success">Nhận tiền</span> : <span className="tb-status text-warning">Nhắc nợ</span>}
+
             </td>
             <td className="nk-tb-col tb-col-lg">
                 <span>{time}</span>
@@ -40,13 +43,10 @@ function Transaction({ onGetOTP, user, data }) {
             <td className="nk-tb-col tb-col-lg">
                 <span>{note}</span>
             </td>
+
             <td className="nk-tb-col tb-col-md">
-                {type === 'transfer' ? depositor.account_number === user.userInfo.account_number ? <span className="tb-status text-danger">Chuyển tiền</span> :
-                    <span className="tb-status text-success">Nhận tiền</span> : <span className="tb-status text-warning">Nhắc nợ</span>}
-            </td>
-            <td className="nk-tb-col tb-col-md">
-                {status === 'pending' ? <span className="tb-status text-warning">Đang chờ</span> :
-                    <span className="tb-status text-success">Thành công</span>}
+                {status === 'pending' ? <span class="badge badge-sm badge-dim badge-outline-warning d-none d-md-inline-flex">Đang chờ</span> :
+                    <span class="badge badge-sm badge-dim badge-outline-success d-none d-md-inline-flex">Thành công</span>}
             </td>
             <td className="nk-tb-col nk-tb-col-tools">
                 <ul className="nk-tb-actions gx-1">

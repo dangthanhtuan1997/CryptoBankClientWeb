@@ -11,6 +11,14 @@ const successUpdatePasswordContent = 'Mật khẩu của bạn đã được c�
 const successRemindDebtTitle = 'Gửi yêu cầu thanh toán nợ thành công!';
 const successRemindDebtContent = 'Một thông báo đã được gửi tới người nhận, bạn sẽ nhận được tiền khi người đó thanh toán cho bạn.';
 
+const successUpdateFriendsTitle = 'Cập nhật người thụ hưởng thành công!';
+const successUpdateFriendsContent = 'Bạn có thể chuyển tiền cho bạn bè ngay bây giờ.';
+
+const successDeleteFriendsTitle = 'Xóa người thụ hưởng thành công!';
+const successDeleteFriendsContent = 'Bạn có thể thêm lại bất cứ lúc nào.';
+
+const listTitle = ['success-transaction', 'success-update-password', 'success-debt-remind', 'success-update-friends', 'success-delete-friends']
+
 function SuccessfulModal(props) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -19,7 +27,7 @@ function SuccessfulModal(props) {
         props.clearPopup();
     }
 
-    if (props.popup.status !== 'success' || (props.popup.title !== 'success-transaction' && props.popup.title !== 'success-update-password' && props.popup.title !== 'success-debt-remind')) {
+    if (props.popup.status !== 'success' || listTitle.indexOf(props.popup.title) === -1) {
         return null;
     }
     else {
@@ -38,6 +46,17 @@ function SuccessfulModal(props) {
                 case 'success-debt-remind': {
                     setTitle(successRemindDebtTitle);
                     setContent(successRemindDebtContent);
+                }
+                    break;
+                case 'success-update-friends': {
+                    setTitle(successUpdateFriendsTitle);
+                    setContent(successUpdateFriendsContent);
+                }
+                    break;
+
+                case 'success-delete-friends': {
+                    setTitle(successDeleteFriendsTitle);
+                    setContent(successDeleteFriendsContent);
                 }
                     break;
                 default:

@@ -47,7 +47,6 @@ function DebtPage(props) {
                                                     <th className="nk-tb-col tb-col-md"><span className="sub-text">Số tiền</span></th>
                                                     <th className="nk-tb-col tb-col-lg"><span className="sub-text">Thời gian</span></th>
                                                     <th className="nk-tb-col tb-col-md"><span className="sub-text">Ghi chú</span></th>
-                                                    <th className="nk-tb-col tb-col-md"><span className="sub-text">Loại</span></th>
                                                     <th className="nk-tb-col tb-col-md"><span className="sub-text">Trạng thái</span></th>
                                                     <th className="nk-tb-col nk-tb-col-tools text-right">
                                                         <div className="dropdown">

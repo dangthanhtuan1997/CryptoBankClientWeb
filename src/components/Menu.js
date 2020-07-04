@@ -91,10 +91,10 @@ function Menu(props) {
                                 <li className="nk-menu-item">
                                     <a href="#" onClick={(e) => {
                                         e.preventDefault();
-                                        history.push('/personal_info');
+                                        history.push('/personal-info');
                                     }} className="nk-menu-link" >
                                         <span className="nk-menu-icon"><em className="icon ni ni-user-c" /></span>
-                                        <span className="nk-menu-text">Thông tin tài khoản</span>
+                                        <span className="nk-menu-text">Thông tin cá nhân</span>
                                     </a>
                                 </li>
                                 <li className="nk-menu-item">
@@ -103,7 +103,16 @@ function Menu(props) {
                                         history.push('/card');
                                     }} className="nk-menu-link">
                                         <span className="nk-menu-icon"><em className="icon ni ni-wallet-alt" /></span>
-                                        <span className="nk-menu-text">Danh sách tài khoản</span>
+                                        <span className="nk-menu-text">Thông tin tài khoản</span>
+                                    </a>
+                                </li>
+                                <li className="nk-menu-item">
+                                    <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        history.push('/friends');
+                                    }} className="nk-menu-link" >
+                                        <span className="nk-menu-icon"><em class="icon ni ni-user-add"></em></span>
+                                        <span className="nk-menu-text">Danh sách người thụ hưởng</span>
                                     </a>
                                 </li>
                                 <li className="nk-menu-item">

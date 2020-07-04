@@ -211,14 +211,14 @@ function TransactionModal(props) {
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" />
-                                                    <label className="custom-control-label" >Phí người chuyển chịu </label>
+                                                    <input id="fee-external" type="checkbox" defaultChecked="true" className="custom-control-input" />
+                                                    <label htmlFor="fee-external" className="custom-control-label" >Phí người chuyển chịu </label>
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="custom-control custom-switch">
-                                                    <input type="checkbox" defaultChecked="true" className="custom-control-input" />
-                                                    <label className="custom-control-label">Lưu người nhận </label>
+                                                    <input id="save-external" type="checkbox" defaultChecked="true" className="custom-control-input" />
+                                                    <label htmlFor="save-external" className="custom-control-label">Lưu người nhận </label>
                                                 </div>
                                             </div>
                                         </div>

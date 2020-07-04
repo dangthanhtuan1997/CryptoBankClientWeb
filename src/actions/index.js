@@ -223,6 +223,30 @@ const onUpdatePassword = (oldPassword, newPassword) => async dispatch => {
     }
 }
 
+/*==============================================     UpdateFriends     ==============================================*/
+
+const onUpdateFriends = (friends, type) => async dispatch => {
+    const state = store.getState();
+    const accessToken = state.userReducer.accessToken;
+
+    try {
+        const res = await axios.patch(`${apiUrl}/users/friends`, { friends }, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
+        });
+        
+        if (type === 'update') {
+            dispatch(setPopup('success', 'success-update-friends'));
+        }
+        else if (type === 'delete') {
+            dispatch(setPopup('success', 'success-delete-friends'));
+        }
+    } catch (error) {
+        dispatch(setPopup('error', 'success-update-friends', error.response.data.message));
+    }
+}
+
 const RestoreAccessToken = (accessToken) => ({
     type: 'RESTORE_TOKEN',
     accessToken: accessToken
@@ -241,5 +265,6 @@ export {
     onGetTransactions,
     onConfirmSendMoneyToOthers,
     onUpdatePassword,
-    onGetOTP
+    onGetOTP,
+    onUpdateFriends
 };
