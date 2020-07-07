@@ -4,7 +4,7 @@ import cookie from 'react-cookies';
 import history from './history';
 import { RestoreAccessToken } from './actions/index';
 import { connect } from 'react-redux';
-import io from 'socket.io-client';
+import { socket } from './socket';
 
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
@@ -37,10 +37,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-const socket = io(config.socketUrl);
 
 function App(props) {
-  const [isLogin, setIsLogin] = useState(false);
+  const [init, setInit] = useState(false);
 
   useEffect(() => {
     const accessToken = cookie.load('CryptoBankAccessToken');
@@ -53,7 +52,10 @@ function App(props) {
 
   useEffect(() => {
     if (props.user.userInfo) {
-      socket.emit('init', props.user.userInfo.account_number);
+      if (!init) {
+        socket.emit('init', props.user.userInfo.account_number);
+        setInit(true);
+      }
     }
   }, [props.user.userInfo]);
 

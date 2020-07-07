@@ -149,7 +149,7 @@ const onCreateNewTransaction = (transaction) => async dispatch => {
                 transactions.push(res.data.transaction);
             }
 
-            dispatch(setPopup('success', 'success-debt-remind'));
+            //dispatch(setPopup('success', 'success-debt-remind'));
             dispatch(setTransactions(transactions));
         }
     } catch (error) {
@@ -235,7 +235,7 @@ const onUpdateFriends = (friends, type) => async dispatch => {
                 "x-access-token": `JWT ${accessToken}`
             }
         });
-        
+
         if (type === 'update') {
             dispatch(setPopup('success', 'success-update-friends'));
         }
@@ -247,11 +247,31 @@ const onUpdateFriends = (friends, type) => async dispatch => {
     }
 }
 
+/*==============================================     Nofitication     ==============================================*/
+
+const addNotification = (title, content) => ({
+    type: 'ADD_NOTIFICATION',
+    title: title,
+    content: content
+});
+
+const onAddNotification = (title, content) => {
+    store.dispatch(addNotification(title, content));
+}
+
 const RestoreAccessToken = (accessToken) => ({
     type: 'RESTORE_TOKEN',
     accessToken: accessToken
 });
 
+
+const seenNotification = () => ({
+    type: 'SEEN_NOTIFICATION'
+});
+
+const onSeenNotification = () => dispatch => {
+    dispatch(seenNotification());
+};
 
 export {
     onLogin,
@@ -266,5 +286,7 @@ export {
     onConfirmSendMoneyToOthers,
     onUpdatePassword,
     onGetOTP,
-    onUpdateFriends
+    onUpdateFriends,
+    onAddNotification,
+    onSeenNotification
 };

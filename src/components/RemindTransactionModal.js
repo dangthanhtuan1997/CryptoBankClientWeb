@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import { onGetUserByAccountNumber, onCreateNewTransaction } from '../actions';
 import { connect } from 'react-redux';
+import { socket } from '../socket';
 
-function RemindTransactionModal({ onCreateNewTransaction }) {
+function RemindTransactionModal({ onCreateNewTransaction, user }) {
     const typingTimeoutRef = useRef(null);
 
     const [receiverAccountNumber, setReceiverAccountNumber] = useState('0123456789012345');
@@ -27,7 +28,7 @@ function RemindTransactionModal({ onCreateNewTransaction }) {
     });
 
     function sendDebtTransaction() {
-        onCreateNewTransaction({
+        const debt = {
             receiver: {
                 full_name: receiverName,
                 account_number: receiverAccountNumber
@@ -39,7 +40,8 @@ function RemindTransactionModal({ onCreateNewTransaction }) {
             fee: false,
             save: true,
             type: 'debt'
-        });
+        }
+        onCreateNewTransaction(debt);
     }
 
     return (
