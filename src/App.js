@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import cookie from 'react-cookies';
 import history from './history';
-import { RestoreAccessToken } from './actions/index';
+import { RestoreAccessToken, onGetUserInfo, onGetTransactions } from './actions/index';
 import { connect } from 'react-redux';
 import { socket } from './socket';
 
@@ -40,24 +40,31 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 function App(props) {
   const [init, setInit] = useState(false);
+  const { user, transactions, onGetUserInfo, onGetTransactions, RestoreAccessToken } = props;
 
   useEffect(() => {
     const accessToken = cookie.load('CryptoBankAccessToken');
 
     if (accessToken) {
-      const { RestoreAccessToken } = props;
       RestoreAccessToken(accessToken);
     }
   }, []);
 
   useEffect(() => {
-    if (props.user.userInfo) {
+    if (!user.userInfo) {
+      onGetUserInfo();
+    }
+    else {
       if (!init) {
-        socket.emit('init', props.user.userInfo.account_number);
+        socket.emit('init', user.userInfo.account_number);
         setInit(true);
       }
     }
-  }, [props.user.userInfo]);
+
+    if (user.userInfo && !transactions.data) {
+      onGetTransactions();
+    }
+  });
 
   return (
     <Router history={history}>
@@ -95,10 +102,13 @@ function App(props) {
 
 export default connect(state => {
   return {
-    user: state.userReducer
+    user: state.userReducer,
+    transactions: state.transactionReducer
   }
 }, dispatch => {
   return {
     RestoreAccessToken: (accessToken) => dispatch(RestoreAccessToken(accessToken)),
+    onGetUserInfo: () => dispatch(onGetUserInfo()),
+    onGetTransactions: () => dispatch(onGetTransactions())
   }
 })(App);

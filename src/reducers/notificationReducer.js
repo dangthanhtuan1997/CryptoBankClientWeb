@@ -6,7 +6,7 @@ const notificationReducer = (state = initialState, action) => {
             const newData = [...state.data];
             newData.push({
                 title: action.title,
-                content: action.content
+                data: action.data
             });
             
             return {

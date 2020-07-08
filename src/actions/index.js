@@ -149,7 +149,7 @@ const onCreateNewTransaction = (transaction) => async dispatch => {
                 transactions.push(res.data.transaction);
             }
 
-            //dispatch(setPopup('success', 'success-debt-remind'));
+            dispatch(setPopup('success', 'success-debt-remind'));
             dispatch(setTransactions(transactions));
         }
     } catch (error) {
@@ -249,21 +249,28 @@ const onUpdateFriends = (friends, type) => async dispatch => {
 
 /*==============================================     Nofitication     ==============================================*/
 
-const addNotification = (title, content) => ({
+const addNotification = (title, data) => ({
     type: 'ADD_NOTIFICATION',
     title: title,
-    content: content
+    data: data
 });
 
-const onAddNotification = (title, content) => {
-    store.dispatch(addNotification(title, content));
+const onAddNotification = (title, data) => {
+    const state = store.getState();
+    const { userInfo } = state.userReducer;
+
+    if (title === 'receive') {
+        const transactions = state.transactionReducer.data;
+
+        if (transactions) {
+            const trans = [...transactions];
+            trans.push(data);
+            store.dispatch(setUserInfo({ ...userInfo, balance: +userInfo.balance + +data.amount }));
+            store.dispatch(setTransactions(trans));
+        }
+    }
+    store.dispatch(addNotification(title, data));
 }
-
-const RestoreAccessToken = (accessToken) => ({
-    type: 'RESTORE_TOKEN',
-    accessToken: accessToken
-});
-
 
 const seenNotification = () => ({
     type: 'SEEN_NOTIFICATION'
@@ -272,6 +279,12 @@ const seenNotification = () => ({
 const onSeenNotification = () => dispatch => {
     dispatch(seenNotification());
 };
+
+const RestoreAccessToken = (accessToken) => ({
+    type: 'RESTORE_TOKEN',
+    accessToken: accessToken
+});
+
 
 export {
     onLogin,

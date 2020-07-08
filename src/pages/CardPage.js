@@ -1,20 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { onGetUserInfo, onGetTransactions } from '../actions';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 function CardPage(props) {
-    const { user, transactions, onGetTransactions, onGetUserInfo } = props;
+    const { user } = props;
     const [data, setData] = useState([]);
-
-    useEffect(() => {
-        if (!user.userInfo) {
-            onGetUserInfo();
-        }
-
-        if (user.userInfo && !transactions.data) {
-            onGetTransactions();
-        }
-    });
 
     return (
         <div className="nk-content ">
@@ -142,11 +131,8 @@ function CardPage(props) {
 export default connect(state => {
     return {
         user: state.userReducer,
-        transactions: state.transactionReducer
     }
 }, dispatch => {
     return {
-        onGetUserInfo: () => dispatch(onGetUserInfo()),
-        onGetTransactions: () => dispatch(onGetTransactions())
     }
 })(CardPage);

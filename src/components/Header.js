@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { onLogout, onSeenNotification } from '../actions';
+import { onLogout, onSeenNotification, onAddNotification } from '../actions';
 import moment from 'moment';
 
 function Header(props) {
-    const { user, notification } = props;
+    const { user, notifications } = props;
     const [show, setShow] = useState(false);
     const [data, setData] = useState([]);
 
@@ -17,11 +17,19 @@ function Header(props) {
     }
 
     useEffect(() => {
-        if (notification.data){
-            const arr = [...(notification.data)]
+        if (user.userInfo) {
+            user.userInfo.notifications.map(item => {
+                onAddNotification(item.title, item.data)
+            });
+        }
+    }, [user.userInfo?.notifications?.length]);
+
+    useEffect(() => {
+        if (notifications.data) {
+            const arr = [...(notifications.data)];
             setData(arr.reverse());
         }
-    }, [notification.data?.length]);
+    }, [notifications.data?.length]);
 
     return (
         <div className="nk-header nk-header-fluid nk-header-fixed is-light">
@@ -104,7 +112,7 @@ function Header(props) {
                                     props.onSeenNotification();
                                 }} className="dropdown-toggle nk-quick-nav-icon">
                                     <div className="icon-overlap">
-                                        {notification.notificationLength > 0 ? <span className="badge badge-pill badge-danger">{notification.notificationLength}</span> : null}
+                                        {notifications.notificationLength > 0 ? <span className="badge badge-pill badge-danger">{notifications.notificationLength}</span> : null}
                                         <em className="icon ni ni-bell" style={{ height: 15, width: 15 }} />
                                     </div>
                                     {/* <div className="icon-status icon-status-danger"><em className="icon ni ni-bell" /></div> */}
@@ -125,11 +133,20 @@ function Header(props) {
                                                             <em className="icon icon-circle bg-warning-dim ni ni-curve-down-right" />
                                                         </div>
                                                         <div className="nk-notification-content">
-                                                            <div className="nk-notification-text">{item.content.receiver.full_name} vừa nhắc bạn trả {Number(item.content.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
-                                                            <div className="nk-notification-time">{moment(item.content.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
+                                                            <div className="nk-notification-text">{item.data?.receiver.full_name} vừa nhắc bạn trả {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
+                                                            <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
+                                                        </div>
+                                                    </div> : item.title === 'receive' ? <div className="nk-notification-item dropdown-inner">
+                                                        <div className="nk-notification-icon">
+                                                            <em className="icon icon-circle bg-success-dim ni ni-arrow-down-left" />
+                                                        </div>
+                                                        <div className="nk-notification-content">
+                                                            <div className="nk-notification-text">{item.data?.depositor.full_name} vừa chuyển cho bạn {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
+                                                            <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
                                                         </div>
                                                     </div> : null
                                             )}
+
                                             {/* <div className="nk-notification-item dropdown-inner">
                                                 <div className="nk-notification-icon">
                                                     <em className="icon icon-circle bg-success-dim ni ni-curve-down-left" />
@@ -157,11 +174,11 @@ function Header(props) {
 export default connect(state => {
     return {
         user: state.userReducer,
-        notification: state.notificationReducer
+        notifications: state.notificationReducer
     }
 }, dispatch => {
     return {
         onLogout: () => dispatch(onLogout()),
-        onSeenNotification: () => dispatch(onSeenNotification())
+        onSeenNotification: () => dispatch(onSeenNotification()),
     }
 })(Header);

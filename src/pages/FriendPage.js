@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { onGetUserInfo, onGetTransactions, onUpdateFriends } from '../actions';
+import { onUpdateFriends } from '../actions';
 import { connect } from 'react-redux';
 
 function FriendPage(props) {
-    const { user, transactions, onGetTransactions, onGetUserInfo, onUpdateFriends } = props;
+    const { user, onUpdateFriends } = props;
     const [edit, setEdit] = useState(false);
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {
-        if (!user.userInfo) {
-            onGetUserInfo();
-        }
-
-        if (user.userInfo && !transactions.data) {
-            onGetTransactions();
-        }
-
         if (user.userInfo) {
             setFriends(user.userInfo.friends);
         }
@@ -277,12 +269,9 @@ function FriendPage(props) {
 export default connect(state => {
     return {
         user: state.userReducer,
-        transactions: state.transactionReducer
     }
 }, dispatch => {
     return {
-        onGetUserInfo: () => dispatch(onGetUserInfo()),
-        onGetTransactions: () => dispatch(onGetTransactions()),
         onUpdateFriends: (friends, type) => dispatch(onUpdateFriends(friends, type))
     }
 })(FriendPage);

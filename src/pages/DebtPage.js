@@ -1,29 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { onGetUserInfo, onGetTransactions } from '../actions';
 import { connect } from 'react-redux';
 import Transaction from '../components/Transaction';
 
 function DebtPage(props) {
-    const { user, transactions, onGetTransactions, onGetUserInfo } = props;
+    const { user, transactions } = props;
     const [data, setData] = useState([]);
-    
-    useEffect(() => {
-        if (!user.userInfo) {
-            onGetUserInfo();
-        }
-
-        if (user.userInfo && !transactions.data) {
-            onGetTransactions();
-        }
-    });
 
     useEffect(() => {
-        if (props.transactions.data){
-            let arr = [...(props.transactions.data)];
+        if (transactions.data){
+            let arr = [...(transactions.data)];
             arr = arr.filter(item => item.type === 'debt');
             setData(arr.reverse());
         }
-    }, [props.transactions.data?.length]);
+    }, [transactions.data?.length]);
 
     return (
         <div className="nk-content ">
@@ -105,7 +94,5 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onGetUserInfo: () => dispatch(onGetUserInfo()),
-        onGetTransactions: () => dispatch(onGetTransactions())
-    }
+       }
 })(DebtPage);

@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { onGetUserInfo, onGetTransactions } from '../actions';
 import { connect } from 'react-redux';
 import Transaction from '../components/Transaction';
 
 function TransactionsPage(props) {
-    const { user, transactions, onGetTransactions, onGetUserInfo } = props;
+    const { user, transactions } = props;
     const [data, setData] = useState([]);
-
-    useEffect(() => {
-        if (!user.userInfo) {
-            onGetUserInfo();
-        }
-
-        if (user.userInfo && !transactions.data) {
-            onGetTransactions();
-        }
-    });
 
     useEffect(() => {
         if (props.transactions.data){
@@ -104,7 +93,5 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onGetUserInfo: () => dispatch(onGetUserInfo()),
-        onGetTransactions: () => dispatch(onGetTransactions())
     }
 })(TransactionsPage);
