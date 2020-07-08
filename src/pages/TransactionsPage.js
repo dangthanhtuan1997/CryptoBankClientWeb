@@ -7,11 +7,11 @@ function TransactionsPage(props) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        if (props.transactions.data){
-            const arr = [...(props.transactions.data)]
+        if (transactions.data){
+            const arr = [...(transactions.data)]
             setData(arr.reverse());
         }
-    }, [props.transactions.data?.length]);
+    }, [JSON.stringify(transactions.data)]);
 
     return (
         <div className="nk-content ">

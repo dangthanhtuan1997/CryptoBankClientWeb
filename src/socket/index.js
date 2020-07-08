@@ -13,4 +13,8 @@ socket.on('receive', transaction => {
     onAddNotification('receive', transaction);
 });
 
+socket.on('pay', transaction => {
+    onAddNotification('pay', transaction);
+});
+
 export { socket }

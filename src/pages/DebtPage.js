@@ -12,7 +12,7 @@ function DebtPage(props) {
             arr = arr.filter(item => item.type === 'debt');
             setData(arr.reverse());
         }
-    }, [transactions.data?.length]);
+    }, [JSON.stringify(transactions.data)]);
 
     return (
         <div className="nk-content ">

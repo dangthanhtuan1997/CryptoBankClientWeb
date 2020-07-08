@@ -1,4 +1,4 @@
-const initialState = { data: null };
+const initialState = { data: [] };
 
 const transactionReducer = (state = initialState, action) => {
     switch (action.type) {

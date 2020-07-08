@@ -178,7 +178,7 @@ const onGetOTP = (transactionId) => async dispatch => {
 const onConfirmSendMoneyToOthers = (otp) => async dispatch => {
     const state = store.getState();
     const accessToken = state.userReducer.accessToken;
-    const transactions = state.transactionReducer.data;
+    const transactions = JSON.parse(JSON.stringify(state.transactionReducer.data));
     const data = { otp };
 
     try {
@@ -199,7 +199,7 @@ const onConfirmSendMoneyToOthers = (otp) => async dispatch => {
 
         dispatch(setUserInfo(res.data.depositor));
         dispatch(setPopup('success', 'success-transaction'));
-        dispatch(setTransactions(res.data.transactions));
+        dispatch(setTransactions(transactions));
     } catch (error) {
         dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
     }
@@ -258,17 +258,23 @@ const addNotification = (title, data) => ({
 const onAddNotification = (title, data) => {
     const state = store.getState();
     const { userInfo } = state.userReducer;
+    const transactions = JSON.parse(JSON.stringify(state.transactionReducer.data));
 
-    if (title === 'receive') {
-        const transactions = state.transactionReducer.data;
+    if (title === 'receive' || title === 'pay') {
+        store.dispatch(setUserInfo({ ...userInfo, balance: +userInfo.balance + +data.amount }));
+    }
 
-        if (transactions) {
-            const trans = [...transactions];
-            trans.push(data);
-            store.dispatch(setUserInfo({ ...userInfo, balance: +userInfo.balance + +data.amount }));
-            store.dispatch(setTransactions(trans));
+    if (transactions) {
+        if (title === 'pay') {
+            transactions[transactions.findIndex(item => item._id === data._id)].status = 'confirmed';
+            store.dispatch(setTransactions(transactions));
+        }
+        else if (title === 'debt' || title === 'receive') {
+            transactions.push(data);
+            store.dispatch(setTransactions(transactions));
         }
     }
+
     store.dispatch(addNotification(title, data));
 }
 

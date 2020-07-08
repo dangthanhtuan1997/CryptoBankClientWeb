@@ -39,9 +39,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 
 function App(props) {
-  const [init, setInit] = useState(false);
   const { user, transactions, onGetUserInfo, onGetTransactions, RestoreAccessToken } = props;
-
+  const [init, setInit] = useState(false);
+  const [fetchTransactions, setFetchTransactions] = useState(false);
   useEffect(() => {
     const accessToken = cookie.load('CryptoBankAccessToken');
 
@@ -61,8 +61,9 @@ function App(props) {
       }
     }
 
-    if (user.userInfo && !transactions.data) {
+    if (user.userInfo && !fetchTransactions) {
       onGetTransactions();
+      setFetchTransactions(true);
     }
   });
 

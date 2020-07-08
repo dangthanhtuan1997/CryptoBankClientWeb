@@ -16,13 +16,13 @@ function Header(props) {
         return sum;
     }
 
-    useEffect(() => {
-        if (user.userInfo) {
-            user.userInfo.notifications.map(item => {
-                onAddNotification(item.title, item.data)
-            });
-        }
-    }, [user.userInfo?.notifications?.length]);
+    // useEffect(() => {
+    //     if (user.userInfo) {
+    //         user.userInfo.notifications.map(item => {
+    //             onAddNotification(item.title, item.data)
+    //         });
+    //     }
+    // }, [user.userInfo?.notifications?.length]);
 
     useEffect(() => {
         if (notifications.data) {
@@ -142,6 +142,14 @@ function Header(props) {
                                                         </div>
                                                         <div className="nk-notification-content">
                                                             <div className="nk-notification-text">{item.data?.depositor.full_name} vừa chuyển cho bạn {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
+                                                            <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
+                                                        </div>
+                                                    </div> : item.title === 'pay' ? <div className="nk-notification-item dropdown-inner">
+                                                        <div className="nk-notification-icon">
+                                                            <em className="icon icon-circle bg-success-dim ni ni-arrow-down-left" />
+                                                        </div>
+                                                        <div className="nk-notification-content">
+                                                            <div className="nk-notification-text">{item.data?.depositor.full_name} vừa trả theo yêu cầu của bạn {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
                                                             <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
                                                         </div>
                                                     </div> : null
