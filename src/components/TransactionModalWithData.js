@@ -29,6 +29,13 @@ function TransactionModalWithData(props) {
         setFee(true);
         setSave(true);
     }
+    
+    function checkForm() {
+        if (!amount) {
+            return false;
+        }
+        return true;
+    }
 
     function sendTransactionInfo(scope) {
         props.onCreateNewTransaction({
@@ -79,7 +86,7 @@ function TransactionModalWithData(props) {
                                                 <div className="col-md-6">
                                                     <div className="form-group">
                                                         <label className="form-label">Số tài khoản</label>
-                                                        <input type="number" value={transactions.template?.account_number} className="form-control form-control-lg" placeholder="Nhập số tài khoản" />
+                                                        <input type="number" disabled={true} value={transactions.template?.account_number} className="form-control form-control-lg" placeholder="Nhập số tài khoản" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
@@ -112,19 +119,21 @@ function TransactionModalWithData(props) {
                                                 <div className="col-6">
                                                     <div className="custom-control custom-switch">
                                                         <input id="fee-with-data" type="checkbox" checked={fee} onChange={(e) => setFee(e.target.checked)} className="custom-control-input" />
-                                                        <label htmlFor="fee" className="custom-control-label">Phí người chuyển chịu </label>
+                                                        <label htmlFor="fee-with-data" className="custom-control-label">Phí người chuyển chịu </label>
                                                     </div>
                                                 </div>
                                                 <div className="col-6">
                                                     <div className="custom-control custom-switch">
                                                         <input id="save-with-data" type="checkbox" checked={save} onChange={(e) => setSave(e.target.checked)} className="custom-control-input" />
-                                                        <label htmlFor="save" className="custom-control-label">Lưu người nhận </label>
+                                                        <label htmlFor="save-with-data" className="custom-control-label">Lưu người nhận </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </ul>
                                         <div className="sp-package-action">
-                                            <a href="#" className="btn btn-primary" onClick={() => sendTransactionInfo('internal')} data-dismiss="modal">Chuyển</a>
+                                            <a href="" style={checkForm() ? {} : {
+                                            'pointer-events': 'none',
+                                        }} className="btn btn-primary" onClick={() => sendTransactionInfo('internal')} data-dismiss="modal">Chuyển</a>
                                             <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                         </div>
                                     </div> :
@@ -143,7 +152,7 @@ function TransactionModalWithData(props) {
                                                 <div className="col-md-6">
                                                     <div className="form-group">
                                                         <label className="form-label">Số tài khoản</label>
-                                                        <input type="text" className="form-control form-control-lg" value={transactions.template?.account_number} placeholder="Số tài khoản" />
+                                                        <input type="text" disabled={true} className="form-control form-control-lg" value={transactions.template?.account_number} placeholder="Số tài khoản" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
@@ -176,19 +185,21 @@ function TransactionModalWithData(props) {
                                                 <div className="col-6">
                                                     <div className="custom-control custom-switch">
                                                         <input id="fee-external-with-data" type="checkbox" defaultChecked="true" className="custom-control-input" />
-                                                        <label htmlFor="fee-external" className="custom-control-label" >Phí người chuyển chịu </label>
+                                                        <label htmlFor="fee-external-with-data" className="custom-control-label" >Phí người chuyển chịu </label>
                                                     </div>
                                                 </div>
                                                 <div className="col-6">
                                                     <div className="custom-control custom-switch">
                                                         <input id="save-external-with-data" type="checkbox" defaultChecked="true" className="custom-control-input" />
-                                                        <label htmlFor="save-external" className="custom-control-label">Lưu người nhận </label>
+                                                        <label htmlFor="save-external-with-data" className="custom-control-label">Lưu người nhận </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </ul>
                                         <div className="sp-package-action">
-                                            <a href="#" className="btn btn-primary" onClick={() => sendTransactionInfo('external')} data-dismiss="modal">Chuyển</a>
+                                            <a href="" style={checkForm() ? {} : {
+                                            'pointer-events': 'none',
+                                        }} className="btn btn-primary" onClick={() => sendTransactionInfo('external')} data-dismiss="modal">Chuyển</a>
                                             <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                         </div>
                                     </div>

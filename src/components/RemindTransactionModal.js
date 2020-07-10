@@ -27,6 +27,13 @@ function RemindTransactionModal({ onCreateNewTransaction, user }) {
         }, 300);
     });
 
+    function checkForm() {
+        if (!receiverAccountNumber || !receiverName || !amount) {
+            return false;
+        }
+        return true;
+    }
+
     function sendDebtTransaction() {
         const debt = {
             receiver: {
@@ -109,7 +116,9 @@ function RemindTransactionModal({ onCreateNewTransaction, user }) {
                                 </div>
                             </div>
                             <div className="sp-package-action">
-                                <a href="" onClick={() => sendDebtTransaction()} className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Gửi yêu cầu</a>
+                                <a href="" style={checkForm() ? {} : {
+                                            'pointer-events': 'none',
+                                        }} onClick={() => sendDebtTransaction()} className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Gửi yêu cầu</a>
                                 <a href="" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy gửi</a>
                             </div>
                         </div>

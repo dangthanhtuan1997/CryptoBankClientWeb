@@ -50,6 +50,13 @@ function TransactionModal(props) {
         setSave(true);
     }
 
+    function checkForm() {
+        if (!receiverAccountNumber || !receiverName || !amount) {
+            return false;
+        }
+        return true;
+    }
+
     function sendTransactionInfo(scope) {
         props.onCreateNewTransaction({
             receiver: {
@@ -150,7 +157,9 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="#" className="btn btn-primary" onClick={() => sendTransactionInfo('internal')} data-dismiss="modal">Chuyển</a>
+                                        <a href="" style={checkForm() ? {} : {
+                                            'pointer-events': 'none',
+                                        }} className="btn btn-primary" onClick={() => sendTransactionInfo('internal')} data-dismiss="modal">Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                     </div>
                                 </div>
@@ -224,7 +233,9 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="#" className="btn btn-primary" onClick={() => sendTransactionInfo('external')} data-dismiss="modal">Chuyển</a>
+                                        <a href="" style={checkForm() ? {} : {
+                                            'pointer-events': 'none',
+                                        }} className="btn btn-primary" onClick={() => sendTransactionInfo('external')} data-dismiss="modal">Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
                                     </div>
                                 </div>
