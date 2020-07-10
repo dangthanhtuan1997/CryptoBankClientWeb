@@ -22,7 +22,7 @@ function DebtPage(props) {
                         <div className="components-preview wide-md mx-auto">
                             <div className="nk-block-head nk-block-head-lg wide-sm">
                                 <div className="nk-block-head-content">
-                                    <h2 className="nk-block-title fw-normal">Lịch sử yêu cầu &amp; thanh toán nợ {transactions.data ? <span class="badge badge-primary">{transactions.data.length}</span> : <span class="badge badge-primary">0</span>}</h2>
+                                    <h2 className="nk-block-title fw-normal">Lịch sử yêu cầu &amp; thanh toán nợ <span class="badge badge-primary">{data.length}</span></h2>
                                 </div>
                             </div>{/* .nk-block-head */}
                             <div className="nk-block nk-block-lg">

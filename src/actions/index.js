@@ -148,7 +148,7 @@ const onCreateNewTransaction = (transaction) => async dispatch => {
             if (transactions) {
                 transactions.push(res.data.transaction);
             }
-
+            
             dispatch(setPopup('success', 'success-debt-remind'));
             dispatch(setTransactions(transactions));
         }

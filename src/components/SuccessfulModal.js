@@ -25,12 +25,14 @@ function SuccessfulModal(props) {
 
     function close() {
         props.clearPopup();
+        setTitle('');
+        setContent('');
     }
 
     if (props.popup.status !== 'success' || listTitle.indexOf(props.popup.title) === -1) {
         return null;
     }
-    else {
+    else {        
         if (!title && !content) {
             switch (props.popup.title) {
                 case 'success-transaction': {
@@ -76,7 +78,7 @@ function SuccessfulModal(props) {
                                 <p>{content}</p>
                             </div>
                             <div className="nk-modal-action-lg">
-                                <a onClick={() => close()} className="btn btn-mw btn-light" data-dismiss="modal">Trở về</a>
+                                <a onClick={() => close()} className="btn btn-mw btn-light">Trở về</a>
                             </div>
                         </div>
                     </div>{/* .modal-body */}
