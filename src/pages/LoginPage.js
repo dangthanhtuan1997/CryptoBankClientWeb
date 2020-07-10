@@ -76,11 +76,11 @@ class LoginPage extends React.Component {
                     <input value={this.state.password} onChange={e => this.onChangeText('password', e.target.value)} type="password" className="form-control form-control-lg" id="password" placeholder="Nhập mật khẩu của bạn" />
                   </div>
                 </div>{/* .foem-group */}
-                {this.props.user.loginError ? <div className="form-group">
+                {this.props.user.loginError && <div className="form-group">
                   <div className="alert alert-fill alert-danger alert-dismissible alert-icon">
                     <em className="icon ni ni-cross-circle"></em> <strong>{this.props.user.loginError}</strong>!
                   </div>
-                </div> : null}
+                </div>}
                 <div className="form-group">
                   <Recaptcha
                     sitekey="6LfKt6kZAAAAACSb1vSJ8vgM437YQezW3vb8kbcw"
@@ -91,7 +91,7 @@ class LoginPage extends React.Component {
                 </div>
                 <div className="form-group">
                   <button onClick={(event) => this.handleLogin(event)} className="btn btn-lg btn-primary btn-block" disabled={this.state.loading}>
-                    {this.state.loading ? <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> : null}
+                    {this.state.loading && <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>}
                     <span>Đăng nhập</span></button>
                 </div>
               </form>{/* form */}

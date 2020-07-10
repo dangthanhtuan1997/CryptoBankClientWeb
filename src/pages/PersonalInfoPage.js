@@ -46,21 +46,21 @@ function PersonalInfoPage(props) {
                                         <div className="data-item" data-toggle="modal" data-target="#profile-edit">
                                             <div className="data-col">
                                                 <span className="data-label">Họ tên</span>
-                                                <span className="data-value">{user.userInfo ? user.userInfo.full_name : null}</span>
+                                                <span className="data-value">{user.userInfo?.full_name}</span>
                                             </div>
                                             <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-forward-ios" /></span></div>
                                         </div>{/* .data-item */}
                                         <div className="data-item">
                                             <div className="data-col">
                                                 <span className="data-label">Email</span>
-                                                <span className="data-value">{user.userInfo ? user.userInfo.email : null}</span>
+                                                <span className="data-value">{user.userInfo?.email}</span>
                                             </div>
                                             <div className="data-col data-col-end"><span className="data-more disable"><em className="icon ni ni-lock-alt" /></span></div>
                                         </div>{/* .data-item */}
                                         <div className="data-item" data-toggle="modal" data-target="#profile-edit">
                                             <div className="data-col">
                                                 <span className="data-label">Số điện thoại</span>
-                                                <span className="data-value">{user.userInfo ? user.userInfo.phone : null}</span>
+                                                <span className="data-value">{user.userInfo?.phone}</span>
                                             </div>
                                             <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-forward-ios" /></span></div>
                                         </div>{/* .data-item */}

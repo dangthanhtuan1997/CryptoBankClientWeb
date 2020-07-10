@@ -50,14 +50,14 @@ function Transaction({ onGetOTP, user, data }) {
             </td>
             <td className="nk-tb-col nk-tb-col-tools">
                 <ul className="nk-tb-actions gx-1">
-                    {type === 'debt' && status === 'pending' && depositor.account_number === user.userInfo.account_number ? <li className="nk-tb-action-hidden">
+                    {type === 'debt' && status === 'pending' && depositor.account_number === user.userInfo.account_number && <li className="nk-tb-action-hidden">
                         <a href="" onClick={(e) => {
                             e.preventDefault();
                             onGetOTP(_id);
                         }} className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Wallet">
                             <em className="icon ni ni-wallet-fill" />
                         </a>
-                    </li> : null}
+                    </li>}
                     {/* <li className="nk-tb-action-hidden">
                         <a href="#" className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Send Email">
                             <em className="icon ni ni-mail-fill" />

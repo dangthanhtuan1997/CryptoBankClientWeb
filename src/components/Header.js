@@ -112,7 +112,7 @@ function Header(props) {
                                     props.onSeenNotification();
                                 }} className="dropdown-toggle nk-quick-nav-icon">
                                     <div className="icon-overlap">
-                                        {notifications.notificationLength > 0 ? <span className="badge badge-pill badge-danger">{notifications.notificationLength}</span> : null}
+                                        {notifications.notificationLength > 0 && <span className="badge badge-pill badge-danger">{notifications.notificationLength}</span>}
                                         <em className="icon ni ni-bell" style={{ height: 15, width: 15 }} />
                                     </div>
                                     {/* <div className="icon-status icon-status-danger"><em className="icon ni ni-bell" /></div> */}
@@ -144,7 +144,7 @@ function Header(props) {
                                                             <div className="nk-notification-text">{item.data?.depositor.full_name} vừa chuyển cho bạn {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
                                                             <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
                                                         </div>
-                                                    </div> : item.title === 'pay' ? <div className="nk-notification-item dropdown-inner">
+                                                    </div> : item.title === 'pay' && <div className="nk-notification-item dropdown-inner">
                                                         <div className="nk-notification-icon">
                                                             <em className="icon icon-circle bg-success-dim ni ni-arrow-down-left" />
                                                         </div>
@@ -152,7 +152,7 @@ function Header(props) {
                                                             <div className="nk-notification-text">{item.data?.depositor.full_name} vừa trả theo yêu cầu của bạn {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
                                                             <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
                                                         </div>
-                                                    </div> : null
+                                                    </div>
                                             )}
 
                                             {/* <div className="nk-notification-item dropdown-inner">
