@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { onUpdateFriends } from '../actions';
+import { onUpdateFriends, onSetTemplateTransaction } from '../actions';
 import { connect } from 'react-redux';
 
 function FriendPage(props) {
-    const { user, onUpdateFriends } = props;
+    const { user, onUpdateFriends, onSetTemplateTransaction } = props;
     const [edit, setEdit] = useState(false);
     const [friends, setFriends] = useState([]);
 
@@ -21,10 +21,7 @@ function FriendPage(props) {
                         <div className="nk-block-head nk-block-head-sm">
                             <div className="nk-block-between g-3">
                                 <div className="nk-block-head-content">
-                                    <h3 className="nk-block-title page-title">Danh sách người thụ hưởng</h3>
-                                    <div className="nk-block-des text-soft">
-                                        <p>Bạn có {friends.length} người thụ hưởng</p>
-                                    </div>
+                                    <h2 className="nk-block-title fw-normal">Danh sách người thụ hưởng <span class="badge badge-primary">{friends.length}</span></h2>
                                 </div>{/* .nk-block-head-content */}
                                 <div className="nk-block-head-content">
                                     <div className="toggle-wrap nk-block-tools-toggle">
@@ -34,13 +31,13 @@ function FriendPage(props) {
                                                 <li className="nk-block-tools-opt">
                                                     <div className="drodown">
                                                         <a href="#" className="dropdown-toggle btn btn-icon btn-primary" data-toggle="dropdown"><em className="icon ni ni-plus" /></a>
-                                                        <div className="dropdown-menu dropdown-menu-right">
+                                                        {/* <div className="dropdown-menu dropdown-menu-right">
                                                             <ul className="link-list-opt no-bdr">
                                                                 <li><a href="#"><span>Add Tranx</span></a></li>
                                                                 <li><a href="#"><span>Add Deposit</span></a></li>
                                                                 <li><a href="#"><span>Add Withdraw</span></a></li>
                                                             </ul>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </li>
                                             </ul>
@@ -209,7 +206,10 @@ function FriendPage(props) {
                                                     <div className="nk-tb-col nk-tb-col-tools">
                                                         <ul className="nk-tb-actions gx-2">
                                                             <li className="nk-tb-action-hidden">
-                                                                <a href="" data-toggle="modal" className="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip" title data-original-title="Details"><em class="icon ni ni-wallet-out"></em></a>
+                                                                <a href="" onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    onSetTemplateTransaction(item);
+                                                                }} data-toggle="modal" data-target="#new-transaction-with-data" className="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip" title data-original-title="Details"><em class="icon ni ni-wallet-out"></em></a>
                                                             </li>
                                                             <li>
                                                                 <div className="dropdown">
@@ -272,6 +272,7 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onUpdateFriends: (friends, type) => dispatch(onUpdateFriends(friends, type))
+        onUpdateFriends: (friends, type) => dispatch(onUpdateFriends(friends, type)),
+        onSetTemplateTransaction: (template) => dispatch(onSetTemplateTransaction(template))
     }
 })(FriendPage);

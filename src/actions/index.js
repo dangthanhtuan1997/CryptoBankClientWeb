@@ -286,6 +286,15 @@ const onSeenNotification = () => dispatch => {
     dispatch(seenNotification());
 };
 
+const setTemplateTransaction = (template) => ({
+    type: 'SET_TEMPLATE',
+    template: template
+});
+
+const onSetTemplateTransaction = (template) => dispatch => {
+    dispatch(setTemplateTransaction(template));
+};
+
 const RestoreAccessToken = (accessToken) => ({
     type: 'RESTORE_TOKEN',
     accessToken: accessToken
@@ -307,5 +316,6 @@ export {
     onGetOTP,
     onUpdateFriends,
     onAddNotification,
-    onSeenNotification
+    onSeenNotification,
+    onSetTemplateTransaction
 };

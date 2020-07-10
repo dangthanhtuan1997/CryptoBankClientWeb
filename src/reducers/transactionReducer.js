@@ -1,4 +1,4 @@
-const initialState = { data: [] };
+const initialState = { data: [], template: null };
 
 const transactionReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -6,6 +6,12 @@ const transactionReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: action.transactions
+            };
+
+        case 'SET_TEMPLATE':
+            return {
+                ...state,
+                template: action.template
             };
 
         default:

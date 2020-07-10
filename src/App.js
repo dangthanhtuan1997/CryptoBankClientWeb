@@ -20,11 +20,11 @@ import OTPModal from './components/OTPModal';
 import SuccessfulModal from './components/SuccessfulModal';
 import ErrorModal from './components/ErrorModal';
 import ChangePasswordModal from './components/ChangePasswordModal';
+import TransactionModalWithData from './components/TransactionModalWithData';
 
 import Menu from './components/Menu';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import config from './config';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const accessToken = cookie.load('CryptoBankAccessToken');
@@ -97,6 +97,7 @@ function App(props) {
       <TransactionModal></TransactionModal>
       <RemindTransactionModal></RemindTransactionModal>
       <ChangePasswordModal></ChangePasswordModal>
+      <TransactionModalWithData></TransactionModalWithData>
     </Router>
   );
 }
