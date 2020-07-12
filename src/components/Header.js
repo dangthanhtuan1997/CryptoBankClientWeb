@@ -3,6 +3,61 @@ import { connect } from 'react-redux';
 import { onLogout, onSeenNotification, onAddNotification } from '../actions';
 import moment from 'moment';
 
+function HandleNotification(item) {
+    switch (item.title) {
+        case 'debt': {
+            return <div className="nk-notification-item dropdown-inner">
+                <div className="nk-notification-icon">
+                    <em className="icon icon-circle bg-warning-dim ni ni-curve-down-right" />
+                </div>
+                <div className="nk-notification-content">
+                    <div className="nk-notification-text">{item.data?.receiver.full_name} vừa nhắc bạn trả {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
+                    <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
+                </div>
+            </div>
+        }
+        case 'receive': {
+            return <div className="nk-notification-item dropdown-inner">
+                <div className="nk-notification-icon">
+                    <em className="icon icon-circle bg-success-dim ni ni-arrow-down-left" />
+                </div>
+                <div className="nk-notification-content">
+                    <div className="nk-notification-text">{item.data?.depositor.full_name} vừa chuyển cho bạn {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
+                    <div className="nk-notification-time">{moment(item.data?.updatedAt).format('HH:mm:ss DD/MM/YYYY')}</div>
+                </div>
+            </div>
+        }
+
+        case 'pay': {
+            return <div className="nk-notification-item dropdown-inner">
+                <div className="nk-notification-icon">
+                    <em className="icon icon-circle bg-success-dim ni ni-arrow-down-left" />
+                </div>
+                <div className="nk-notification-content">
+                    <div className="nk-notification-text">{item.data?.depositor.full_name} vừa trả theo yêu cầu của bạn {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
+                    <div className="nk-notification-time">{moment(item.data?.updatedAt).format('HH:mm:ss DD/MM/YYYY')}</div>
+                </div>
+            </div>
+        }
+
+        case 'cancel-debt': {
+            return <div className="nk-notification-item dropdown-inner">
+                <div className="nk-notification-icon">
+                    <em className="icon icon-circle bg-success-dim ni ni-arrow-down-left" />
+                </div>
+                <div className="nk-notification-content">
+                    <div className="nk-notification-text">{item.data?.depositor.full_name} vừa hủy yêu cầu trả nợ {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
+                    <div className="nk-notification-text">Lời nhắn: {item.data.delete_message}</div>
+                    <div className="nk-notification-time">{moment(item.data?.updatedAt).format('HH:mm:ss DD/MM/YYYY')}</div>
+                </div>
+            </div>
+        }
+
+        default:
+            break;
+    }
+}
+
 function Header(props) {
     const { user, notifications } = props;
     const [show, setShow] = useState(false);
@@ -126,44 +181,7 @@ function Header(props) {
                                     </div>
                                     <div className="dropdown-body">
                                         <div className="nk-notification">
-                                            {data?.map(item =>
-                                                item.title === 'debt' ?
-                                                    <div className="nk-notification-item dropdown-inner">
-                                                        <div className="nk-notification-icon">
-                                                            <em className="icon icon-circle bg-warning-dim ni ni-curve-down-right" />
-                                                        </div>
-                                                        <div className="nk-notification-content">
-                                                            <div className="nk-notification-text">{item.data?.receiver.full_name} vừa nhắc bạn trả {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
-                                                            <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
-                                                        </div>
-                                                    </div> : item.title === 'receive' ? <div className="nk-notification-item dropdown-inner">
-                                                        <div className="nk-notification-icon">
-                                                            <em className="icon icon-circle bg-success-dim ni ni-arrow-down-left" />
-                                                        </div>
-                                                        <div className="nk-notification-content">
-                                                            <div className="nk-notification-text">{item.data?.depositor.full_name} vừa chuyển cho bạn {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
-                                                            <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
-                                                        </div>
-                                                    </div> : item.title === 'pay' && <div className="nk-notification-item dropdown-inner">
-                                                        <div className="nk-notification-icon">
-                                                            <em className="icon icon-circle bg-success-dim ni ni-arrow-down-left" />
-                                                        </div>
-                                                        <div className="nk-notification-content">
-                                                            <div className="nk-notification-text">{item.data?.depositor.full_name} vừa trả theo yêu cầu của bạn {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
-                                                            <div className="nk-notification-time">{moment(item.data?.createdAt).format('HH:mm:ss DD/MM/YYYY')}</div>
-                                                        </div>
-                                                    </div>
-                                            )}
-
-                                            {/* <div className="nk-notification-item dropdown-inner">
-                                                <div className="nk-notification-icon">
-                                                    <em className="icon icon-circle bg-success-dim ni ni-curve-down-left" />
-                                                </div>
-                                                <div className="nk-notification-content">
-                                                    <div className="nk-notification-text">Nhận tiền từ Nguyễn Sĩ văn</div>
-                                                    <div className="nk-notification-time">3 giờ trước</div>
-                                                </div>
-                                            </div> */}
+                                            {data?.map(item => HandleNotification(item))}
                                         </div>
                                     </div>{/* .nk-dropdown-body */}
                                     <div className="dropdown-foot center">

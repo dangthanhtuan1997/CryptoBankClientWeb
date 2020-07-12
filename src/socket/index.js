@@ -17,4 +17,8 @@ socket.on('pay', transaction => {
     onAddNotification('pay', transaction);
 });
 
+socket.on('cancel-debt', transaction => {
+    onAddNotification('cancel-debt', transaction);
+});
+
 export { socket }

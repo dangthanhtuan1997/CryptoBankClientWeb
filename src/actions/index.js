@@ -275,6 +275,11 @@ const onAddNotification = (title, data) => {
         }
     }
 
+    if (title === 'cancel-debt') {
+        const newData = transactions.filter(item => item._id !== data._id);
+        store.dispatch(setTransactions(newData));
+    }
+
     store.dispatch(addNotification(title, data));
 }
 
@@ -310,7 +315,7 @@ const onRemoveDebtTransaction = (transactionId) => async dispatch => {
     dispatch(selectTransaction(transactionId));
 }
 
-const onConfirmRemoveDebtTransaction = () => async dispatch => {
+const onConfirmRemoveDebtTransaction = (note) => async dispatch => {
     const state = store.getState();
     const accessToken = state.userReducer.accessToken;
     const { data, selectedItem } = state.transactionReducer;
@@ -319,6 +324,9 @@ const onConfirmRemoveDebtTransaction = () => async dispatch => {
         const res = await axios.delete(`${apiUrl}/transactions/${selectedItem}`, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
+            },
+            data: {
+                message: note
             }
         });
         const transactions = JSON.parse(JSON.stringify(data)).filter(item => item._id !== selectedItem);

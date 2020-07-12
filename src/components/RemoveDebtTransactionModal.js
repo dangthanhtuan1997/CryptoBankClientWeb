@@ -60,6 +60,6 @@ export default connect(state => {
     return {
         clearPopup: () => dispatch(clearPopup()),
         onRemoveDebtTransaction: () => dispatch(onRemoveDebtTransaction()),
-        onConfirmRemoveDebtTransaction: (transactionId) => dispatch(onConfirmRemoveDebtTransaction(transactionId))
+        onConfirmRemoveDebtTransaction: (note) => dispatch(onConfirmRemoveDebtTransaction(note))
     }
 })(RemoveDebtTransactionModal);
