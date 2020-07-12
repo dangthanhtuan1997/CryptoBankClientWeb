@@ -7,9 +7,9 @@ import { socket } from '../socket';
 function RemindTransactionModal({ onCreateNewTransaction, user }) {
     const typingTimeoutRef = useRef(null);
 
-    const [receiverAccountNumber, setReceiverAccountNumber] = useState('0123456789012345');
-    const [amount, setAmount] = useState(10000);
-    const [note, setNote] = useState('Chuyển tiền');
+    const [receiverAccountNumber, setReceiverAccountNumber] = useState('');
+    const [amount, setAmount] = useState(0);
+    const [note, setNote] = useState('');
     const [receiverName, setReceiverName] = useState('');
 
     useEffect(() => {

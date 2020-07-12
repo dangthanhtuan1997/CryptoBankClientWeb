@@ -13,9 +13,9 @@ function TransactionModal(props) {
     const typingTimeoutRef = useRef(null);
 
     const [receiverName, setReceiverName] = useState('');
-    const [receiverAccountNumber, setReceiverAccountNumber] = useState('0123456789012345');
-    const [amount, setAmount] = useState(10000);
-    const [note, setNote] = useState('Chuyển tiền');
+    const [receiverAccountNumber, setReceiverAccountNumber] = useState('');
+    const [amount, setAmount] = useState(0);
+    const [note, setNote] = useState('');
     const [selectedBank, setSelectedBank] = useState('nklbank');
     const [scope, setScope] = useState('internal');
     const [fee, setFee] = useState(true);

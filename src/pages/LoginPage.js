@@ -5,8 +5,8 @@ import Recaptcha from 'react-recaptcha';
 
 class LoginPage extends React.Component {
   state = {
-    username: 'dangthanhtuan',
-    password: '123456',
+    username: '',
+    password: '',
     loading: false,
     isVerified: false
   }
