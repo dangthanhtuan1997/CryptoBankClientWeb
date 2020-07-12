@@ -1,4 +1,4 @@
-const initialState = { data: [], template: null };
+const initialState = { data: [], template: null, selectedItem: null };
 
 const transactionReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -12,6 +12,12 @@ const transactionReducer = (state = initialState, action) => {
             return {
                 ...state,
                 template: action.template
+            };
+
+        case 'SELECT_TRANSACTION':
+            return {
+                ...state,
+                selectedItem: action.transaction
             };
 
         default:

@@ -8,7 +8,7 @@ function TransactionsPage(props) {
 
     useEffect(() => {
         if (transactions.data){
-            const arr = [...(transactions.data)]
+            const arr = transactions.data.filter(item => item.active === true);
             setData(arr.reverse());
         }
     }, [JSON.stringify(transactions.data)]);
@@ -21,7 +21,7 @@ function TransactionsPage(props) {
                         <div className="components-preview wide-md mx-auto">
                             <div className="nk-block-head nk-block-head-lg wide-sm">
                                 <div className="nk-block-head-content">
-                                    <h2 className="nk-block-title fw-normal">Lịch sử giao dịch {transactions.data ? <span class="badge badge-primary">{transactions.data.length}</span> : <span class="badge badge-primary">0</span>}</h2>
+                                    <h2 className="nk-block-title fw-normal">Lịch sử giao dịch <span class="badge badge-primary">{data.length}</span></h2>
                                 </div>
                             </div>{/* .nk-block-head */}
                             <div className="nk-block nk-block-lg">

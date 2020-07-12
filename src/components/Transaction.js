@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { onGetOTP } from '../actions';
+import { onGetOTP, onRemoveDebtTransaction } from '../actions';
 
-function Transaction({ onGetOTP, user, data }) {
-    const { depositor, receiver, amount, createdAt, note, type, status, _id } = data;
+function Transaction({ onGetOTP, onRemoveDebtTransaction, user, data }) {
+    const { depositor, receiver, amount, createdAt, note, type, status, _id, active } = data;
     const time = moment(createdAt).format('HH:mm:ss DD/MM/YYYY');
 
     return (
@@ -58,29 +58,17 @@ function Transaction({ onGetOTP, user, data }) {
                             <em className="icon ni ni-wallet-fill" />
                         </a>
                     </li>}
-                    {/* <li className="nk-tb-action-hidden">
-                        <a href="#" className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Send Email">
-                            <em className="icon ni ni-mail-fill" />
-                        </a>
-                    </li>
-                    <li className="nk-tb-action-hidden">
-                        <a href="#" className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Suspend">
-                            <em className="icon ni ni-user-cross-fill" />
-                        </a>
-                    </li> */}
                     <li>
                         <div className="drodown">
                             <a href="#" className="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em className="icon ni ni-more-h" /></a>
                             <div className="dropdown-menu dropdown-menu-right">
                                 <ul className="link-list-opt no-bdr">
-                                    <li><a href="#"><em className="icon ni ni-focus" /><span>Quick View</span></a></li>
-                                    <li><a href="#"><em className="icon ni ni-eye" /><span>View Details</span></a></li>
-                                    <li><a href="#"><em className="icon ni ni-repeat" /><span>Transaction</span></a></li>
-                                    <li><a href="#"><em className="icon ni ni-activity-round" /><span>Activities</span></a></li>
+                                    <li><a href="" onClick={(e) => {
+                                        e.preventDefault();
+                                        onRemoveDebtTransaction(_id);
+                                    }}><em class="icon ni ni-property-remove"></em><span>Hủy nhắc nợ này</span></a></li>
                                     <li className="divider" />
-                                    <li><a href="#"><em className="icon ni ni-shield-star" /><span>Reset Pass</span></a></li>
-                                    <li><a href="#"><em className="icon ni ni-shield-off" /><span>Reset 2FA</span></a></li>
-                                    <li><a href="#"><em className="icon ni ni-na" /><span>Suspend User</span></a></li>
+                                    <li><a href="#"><em className="icon ni ni-na" /><span>Chặn người nhắc</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -97,6 +85,7 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onGetOTP: (transactionId) => dispatch(onGetOTP(transactionId))
+        onGetOTP: (transactionId) => dispatch(onGetOTP(transactionId)),
+        onRemoveDebtTransaction: (_id) => dispatch(onRemoveDebtTransaction(_id))
     }
 })(Transaction);

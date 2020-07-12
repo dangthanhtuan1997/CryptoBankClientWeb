@@ -20,7 +20,8 @@ import OTPModal from './components/OTPModal';
 import SuccessfulModal from './components/SuccessfulModal';
 import ErrorModal from './components/ErrorModal';
 import ChangePasswordModal from './components/ChangePasswordModal';
-import TransactionModalWithData from './components/TransactionModalWithData';
+import TransactionModalWithDataModal from './components/TransactionModalWithDataModal';
+import RemoveDebtTransactionModal from './components/RemoveDebtTransactionModal';
 
 import Menu from './components/Menu';
 import Header from './components/Header';
@@ -42,6 +43,7 @@ function App(props) {
   const { user, transactions, onGetUserInfo, onGetTransactions, RestoreAccessToken } = props;
   const [init, setInit] = useState(false);
   const [fetchTransactions, setFetchTransactions] = useState(false);
+  
   useEffect(() => {
     const accessToken = cookie.load('CryptoBankAccessToken');
 
@@ -97,7 +99,8 @@ function App(props) {
       <TransactionModal></TransactionModal>
       <RemindTransactionModal></RemindTransactionModal>
       <ChangePasswordModal></ChangePasswordModal>
-      <TransactionModalWithData></TransactionModalWithData>
+      <TransactionModalWithDataModal></TransactionModalWithDataModal>
+      <RemoveDebtTransactionModal></RemoveDebtTransactionModal>
     </Router>
   );
 }

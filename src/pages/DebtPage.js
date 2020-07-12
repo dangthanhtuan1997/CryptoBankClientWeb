@@ -8,8 +8,7 @@ function DebtPage(props) {
 
     useEffect(() => {
         if (transactions.data){
-            let arr = [...(transactions.data)];
-            arr = arr.filter(item => item.type === 'debt');
+            let arr = transactions.data.filter(item => item.active === true && item.type === 'debt');
             setData(arr.reverse());
         }
     }, [JSON.stringify(transactions.data)]);

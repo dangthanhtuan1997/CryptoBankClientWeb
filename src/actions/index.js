@@ -148,7 +148,7 @@ const onCreateNewTransaction = (transaction) => async dispatch => {
             if (transactions) {
                 transactions.push(res.data.transaction);
             }
-            
+
             dispatch(setPopup('success', 'success-debt-remind'));
             dispatch(setTransactions(transactions));
         }
@@ -243,7 +243,7 @@ const onUpdateFriends = (friends, type) => async dispatch => {
             dispatch(setPopup('success', 'success-delete-friends'));
         }
     } catch (error) {
-        dispatch(setPopup('error', 'success-update-friends', error.response.data.message));
+        dispatch(setPopup('error', 'error-update-friends', error.response.data.message));
     }
 }
 
@@ -291,6 +291,11 @@ const setTemplateTransaction = (template) => ({
     template: template
 });
 
+const selectTransaction = (transaction) => ({
+    type: 'SELECT_TRANSACTION',
+    transaction: transaction
+});
+
 const onSetTemplateTransaction = (template) => dispatch => {
     dispatch(setTemplateTransaction(template));
 };
@@ -300,6 +305,29 @@ const RestoreAccessToken = (accessToken) => ({
     accessToken: accessToken
 });
 
+const onRemoveDebtTransaction = (transactionId) => async dispatch => {
+    dispatch(setPopup('success', 'remove-debt-transaction'));
+    dispatch(selectTransaction(transactionId));
+}
+
+const onConfirmRemoveDebtTransaction = () => async dispatch => {
+    const state = store.getState();
+    const accessToken = state.userReducer.accessToken;
+    const { data, selectedItem } = state.transactionReducer;
+
+    try {
+        const res = await axios.delete(`${apiUrl}/transactions/${selectedItem}`, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
+        });
+        const transactions = JSON.parse(JSON.stringify(data)).filter(item => item._id !== selectedItem);
+
+        dispatch(setTransactions(transactions));
+    } catch (error) {
+        dispatch(setPopup('error', 'error-remove-debt-transaction', error.response.data.message));
+    }
+}
 
 export {
     onLogin,
@@ -317,5 +345,7 @@ export {
     onUpdateFriends,
     onAddNotification,
     onSeenNotification,
-    onSetTemplateTransaction
+    onSetTemplateTransaction,
+    onRemoveDebtTransaction,
+    onConfirmRemoveDebtTransaction
 };
