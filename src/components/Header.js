@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { onLogout, onSeenNotification, onAddNotification } from '../actions';
 import moment from 'moment';
 
-function HandleNotification(item) {
+function HandleNotification(item, user) {
     switch (item.title) {
         case 'debt': {
             return <div className="nk-notification-item dropdown-inner">
@@ -46,7 +46,7 @@ function HandleNotification(item) {
                     <em className="icon icon-circle bg-success-dim ni ni-arrow-down-left" />
                 </div>
                 <div className="nk-notification-content">
-                    <div className="nk-notification-text">{item.data?.depositor.full_name} vừa hủy yêu cầu trả nợ {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
+                    <div className="nk-notification-text">{user.userInfo.account_number === item.data?.depositor.account_number ? item.data?.receiver.full_name : item.data?.depositor.full_name} vừa hủy yêu cầu trả nợ {Number(item.data?.amount).toLocaleString('en-US', { currency: 'VND' })} VND</div>
                     <div className="nk-notification-text">Lời nhắn: {item.data.delete_message}</div>
                     <div className="nk-notification-time">{moment(item.data?.updatedAt).format('HH:mm:ss DD/MM/YYYY')}</div>
                 </div>
@@ -181,7 +181,7 @@ function Header(props) {
                                     </div>
                                     <div className="dropdown-body">
                                         <div className="nk-notification">
-                                            {data?.map(item => HandleNotification(item))}
+                                            {data?.map(item => HandleNotification(item, user))}
                                         </div>
                                     </div>{/* .nk-dropdown-body */}
                                     <div className="dropdown-foot center">
