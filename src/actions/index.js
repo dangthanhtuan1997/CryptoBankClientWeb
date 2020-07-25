@@ -353,9 +353,9 @@ const onResetPassword = (username, password, otp) => async dispatch => {
             { username, password, otp }
         );
 
-        alert(res.data.message);
+        dispatch(setPopup('success', 'success-update-password'));
     } catch (error) {
-        //dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
+        dispatch(setPopup('error', 'error-update-password', error.response.data.message));
     }
 }
 

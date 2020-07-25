@@ -50,10 +50,6 @@ class ForgotPasswordPage extends React.Component {
     return true;
   }
 
-  componentWillReceiveProps() {
-    this.setState({ loading: false });
-  }
-
   render() {
     return (
       <div className="nk-app-root">
@@ -109,7 +105,7 @@ class ForgotPasswordPage extends React.Component {
                       <em className="passcode-icon icon-show icon ni ni-eye" />
                       <em className="passcode-icon icon-hide icon ni ni-eye-off" />
                     </a>
-                    {this.state.rePassword ?
+                    {this.state.rePassword && this.state.password === this.state.rePassword ?
                       <input value={this.state.rePassword} onChange={e => this.onChangeText('rePassword', e.target.value)} type="password" className="form-control form-control-lg" id="re-password" placeholder="Nhập mật khẩu mới của bạn" />
                       :
                       <input value={this.state.rePassword} onChange={e => this.onChangeText('rePassword', e.target.value)} type="password" className="form-control form-control-lg error" id="re-password" placeholder="Nhập mật khẩu mới của bạn" />
@@ -157,7 +153,9 @@ class ForgotPasswordPage extends React.Component {
                     'pointer-events': 'none',
                   }} onClick={(event) => {
                     event.preventDefault();
-                    this.props.onResetPassword(this.state.username, this.state.password, this.state.otp);
+                    if (this.state.password === this.state.rePassword) {
+                      this.props.onResetPassword(this.state.username, this.state.password, this.state.otp);
+                    }
                   }} className="btn btn-lg btn-primary btn-block" disabled={this.state.loading}>
                     {this.state.loading && <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>}
                     <span>Xác nhận</span></button>
