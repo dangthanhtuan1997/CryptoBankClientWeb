@@ -157,7 +157,7 @@ const onCreateNewTransaction = (transaction) => async dispatch => {
     }
 }
 
-const onGetOTP = (transactionId) => async dispatch => {
+const onGetOTPTransaction = (transactionId) => async dispatch => {
     const state = store.getState();
     const accessToken = state.userReducer.accessToken;
 
@@ -337,6 +337,28 @@ const onConfirmRemoveDebtTransaction = (note) => async dispatch => {
     }
 }
 
+const onGetOTPPassword = async (username) => {
+    try {
+        const res = await axios.get(`${apiUrl}/users/forgot/otp?username=${username}`);
+
+        alert(res.data.otp);
+    } catch (error) {
+        //dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
+    }
+}
+
+const onResetPassword = (username, password, otp) => async dispatch => {
+    try {
+        const res = await axios.patch(`${apiUrl}/users/forgot`,
+            { username, password, otp }
+        );
+
+        alert(res.data.message);
+    } catch (error) {
+        //dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
+    }
+}
+
 export {
     onLogin,
     onLogout,
@@ -349,11 +371,13 @@ export {
     onGetTransactions,
     onConfirmSendMoneyToOthers,
     onUpdatePassword,
-    onGetOTP,
+    onGetOTPTransaction,
     onUpdateFriends,
     onAddNotification,
     onSeenNotification,
     onSetTemplateTransaction,
     onRemoveDebtTransaction,
-    onConfirmRemoveDebtTransaction
+    onConfirmRemoveDebtTransaction,
+    onGetOTPPassword,
+    onResetPassword
 };

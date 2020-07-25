@@ -13,6 +13,7 @@ import PersonalInfoPage from './pages/PersonalInfoPage';
 import DebtPage from './pages/DebtPage';
 import CardPage from './pages/CardPage';
 import FriendPage from './pages/FriendPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 import TransactionModal from './components/TransactionModal';
 import RemindTransactionModal from './components/RemindTransactionModal';
@@ -73,6 +74,7 @@ function App(props) {
     <Router history={history}>
       <Switch>
         <Route path="/login" component={LoginPage} />
+        <Route path="/forgot" component={ForgotPasswordPage} />
         <>
           <div className="nk-app-root">
             <div className="nk-main ">

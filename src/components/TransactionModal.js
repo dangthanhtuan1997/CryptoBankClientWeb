@@ -50,7 +50,7 @@ function TransactionModal(props) {
         setSave(true);
     }
 
-    function checkForm() {
+    function isValidForm() {
         if (!receiverAccountNumber || !receiverName || !amount) {
             return false;
         }
@@ -157,7 +157,7 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="" style={checkForm() ? {} : {
+                                        <a href="" style={isValidForm() ? {} : {
                                             'pointer-events': 'none',
                                         }} className="btn btn-primary" onClick={() => sendTransactionInfo('internal')} data-dismiss="modal">Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>
@@ -233,7 +233,7 @@ function TransactionModal(props) {
                                         </div>
                                     </ul>
                                     <div className="sp-package-action">
-                                        <a href="" style={checkForm() ? {} : {
+                                        <a href="" style={isValidForm() ? {} : {
                                             'pointer-events': 'none',
                                         }} className="btn btn-primary" onClick={() => sendTransactionInfo('external')} data-dismiss="modal">Chuyển</a>
                                         <a href="#" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy chuyển</a>

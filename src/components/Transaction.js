@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { onGetOTP, onRemoveDebtTransaction } from '../actions';
+import { onGetOTPTransaction, onRemoveDebtTransaction } from '../actions';
 
-function Transaction({ onGetOTP, onRemoveDebtTransaction, user, data }) {
+function Transaction({ onGetOTPTransaction, onRemoveDebtTransaction, user, data }) {
     const { depositor, receiver, amount, createdAt, note, type, status, _id, active } = data;
     const time = moment(createdAt).format('HH:mm:ss DD/MM/YYYY');
 
@@ -53,7 +53,7 @@ function Transaction({ onGetOTP, onRemoveDebtTransaction, user, data }) {
                     {type === 'debt' && status === 'pending' && depositor.account_number === user.userInfo.account_number && <li className="nk-tb-action-hidden">
                         <a href="" onClick={(e) => {
                             e.preventDefault();
-                            onGetOTP(_id);
+                            onGetOTPTransaction(_id);
                         }} className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Wallet">
                             <em className="icon ni ni-wallet-fill" />
                         </a>
@@ -85,7 +85,7 @@ export default connect(state => {
     }
 }, dispatch => {
     return {
-        onGetOTP: (transactionId) => dispatch(onGetOTP(transactionId)),
+        onGetOTPTransaction: (transactionId) => dispatch(onGetOTPTransaction(transactionId)),
         onRemoveDebtTransaction: (_id) => dispatch(onRemoveDebtTransaction(_id))
     }
 })(Transaction);
