@@ -113,7 +113,7 @@ const onGetTransactions = () => async dispatch => {
     let accessToken = state.userReducer.accessToken;
 
     try {
-        const res = await axios.get(`${apiUrl}/transactions/user`, {
+        const res = await axios.get(`${apiUrl}/transactions/me`, {
             headers: {
                 "x-access-token": `JWT ${accessToken}`
             }
