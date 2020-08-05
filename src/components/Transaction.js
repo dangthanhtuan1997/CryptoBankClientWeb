@@ -49,31 +49,32 @@ function Transaction({ onGetOTPTransaction, onRemoveDebtTransaction, user, data 
                     <span class="badge badge-sm badge-dim badge-outline-success d-none d-md-inline-flex">Thành công</span>}
             </td>
             <td className="nk-tb-col nk-tb-col-tools">
-                <ul className="nk-tb-actions gx-1">
-                    {type === 'debt' && status === 'pending' && depositor.account_number === user.userInfo.account_number && <li className="nk-tb-action-hidden">
-                        <a href="" onClick={(e) => {
-                            e.preventDefault();
-                            onGetOTPTransaction(_id);
-                        }} className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Wallet">
-                            <em className="icon ni ni-wallet-fill" />
-                        </a>
-                    </li>}
-                    <li>
-                        <div className="drodown">
-                            <a href="#" className="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em className="icon ni ni-more-h" /></a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                                <ul className="link-list-opt no-bdr">
-                                    <li><a href="" onClick={(e) => {
-                                        e.preventDefault();
-                                        onRemoveDebtTransaction(_id);
-                                    }}><em class="icon ni ni-property-remove"></em><span>Hủy nhắc nợ này</span></a></li>
-                                    <li className="divider" />
-                                    <li><a href="#"><em className="icon ni ni-na" /><span>Chặn người nhắc</span></a></li>
-                                </ul>
+                {type === 'debt' && status === 'pending' && depositor.account_number === user.userInfo.account_number &&
+                    <ul className="nk-tb-actions gx-1">
+                        <li className="nk-tb-action-hidden">
+                            <a href="" onClick={(e) => {
+                                e.preventDefault();
+                                onGetOTPTransaction(_id);
+                            }} className="btn btn-trigger btn-icon" data-toggle="tooltip" data-placement="top" title="Wallet">
+                                <em className="icon ni ni-wallet-fill" />
+                            </a>
+                        </li>
+                        <li>
+                            <div className="drodown">
+                                <a href="#" className="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em className="icon ni ni-more-h" /></a>
+                                <div className="dropdown-menu dropdown-menu-right">
+                                    <ul className="link-list-opt no-bdr">
+                                        <li><a href="" onClick={(e) => {
+                                            e.preventDefault();
+                                            onRemoveDebtTransaction(_id);
+                                        }}><em class="icon ni ni-property-remove"></em><span>Hủy nhắc nợ này</span></a></li>
+                                        <li className="divider" />
+                                        <li><a href="#"><em className="icon ni ni-na" /><span>Chặn người nhắc</span></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>}
             </td>
         </tr>
     );

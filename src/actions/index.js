@@ -142,7 +142,7 @@ const onCreateNewTransaction = (transaction) => async dispatch => {
 
         if (transaction.type === 'transfer') {
             dispatch(setPopup('success', 'pending-transaction'));
-            alert(res.data.otp)
+            alert('OTP đã được gửi qua email của bạn, để test nhanh OTP là: ' + res.data.otp);
         }
         else {
             if (transactions) {
@@ -169,7 +169,7 @@ const onGetOTPTransaction = (transactionId) => async dispatch => {
         });
 
         dispatch(setPopup('success', 'pending-transaction'));
-        alert(res.data.otp);
+        alert('OTP đã được gửi qua email của bạn, để test nhanh OTP là: ' + res.data.otp);
     } catch (error) {
         dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
     }
@@ -341,7 +341,7 @@ const onGetOTPPassword = async (username) => {
     try {
         const res = await axios.get(`${apiUrl}/users/forgot/otp?username=${username}`);
 
-        alert(res.data.otp);
+        alert('OTP đã được gửi qua email của bạn, để test nhanh OTP là: ' + res.data.otp);
     } catch (error) {
         //dispatch(setPopup('error', 'error-transaction', JSON.stringify(error.response.data.message)));
     }
