@@ -18,13 +18,38 @@ const onLogin = (username, password) => async dispatch => {
             username: username,
             password: password
         });
+        console.log(res.data)
+        const { token, refresh_token } = res.data;
 
-        const { token } = res.data;
-
-        cookie.save('CryptoBankAccessToken', token, { path: '/', expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000) });
+        cookie.save('CryptoBankAccessToken', token, { path: '/', expires: new Date(Date.now() + 1 * 60 * 60 * 1000) });
+        cookie.save('CryptoBankRefreshToken', refresh_token, { path: '/' });
         dispatch(login(token, null));
 
         history.replace({ pathname: '/' });
+    } catch (error) {
+        dispatch(login(null, error.response.data.message));
+    }
+};
+
+const onRefreshToken = () => async dispatch => {
+    try {
+        const refreshToken = await cookie.load('CryptoBankRefreshToken');
+
+        if (!refreshToken){
+            return;
+        }
+
+        const res = await axios.get(`${apiUrl}/auth/user/new-token`, {
+            headers: {
+                "x-refresh-token": `JWT ${refreshToken}`
+            }
+        });
+
+        const { token } = res.data;
+
+        cookie.save('CryptoBankAccessToken', token, { path: '/', expires: new Date(Date.now() + 1 * 60 * 60 * 1000) });
+
+        dispatch(login(token, null));
     } catch (error) {
         dispatch(login(null, error.response.data.message));
     }
@@ -379,5 +404,6 @@ export {
     onRemoveDebtTransaction,
     onConfirmRemoveDebtTransaction,
     onGetOTPPassword,
-    onResetPassword
+    onResetPassword,
+    onRefreshToken
 };

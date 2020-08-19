@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import cookie from 'react-cookies';
 import history from './history';
-import { RestoreAccessToken, onGetUserInfo, onGetTransactions } from './actions/index';
+import { RestoreAccessToken, onGetUserInfo, onGetTransactions, onRefreshToken } from './actions/index';
 import { connect } from 'react-redux';
 import { socket } from './socket';
 
@@ -41,15 +41,23 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 
 function App(props) {
-  const { user, transactions, onGetUserInfo, onGetTransactions, RestoreAccessToken } = props;
+  const { user, transactions, onGetUserInfo, onGetTransactions, RestoreAccessToken, onRefreshToken } = props;
   const [init, setInit] = useState(false);
   const [fetchTransactions, setFetchTransactions] = useState(false);
-  
+
   useEffect(() => {
     const accessToken = cookie.load('CryptoBankAccessToken');
 
     if (accessToken) {
       RestoreAccessToken(accessToken);
+    }
+
+    const t = setInterval(() => {
+      onRefreshToken();
+    }, 50 * 60 * 1000);
+
+    return () => {
+      clearInterval(t);
     }
   }, []);
 
@@ -116,6 +124,7 @@ export default connect(state => {
   return {
     RestoreAccessToken: (accessToken) => dispatch(RestoreAccessToken(accessToken)),
     onGetUserInfo: () => dispatch(onGetUserInfo()),
-    onGetTransactions: () => dispatch(onGetTransactions())
+    onGetTransactions: () => dispatch(onGetTransactions()),
+    onRefreshToken: () => dispatch(onRefreshToken())
   }
 })(App);
