@@ -5,8 +5,8 @@ import { onGetUserByAccountNumber, onCreateNewTransaction } from '../actions';
 import Select from 'react-select';
 
 const options = [
-    { value: 'nklbank', label: 'Ngân hàng NKLBank' },
-    { value: 'teabank', label: 'Ngân hàng TeaBank' }
+    { value: 'NKLBank', label: 'Ngân hàng NKLBank' },
+    { value: 'TeaBank', label: 'Ngân hàng TeaBank' }
 ];
 
 function TransactionModal(props) {
