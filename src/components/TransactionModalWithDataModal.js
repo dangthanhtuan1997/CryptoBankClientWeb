@@ -65,7 +65,7 @@ function TransactionModalWithData(props) {
                                 <p className="text-soft">Vui lòng kiểm tra thông tin người nhận trước khi gửi.</p>
                             </div>
                             <ul className="sp-package-plan nav nav-switch nav-tabs">
-                                {transactions?.template?.bank === 'cryptobank' ?
+                                {transactions?.template?.bank === 'CryptoBank' ?
                                     <li className="nav-item">
                                         <a className="nav-link active" onClick={() => {
                                             setScope('internal');
@@ -79,7 +79,7 @@ function TransactionModalWithData(props) {
                                     </li>}
                             </ul>
                             <div className="tab-content">
-                                {transactions?.template?.bank === 'cryptobank' ?
+                                {transactions?.template?.bank === 'CryptoBank' ?
                                     <div className="tab-pane active" id="internal-with-data">
                                         <ul className="sp-package-list">
                                             <div className="row gy-4">
