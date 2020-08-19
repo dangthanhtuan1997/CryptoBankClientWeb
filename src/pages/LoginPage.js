@@ -95,15 +95,13 @@ class LoginPage extends React.Component {
                     <span>Đăng nhập</span></button>
                 </div>
               </form>{/* form */}
-              <div className="form-note-s2 pt-4">Bạn chưa có tài khoản? <a href="html/general/pages/auths/auth-register.html">Đăng ký</a>
-              </div>
-              <div className="text-center pt-4 pb-3">
+              {/* <div className="text-center pt-4 pb-3">
                 <h6 className="overline-title overline-title-sap"><span>OR</span></h6>
               </div>
               <ul className="nav justify-center gx-4">
                 <li className="nav-item"><a className="nav-link" href="#">Facebook</a></li>
                 <li className="nav-item"><a className="nav-link" href="#">Google</a></li>
-              </ul>
+              </ul> */}
             </div>{/* .nk-block */}
             <div className="nk-block nk-auth-footer">
               <div className="nk-block-between">
