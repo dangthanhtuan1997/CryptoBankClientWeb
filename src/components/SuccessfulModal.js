@@ -8,6 +8,9 @@ const successTransactionContent = 'Lệnh chuyển tiền của đã được x�
 const successUpdatePasswordTitle = 'Đổi mật khẩu thành công!';
 const successUpdatePasswordContent = 'Mật khẩu của bạn đã được cập nhật, vui lòng sử dụng mật khẩu mới khi đăng nhập lại.';
 
+const successUpdateEmailTitle = 'Đổi email thành công!';
+const successUpdateEmailContent = 'Email của bạn đã được cập nhật.';
+
 const successRemindDebtTitle = 'Gửi yêu cầu thanh toán nợ thành công!';
 const successRemindDebtContent = 'Một thông báo đã được gửi tới người nhận, bạn sẽ nhận được tiền khi người đó thanh toán cho bạn.';
 
@@ -17,7 +20,7 @@ const successUpdateFriendsContent = 'Bạn có thể chuyển tiền cho bạn b
 const successDeleteFriendsTitle = 'Xóa người thụ hưởng thành công!';
 const successDeleteFriendsContent = 'Bạn có thể thêm lại bất cứ lúc nào.';
 
-const listTitle = ['success-transaction', 'success-update-password', 'success-debt-remind', 'success-update-friends', 'success-delete-friends']
+const listTitle = ['success-transaction', 'success-update-password', 'success-update-email', 'success-debt-remind', 'success-update-friends', 'success-delete-friends']
 
 function SuccessfulModal(props) {
     const [title, setTitle] = useState('');
@@ -32,7 +35,7 @@ function SuccessfulModal(props) {
     if (props.popup.status !== 'success' || listTitle.indexOf(props.popup.title) === -1) {
         return null;
     }
-    else {        
+    else {
         if (!title && !content) {
             switch (props.popup.title) {
                 case 'success-transaction': {
@@ -43,6 +46,11 @@ function SuccessfulModal(props) {
                 case 'success-update-password': {
                     setTitle(successUpdatePasswordTitle);
                     setContent(successUpdatePasswordContent);
+                }
+                    break;
+                case 'success-update-email': {
+                    setTitle(successUpdateEmailTitle);
+                    setContent(successUpdateEmailContent);
                 }
                     break;
                 case 'success-debt-remind': {

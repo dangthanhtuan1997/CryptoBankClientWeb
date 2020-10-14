@@ -23,6 +23,7 @@ import ErrorModal from './components/ErrorModal';
 import ChangePasswordModal from './components/ChangePasswordModal';
 import TransactionModalWithDataModal from './components/TransactionModalWithDataModal';
 import RemoveDebtTransactionModal from './components/RemoveDebtTransactionModal';
+import ChangeEmailModal from './components/ChangeEmailModal';
 
 import Menu from './components/Menu';
 import Header from './components/Header';
@@ -111,6 +112,7 @@ function App(props) {
       <ChangePasswordModal></ChangePasswordModal>
       <TransactionModalWithDataModal></TransactionModalWithDataModal>
       <RemoveDebtTransactionModal></RemoveDebtTransactionModal>
+      <ChangeEmailModal></ChangeEmailModal>
     </Router>
   );
 }

@@ -6,6 +6,8 @@ const errorTransactionTitle = 'Chuyển tiền thất bại!';
 
 const errorUpdatePasswordTitle = 'Đổi mật khẩu thất bại!';
 
+const errorUpdateEmailTitle = 'Cập nhật email thất bại!';
+
 const errorRemindDebtTitle = 'Gửi yêu cầu thanh toán nợ thất bại!';
 
 const errorUpdateFriendsTitle = 'Cập nhật người thụ hưởng thất bại!';
@@ -14,7 +16,7 @@ const errorDeleteFriendsTitle = 'Xóa người thụ hưởng thất bại!';
 
 const errorRemoveDebtTransactionTitle = 'Xóa nhắc nợ thất bại!';
 
-const listTitle = ['error-transaction', 'error-update-password', 'error-debt-remind', 'error-update-friends', 'error-delete-friends', 'error-remove-debt-transaction']
+const listTitle = ['error-transaction', 'error-update-password', 'error-update-email', 'error-debt-remind', 'error-update-friends', 'error-delete-friends', 'error-remove-debt-transaction']
 
 function ErrorModal(props) {
     const [title, setTitle] = useState('');
@@ -38,6 +40,10 @@ function ErrorModal(props) {
                     setTitle(errorUpdatePasswordTitle);
                 }
                     break;
+                case 'error-update-email': {
+                    setTitle(errorUpdateEmailTitle);
+                }
+                    break;
                 case 'error-debt-remind': {
                     setTitle(errorRemindDebtTitle);
                 }
@@ -51,7 +57,7 @@ function ErrorModal(props) {
                     setTitle(errorDeleteFriendsTitle);
                 }
                     break;
-                    
+
                 case 'error-remove-debt-transaction': {
                     setTitle(errorRemoveDebtTransactionTitle);
                 }

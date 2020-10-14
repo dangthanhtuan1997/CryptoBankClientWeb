@@ -43,40 +43,40 @@ function PersonalInfoPage(props) {
                                 </div>{/* .nk-block-head */}
                                 <div className="card card-bordered">
                                     <div className="nk-data data-list">
-                                        <div className="data-item" data-toggle="modal" data-target="#profile-edit">
+                                        <div className="data-item">
                                             <div className="data-col">
                                                 <span className="data-label">Họ tên</span>
                                                 <span className="data-value">{user.userInfo?.full_name}</span>
                                             </div>
-                                            <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-forward-ios" /></span></div>
+                                            <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-lock-alt" /></span></div>
                                         </div>{/* .data-item */}
-                                        <div className="data-item">
+                                        <div className="data-item" data-toggle="modal" data-target="#email-edit">
                                             <div className="data-col">
                                                 <span className="data-label">Email</span>
                                                 <span className="data-value">{user.userInfo?.email}</span>
                                             </div>
-                                            <div className="data-col data-col-end"><span className="data-more disable"><em className="icon ni ni-lock-alt" /></span></div>
+                                            <div className="data-col data-col-end"><span className="data-more disable"><em className="icon ni ni-forward-ios" /></span></div>
                                         </div>{/* .data-item */}
-                                        <div className="data-item" data-toggle="modal" data-target="#profile-edit">
+                                        <div className="data-item">
                                             <div className="data-col">
                                                 <span className="data-label">Số điện thoại</span>
                                                 <span className="data-value">{user.userInfo?.phone}</span>
                                             </div>
-                                            <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-forward-ios" /></span></div>
+                                            <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-lock-alt" /></span></div>
                                         </div>{/* .data-item */}
-                                        <div className="data-item" data-toggle="modal" data-target="#profile-edit">
+                                        <div className="data-item">
                                             <div className="data-col">
                                                 <span className="data-label">Ngày sinh</span>
                                                 <span className="data-value">Chưa có</span>
                                             </div>
-                                            <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-forward-ios" /></span></div>
+                                            <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-lock-alt" /></span></div>
                                         </div>{/* .data-item */}
-                                        <div className="data-item" data-toggle="modal" data-target="#profile-edit">
+                                        <div className="data-item">
                                             <div className="data-col">
                                                 <span className="data-label">Địa chỉ</span>
                                                 <span className="data-value">Chưa có</span>
                                             </div>
-                                            <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-forward-ios" /></span></div>
+                                            <div className="data-col data-col-end"><span className="data-more"><em className="icon ni ni-lock-alt" /></span></div>
                                         </div>{/* .data-item */}
                                         <div className="data-item" data-toggle="modal" data-target="#password-edit">
                                             <div className="data-col">

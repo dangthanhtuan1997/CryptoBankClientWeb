@@ -35,7 +35,7 @@ const onRefreshToken = () => async dispatch => {
     try {
         const refreshToken = await cookie.load('CryptoBankRefreshToken');
 
-        if (!refreshToken){
+        if (!refreshToken) {
             return;
         }
 
@@ -248,6 +248,25 @@ const onUpdatePassword = (oldPassword, newPassword) => async dispatch => {
     }
 }
 
+/*==============================================     UpdateEmail     ==============================================*/
+
+const onUpdateEmail = (email) => async dispatch => {
+    const state = store.getState();
+    const { userInfo, accessToken } = state.userReducer;
+
+    try {
+        const res = await axios.patch(`${apiUrl}/users/email`, { email }, {
+            headers: {
+                "x-access-token": `JWT ${accessToken}`
+            }
+        });
+        dispatch(setUserInfo({ ...userInfo, email: email }));
+        dispatch(setPopup('success', 'success-update-email'));
+    } catch (error) {
+        dispatch(setPopup('error', 'error-update-email', error.response.data.message));
+    }
+}
+
 /*==============================================     UpdateFriends     ==============================================*/
 
 const onUpdateFriends = (friends, type) => async dispatch => {
@@ -396,6 +415,7 @@ export {
     onGetTransactions,
     onConfirmSendMoneyToOthers,
     onUpdatePassword,
+    onUpdateEmail,
     onGetOTPTransaction,
     onUpdateFriends,
     onAddNotification,
