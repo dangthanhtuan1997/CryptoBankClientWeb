@@ -22,6 +22,9 @@ function RemindTransactionModal({ onCreateNewTransaction, user }) {
         }
 
         typingTimeoutRef.current = setTimeout(async () => {
+            if (user?.userInfo?.account_number == receiverAccountNumber) {
+                return;
+            }
             const receiverName = await onGetUserByAccountNumber(receiverAccountNumber, 'internal', '');
             setReceiverName(receiverName);
         }, 300);
@@ -117,8 +120,8 @@ function RemindTransactionModal({ onCreateNewTransaction, user }) {
                             </div>
                             <div className="sp-package-action">
                                 <a href="" style={checkForm() ? {} : {
-                                            'pointer-events': 'none',
-                                        }} onClick={() => sendDebtTransaction()} className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Gửi yêu cầu</a>
+                                    'pointer-events': 'none',
+                                }} onClick={() => sendDebtTransaction()} className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#confirm-transaction">Gửi yêu cầu</a>
                                 <a href="" className="btn btn-dim btn-danger" data-dismiss="modal">Hủy gửi</a>
                             </div>
                         </div>

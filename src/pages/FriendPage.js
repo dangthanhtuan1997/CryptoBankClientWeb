@@ -52,7 +52,7 @@ function FriendPage(props) {
                                     <div className="card-inner">
                                         <div className="card-title-group">
                                             <div className="card-title">
-                                                <h5 className="title">Tất cả người hưởng thụ bạn đã lưu</h5>
+                                                <h5 className="title">Tất cả người thụ hưởng bạn đã lưu</h5>
                                             </div>
                                             <div className="card-tools mr-n1">
                                                 <ul className="btn-toolbar gx-1">

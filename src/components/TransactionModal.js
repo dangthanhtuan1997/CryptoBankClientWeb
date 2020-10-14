@@ -31,6 +31,10 @@ function TransactionModal(props) {
         }
 
         typingTimeoutRef.current = setTimeout(async () => {
+            const {user} = props;
+            if (user?.userInfo?.account_number == receiverAccountNumber){
+                return;
+            }
             const receiverName = await onGetUserByAccountNumber(receiverAccountNumber, scope, selectedBank);
             setReceiverName(receiverName);
         }, 300);
@@ -105,33 +109,25 @@ function TransactionModal(props) {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Số tài khoản</label>
-                                                    {receiverAccountNumber ? <input type="number" value={receiverAccountNumber} className="form-control form-control-lg" onChange={(e) => {
+                                                    <input type="number" value={receiverAccountNumber} className={receiverAccountNumber ? "form-control form-control-lg" : "form-control form-control-lg error"} onChange={(e) => {
                                                         setReceiverAccountNumber(e.target.value);
                                                         setReceiverName('');
-                                                    }} placeholder="Nhập số tài khoản" /> : <input type="number" value={receiverAccountNumber} className="form-control form-control-lg error" onChange={(e) => {
-                                                        setReceiverAccountNumber(e.target.value);
-                                                        setReceiverName('');
-                                                    }} placeholder="Nhập số tài khoản" />}
+                                                    }} placeholder="Nhập số tài khoản" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Người nhận</label>
-                                                    {receiverName ? <input disabled={true} type="text" className="form-control form-control-lg" value={receiverName} /> :
-                                                        <input disabled={true} type="text" className="form-control form-control-lg error" value={receiverName} />}
+                                                    <input disabled={true} type="text" className={receiverName ? "form-control form-control-lg" : "form-control form-control-lg error"} value={receiverName} />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Số tiền</label>
-                                                    {amount != 0 ? <input type="text" className="form-control form-control-lg" value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                    <input type="text" className={amount != 0 ? "form-control form-control-lg" : "form-control form-control-lg error"} value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
                                                         const val = parseInt(e.target.value.replace(/,/g, "")) || 0;
                                                         setAmount(val);
-                                                    }} placeholder="Số tiền" /> :
-                                                        <input type="text" className="form-control form-control-lg error" value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
-                                                            const val = parseInt(e.target.value.replace(/,/g, "")) || 0;
-                                                            setAmount(val);
-                                                        }} placeholder="Số tiền" />}
+                                                    }} placeholder="Số tiền" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
@@ -178,36 +174,25 @@ function TransactionModal(props) {
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Số tài khoản</label>
-                                                    {receiverAccountNumber ? <input type="text" className="form-control form-control-lg" value={receiverAccountNumber} onChange={(e) => {
+                                                    <input type="text" className={receiverAccountNumber ? "form-control form-control-lg" : "form-control form-control-lg error"} value={receiverAccountNumber} onChange={(e) => {
                                                         setReceiverAccountNumber(e.target.value);
                                                         setReceiverName('');
-                                                    }} placeholder="Số tài khoản" /> :
-                                                        <input type="text" className="form-control form-control-lg error" value={receiverAccountNumber} onChange={(e) => {
-                                                            setReceiverAccountNumber(e.target.value);
-                                                            setReceiverName('');
-                                                        }} placeholder="Số tài khoản" />}
-
+                                                    }} placeholder="Số tài khoản" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label">Người nhận</label>
-                                                    {receiverName ? <input disabled={true} type="text" className="form-control form-control-lg" value={receiverName} /> :
-                                                        <input disabled={true} type="text" className="form-control form-control-lg error" value={receiverName} />}
-
+                                                    <input disabled={true} type="text" className={receiverName? "form-control form-control-lg" : "form-control form-control-lg error"} value={receiverName} />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label className="form-label" >Số tiền</label>
-                                                    {amount != 0 ? <input type="text" className="form-control form-control-lg" value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
+                                                    <input type="text" className={amount != 0 ? "form-control form-control-lg": "form-control form-control-lg error"} value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
                                                         const val = parseInt(e.target.value.replace(/,/g, "")) || 0;
                                                         setAmount(val);
-                                                    }} placeholder="Số tiền" /> :
-                                                        <input type="text" className="form-control form-control-lg error" value={Number(amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")} onChange={(e) => {
-                                                            const val = parseInt(e.target.value.replace(/,/g, "")) || 0;
-                                                            setAmount(val);
-                                                        }} placeholder="Số tiền" />}
+                                                    }} placeholder="Số tiền" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
